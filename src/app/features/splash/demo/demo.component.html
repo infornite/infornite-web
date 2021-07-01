@@ -54,8 +54,13 @@
                 <span class="emphasis">password: </span>demo
             </div>
             <button style="margin-top:10px" mat-raised-button color="primary"
-                (click)="auth.loginWithRedirect({redirect_uri:'https://infornite.com/discover'})">Go to Login
+                (click)="auth.loginWithRedirect({appState: { target: '/discover' }})">Go to Login
                 Page</button>
         </div>
     </div>
 </div>
+
+
+<!--
+    {redirect_uri:'https://infornite.com/discover'}
+-->
