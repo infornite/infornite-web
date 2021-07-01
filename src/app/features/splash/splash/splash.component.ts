@@ -26,6 +26,7 @@ export class SplashComponent implements OnInit {
   ngOnInit(): void {
 
     this.sidebarService.hideHamburger()
+    /*
     if (this.router.url != '/splash') {
       this.auth.isAuthenticated$.subscribe((authenticated: boolean) => {
         if (authenticated) {
@@ -33,6 +34,7 @@ export class SplashComponent implements OnInit {
         }
       });
     }
+    */
   }
 
   openPicDialog(pic) {
