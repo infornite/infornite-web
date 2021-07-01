@@ -29,7 +29,7 @@ export class SplashComponent implements OnInit {
     if (this.router.url != '/splash') {
       this.auth.isAuthenticated$.subscribe((authenticated: boolean) => {
         if (authenticated) {
-          this.router.navigate(['/discover'])
+          //this.router.navigate(['/discover'])
         }
       });
     }

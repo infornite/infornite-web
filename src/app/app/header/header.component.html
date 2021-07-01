@@ -47,10 +47,12 @@
         <n4-user-popup></n4-user-popup>
       </div>
       <div class="not-authenticated" *ngIf="!(auth.isAuthenticated$ | async)">
-        <button mat-button (click)="auth.loginWithRedirect({appState:'/discover'})">
+        <button mat-button (click)="auth.loginWithRedirect({ redirect_uri: baseDomain + '/discover',  appState: { target:'/discover' }})">
           Login
         </button>
       </div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
+
+

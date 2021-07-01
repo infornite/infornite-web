@@ -31,6 +31,7 @@ import { FacetType } from '@app/graphql/schema';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -50,7 +51,8 @@ export class HeaderComponent implements OnInit {
   @Input() isSmallDevice: boolean;
 
   @ViewChild('input') inputElement: ElementRef;
-
+  baseDomain: String
+  loginString: String
   hamburgerState: any
   showSearch: boolean = false;
   navbarItems: HeaderItem[] = [
@@ -95,10 +97,14 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.baseDomain = location.origin
     this.sidebarService.showHamburger()
     this.hamburgerState = this.sidebarService.hamburgerStateObservable$
     this.acSearchAssign()
-  }
+}
+
+
+
 
   get searchInput() { return this.searchForm.get('searchInput') }
 

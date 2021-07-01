@@ -60,10 +60,12 @@ const routes: Routes = [
         (m) => m.SettingsModule
       )
   },
+  /*
   {
     path: '**',
     redirectTo: 'splash'
   }
+  */
 ];
 
 @NgModule({

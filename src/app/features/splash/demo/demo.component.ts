@@ -9,6 +9,8 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class DemoComponent implements OnInit {
 
+  baseDomain: String
+  
   constructor(
     private sidebarService: SidebarService,
     public auth: AuthService,
@@ -18,7 +20,7 @@ export class DemoComponent implements OnInit {
   
   ngOnInit(): void {
     this.sidebarService.hideHamburger()
-
+    this.baseDomain = location.origin
   }
 
 

@@ -22,7 +22,7 @@
                         <span class="emphasis">password: </span>demo
                     </div>
                     <button style="margin-top:10px" mat-raised-button color="primary"
-                        (click)="auth.loginWithRedirect()">Go to Login
+                        (click)="auth.loginWithRedirect({ redirect_uri: baseDomain + '/discover',  appState: { target:'/discover' }})">Go to Login
                         Page</button>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <span class="emphasis">password: </span>demo
             </div>
             <button style="margin-top:10px" mat-raised-button color="primary"
-                (click)="auth.loginWithRedirect()">Go to Login
+                (click)="auth.loginWithRedirect({ redirect_uri: baseDomain + '/discover',  appState: { target:'/discover' }})">Go to Login
                 Page</button>
         </div>
     </div>
