@@ -47,7 +47,7 @@
         <n4-user-popup></n4-user-popup>
       </div>
       <div class="not-authenticated" *ngIf="!(auth.isAuthenticated$ | async)">
-        <button mat-button (click)="auth.loginWithRedirect({redirect_uri:'http://localhost:4200', appState:'discover'})">
+        <button mat-button (click)="auth.loginWithRedirect(appState:'/discover'})">
           Login
         </button>
       </div>

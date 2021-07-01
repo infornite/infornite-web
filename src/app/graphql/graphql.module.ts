@@ -4,7 +4,6 @@ import {ApolloClientOptions, InMemoryCache, concat, ApolloLink} from '@apollo/cl
 import {HttpLink} from 'apollo-angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-//const uri = 'http://localhost:000/'//'https://graphql.fauna.com/graphql'; // <-- add the URL of the GraphQL server here
 
 const uri = environment.API_URL
 
