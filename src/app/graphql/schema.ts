@@ -238,7 +238,8 @@ export enum FacetSubType {
   /** Artefact */
   Policy = 'Policy',
   Guideline = 'Guideline',
-  Wiki = 'Wiki'
+  Wiki = 'Wiki',
+  Training = 'Training'
 }
 
 export type FacetTree = {
