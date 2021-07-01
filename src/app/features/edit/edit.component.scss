@@ -1,0 +1,61 @@
+.facet-form {
+  .form-outer-container {
+    padding: 20px;
+    margin: 20px;
+
+    &.small-device{
+      padding: 0px;
+      margin: 25px 16px;
+    }
+
+    mat-card {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0;
+
+      mat-card-header {
+        padding: 5px;
+
+        mat-card-title {
+          margin-top: 12px;
+        }
+      }
+
+      mat-card-content {
+        padding: 10px;
+
+        .form-field-label {
+          padding-right: 25px;
+          padding-top: 15px;
+          margin-top: -14px;
+        }
+
+        mat-form-field {
+          width: 100%;
+        }
+          .connections-button-div{
+            margin-bottom:16px;
+          }
+      }
+    }
+  }
+}
+.facet-toolbar {
+  margin-bottom: -48px;
+  height: 48px;
+
+  button {
+    margin: 25px;
+    z-index: 2;
+  }
+}
+
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  min-width: 200px;
+}

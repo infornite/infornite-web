@@ -1,0 +1,17 @@
+@use '~@angular/material' as mat;
+$n4-edmc-primary: mat.define-palette(mat.$blue-palette, 900, 300, 900);
+$n4-edmc-accent: mat.define-palette(mat.$orange-palette);
+$n4-edmc-warn: mat.define-palette(mat.$purple-palette, 600);
+
+$n4-edmc-theme: mat.define-light-theme($n4-primary, $n4-accent, $n4-warn);
+
+
+/*
+Original Colors Below - Changed to align with EDMC Colors
+$n4-primary: mat.define-palette(mat.$indigo-palette, 800, 300, 900);
+$n4-accent: mat.define-palette(mat.$light-blue-palette);
+$n4-warn: mat.define-palette(mat.$pink-palette, 600);
+
+$n4-theme: mat.define-light-theme($n4-primary, $n4-accent, $n4-warn);
+
+*/

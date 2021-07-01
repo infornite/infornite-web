@@ -1,0 +1,307 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="breadcrumb">
+            <div *ngFor="let crumb of facetBreadcrumb" class="crumb">
+                <mat-icon *ngIf="!crumb.depth==0">play_arrow</mat-icon>
+                <span class="crumb-name">
+                    <mat-icon [svgIcon]="crumb.type | lcWithDashes"></mat-icon>
+                    <a routerLink="{{'/view/' + crumb.id}}">{{crumb.name}}</a>
+                </span>
+            </div>
+        </div>
+        <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-mini-fab  routerLink="{{'/explore/' + facet.id}}"  style="margin-right:4px" class="white">
+                <mat-icon>pin_drop</mat-icon>
+            </button>
+            <button mat-mini-fab  routerLink="{{'/edit/' + facet.id}}" [queryParams]="{tabIndex: tabIndex}" class="white">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav [mode]="(isSmallDevice$ | async)? 'over': 'side'" [opened]="(sidebarState | async)">
+        <div *ngIf="ultimateParentId">
+            <facet-tree [ultimateFacetId]="ultimateParentId" [facetId]="facet?.id"></facet-tree>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="facet-view">
+
+            <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabIndex">
+                <mat-tab label="Overview">
+                    <ng-template matTabContent>
+                        <div class="view-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column"
+                            fxLayoutAlign=" center">
+                            <div class="view-inner-container">
+                                <div class="title" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                                    <div fxFlex.lt-sm="100%" fxLayoutAlign="row wrap" [ngClass]="routeAnimationsElements">
+                                        <mat-icon style="margin-right:4px;align-self: center;"
+                                            [svgIcon]="facet.type | lcWithDashes">
+                                        </mat-icon>
+                                        <h1>
+                                            {{facet?.name}}
+                                        </h1>
+                                        <mat-icon style="margin-left:10px;align-self: center;" color="accent"
+                                            *ngIf="facet.primaryKey">vpn_key</mat-icon>
+                                    </div>
+                                    
+                                    <div fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements"
+                                        fxLayoutAlign="center end" fxLayoutAlign.lt-sm="start start" fxHide
+                                        fxShow.gt-xs>
+                                        <div fxLayout="col" fxLayoutGap="12px">
+                                            <in4-label *ngIf="facet.subType"
+                                                labelText="{{facet.subType | replaceUnderscore}}" colorStyle="gray">
+                                            </in4-label>
+                                            <in4-label labelText="{{facet.type | replaceUnderscore}}"
+                                                colorStyle="primary">
+                                            </in4-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-divider fxHide fxShow.gt-xs class="title-divider"></mat-divider>
+                                <div class="overview">
+                                    <div [ngClass]="routeAnimationsElements">
+                                        <p>{{facet?.description}}</p>
+                                    </div>
+                                    <div fxLayout="row wrap" fxFill fxLayoutGap="8px grid">
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                            [ngClass]="routeAnimationsElements">
+                                            <b>Subtype: </b>{{facet.subType | replaceUnderscore}}
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <b>Parent: </b>
+                                            <span class="subtle-link" *ngIf="facet.parentId">
+                                                <a routerLink="{{'/view/' + facet.parentId}}">{{facet.parentName}}</a>
+                                            </span>
+                                            <span *ngIf="!facet.parentId">
+                                                Top Level
+                                            </span>
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <b>Status: </b>{{facet.status}} <mat-icon style="vertical-align: middle;"
+                                                [color]="facet.status=='Draft'? 'accent': 'primary'">
+                                                {{facet.status=='Draft'?
+                                                'construction': 'check_circle' }}</mat-icon>
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <ng-container *ngIf="facetDisplayFields?.fields.knowledgeArea">
+                                                <b>Knowledge Area: </b>
+                                                <span class="subtle-link" *ngIf="facet.knowledgeAreaId">
+                                                    <a
+                                                        routerLink="{{'/view/' + facet.knowledgeAreaId}}">{{facet.knowledgeAreaName}}</a>
+                                                </span>
+                                                <span *ngIf="!facet.knowledgeAreaId">
+                                                    Unassigned
+                                                </span>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div fxFlex="100%" fxLayout="column" class="h2-header"
+                                            [ngClass]="routeAnimationsElements" *ngIf="facet.tag">
+                                            <h2>Tags:</h2>
+                                            <div fxFlex="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
+                                                <mat-chip-list>
+                                                    <span *ngFor="let tag of facet.tag">
+                                                        <mat-chip>{{tag}}</mat-chip>
+                                                    </span>
+                                                </mat-chip-list>
+                                            </div>
+                                        </div>
+
+                                        <div fxFlex="100%" fxLayout="column" class="h2-header"
+                                            [ngClass]="routeAnimationsElements"
+                                            *ngIf="facetDisplayFields?.fields.synonym && facet.synonym">
+                                            <h2>Synonyms:</h2>
+                                            <div fxFlex="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
+                                                <mat-chip-list>
+                                                    <span *ngFor="let syn of facet.synonym">
+                                                        <mat-chip>{{syn}}</mat-chip>
+                                                    </span>
+                                                </mat-chip-list>
+                                            </div>
+                                        </div>
+
+                                        <div fxFlex="100%" fxLayout="column" class="h2-header"
+                                            [ngClass]="routeAnimationsElements" *ngIf="facet.validValue && facet.validValue.length>0">
+                                            <h2>Valid Values:</h2>
+                                            <div fxFlex="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
+                                                <mat-chip-list>
+                                                    <span *ngFor="let vv of facet.validValue">
+                                                        <mat-chip>{{vv}}</mat-chip>
+                                                    </span>
+                                                </mat-chip-list>
+                                            </div>
+                                        </div>
+
+                                        <ng-container *ngIf="facetDisplayFields?.fields.format">
+                                            <div fxFlex="100%" fxLayout="column" class="h2-header">
+                                                <h2>Formatting & Security:</h2>
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                                [ngClass]="routeAnimationsElements">
+                                                <b>Format: </b>{{facet.format? facet.format: '-'}}
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                                [ngClass]="routeAnimationsElements"
+                                                *ngIf="facetDisplayFields?.fields.dataType">
+                                                <b>Data Type: </b>{{facet.dataType? facet.dataType: '-'}}
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements"
+                                                *ngIf="facetDisplayFields?.fields.key">
+                                                <b>Key: </b>
+                                                <mat-icon style="vertical-align: middle;"
+                                                    [color]="facet.key? 'primary': 'accent'">
+                                                    {{facet.key?
+                                                    'check_circle': 'cancel' }}</mat-icon>
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                                <b>PII: </b>
+                                                <mat-icon style="vertical-align: middle;"
+                                                    [color]="facet.key? 'primary': 'accent'">
+                                                    {{facet.pii?
+                                                    'check_circle': 'cancel' }}</mat-icon>
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                                [ngClass]="routeAnimationsElements">
+                                                <b>Security Classification: </b>{{facet.securityClassification?
+                                                facet.securityClassification: '-'}}
+                                            </div>
+                                        </ng-container>
+
+
+                                        <ng-container *ngIf="facetDisplayFields?.fields.stakeholderDetail">
+                                            <div fxFlex="100%" fxLayout="column" class="h2-header">
+                                                <h2>Contact Details:</h2>
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                                [ngClass]="routeAnimationsElements">
+                                                <b>Title: </b>{{facet.stakeholderTitle? facet.stakeholderTitle: '-'}}
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                                [ngClass]="routeAnimationsElements">
+                                                <b>Email: </b>{{facet.stakeholderEmailAddress?
+                                                facet.stakeholderEmailAddress:
+                                                '-'}}
+                                            </div>
+                                            <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px"
+                                                [ngClass]="routeAnimationsElements">
+                                                <b>Phone: </b>{{facet.stakeholderPhoneNumber?
+                                                facet.stakeholderPhoneNumber:
+                                                '-'}}
+                                            </div>
+                                        </ng-container>
+                                        <div fxFlex="100%" fxLayout="column" class="h2-header"
+                                            *ngIf="facetDisplayFields?.fields.accessGuidelines">
+                                            <h2>Access Guidelines:</h2>
+                                            <div fxFlex="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
+                                                <p>{{facet.accessGuidelines}}</p>
+                                            </div>
+                                        </div>
+                                        <div fxFlex="100%" fxLayout="column" class="h2-header"
+                                            [ngClass]="routeAnimationsElements">
+                                            <h2>Change History:</h2>
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <b>Created By: </b>
+                                            <span class="subtle-link">
+                                                <a
+                                                    routerLink="{{'/view/' + facet.createdById}}">{{facet.createdByName}}</a>
+                                            </span>
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <b>Created On: </b>{{facet.createdAt | date: 'dd-M-yyyy H:mm' }}
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <b>Last Modified By: </b>
+                                            <span class="subtle-link">
+                                                <a
+                                                    routerLink="{{'/view/' + facet.updatedById}}">{{facet.updatedByName}}</a>
+                                            </span>
+                                        </div>
+                                        <div fxFlex="50%" fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements">
+                                            <b>Last Modified On: </b>{{facet.updatedAt | date: 'dd-M-yyyy H:mm'}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="Connections" style="width:100%">
+                    <ng-template matTabContent>
+                        <div class="view-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column"
+                            fxLayoutAlign=" center">
+                            <div class="view-inner-container">
+                                <div class="title" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                                    <div fxFlex.lt-sm="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
+                                        <mat-icon style="margin-right:4px;align-self: center;"
+                                            [svgIcon]="facet.type | lcWithDashes">
+                                        </mat-icon>
+                                        <h1>
+                                            {{facet?.name}}
+                                        </h1>
+                                        <mat-icon style="margin-left:10px;align-self: center;" color="accent"
+                                            *ngIf="facet.primaryKey">vpn_key</mat-icon>
+                                    </div>
+                                    <div fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements"
+                                        fxLayoutAlign="center end" fxLayoutAlign.lt-sm="start start" fxHide
+                                        fxShow.gt-xs>
+                                        <div fxLayout="col" fxLayoutGap="12px">
+                                            <in4-label *ngIf="facet.subType"
+                                                labelText="{{facet.subType | replaceUnderscore}}" colorStyle="gray">
+                                            </in4-label>
+                                            <in4-label labelText="{{facet.type | replaceUnderscore}}"
+                                                colorStyle="primary">
+                                            </in4-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-divider fxHide fxShow.gt-xs class="title-divider"></mat-divider>
+                                <n4-view-connections [facetId]="facet?.id"></n4-view-connections>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+                <mat-tab label="Wiki" *ngIf="facet?.wiki">
+                    <ng-template matTabContent>
+                        <div class="view-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column"
+                            fxLayoutAlign=" center">
+                            <div class="view-inner-container editor-preview">
+                                <div class="title" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                                    <div fxFlex.lt-sm="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
+                                        <mat-icon style="margin-right:4px;align-self: center;"
+                                            [svgIcon]="facet.type | lcWithDashes">
+                                        </mat-icon>
+                                        <h1>
+                                            {{facet?.name}}
+                                        </h1>
+                                        <mat-icon style="margin-left:10px;align-self: center;" color="accent"
+                                            *ngIf="facet.primaryKey">vpn_key</mat-icon>
+                                    </div>
+                                    <div fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements"
+                                        fxLayoutAlign="center end" fxLayoutAlign.lt-sm="start start" fxHide
+                                        fxShow.gt-xs>
+                                        <div fxLayout="col" fxLayoutGap="12px">
+                                            <in4-label *ngIf="facet.subType"
+                                                labelText="{{facet.subType | replaceUnderscore}}" colorStyle="gray">
+                                            </in4-label>
+                                            <in4-label labelText="{{facet.type | replaceUnderscore}}"
+                                                colorStyle="primary">
+                                            </in4-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-divider fxHide fxShow.gt-xs class="title-divider"></mat-divider>
+                                <in4-mv *ngIf="facet?.wiki" [markdown]="facet?.wiki"></in4-mv>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

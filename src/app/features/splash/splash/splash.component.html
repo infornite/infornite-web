@@ -1,0 +1,173 @@
+<div fxFlex="row">
+    <div class="splash-banner main" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout fxLayoutAlign="center center">
+            <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-text">
+                <div class="banner main" fxFlex="row">
+                    <div>
+                        <h1 [ngClass.xs]="'header-xs'" [ngClass.sm]="'header-sm'" [ngClass.md]="'header-md'">Build a
+                            single source<br />
+                            of truth about your data
+                        </h1>
+                        <p [ngClass.xs]="'header-xs'">
+                            Help teams find, understand and access data through Business Glossary, Data Dictionary and
+                            Report Catalogues.
+                        </p>
+                    </div>
+                    <div>
+                        <button mat-raised-button color="accent" routerLink="/appointment">Book a Discovery Call</button>
+                        <!--<button mat-raised-button routerLink="/demo">Try our Demo Platform</button>-->
+                    </div>
+                </div>
+
+            </div>
+            <div fxFlex="50%" fxHide fxShow.gt-sm class="banner-image main-image">
+                <img src="../../../../assets/img/splash/sc1.png" (click)="openPicDialog('sc1')">
+            </div>
+        </div>
+    </div>
+
+    <div class="curve">
+        <div class="shape">
+            <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+            </svg>
+        </div>
+    </div>
+
+    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container quote" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="100%" fxLayoutAlign="row" class="banner-text" fxLayout fxLayoutAlign="center center">
+                <div class="banner quote" fxLayoutAlign="row" fxLayoutAlign="center center">
+                    <div class="boom" fxLayoutAlign="row" fxLayoutAlign="center center">
+                        <div>
+                            <img src="../../../../assets/img/splash/n4nite-logo-blue.png"
+                                style="height:50px; margin-right:25px; border:none">
+                        </div>
+                        <div>
+                            Empower your teams to <span class="emphasis">find, access</span> and <span
+                                class="emphasis">understand</span> your data.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="splash-banner grey-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="50%" fxFlex.lt-md="100%" fxLayoutAlign="column" class="banner-text">
+                <div class="banner" fxFlex="row">
+                    <div>
+                        <h2 [ngClass.xs]="'header-xs'" [ngClass.sm]="'header-sm'" [ngClass.md]="'header-md'">
+                            Catalogue your data so teams can find and access the insights they need
+                        </h2>
+                        <p [ngClass.xs]="'header-xs'">
+                            Infornite brings your business glossaries, data dictionaries and
+                            report catalogues together in a unified platform. Your teams can easily search for the information they
+                            need and navigate from simple business terms down to the underlying data. 
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-image" fxLayout fxLayoutAlign="center center">
+                <img src="../../../../assets/img/splash/sc5.png" (click)="openPicDialog('sc5')">
+            </div>
+        </div>
+    </div>
+
+    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="50%" fxFlex.lt-md="100%" fxLayoutAlign="column" class="banner-text">
+                <div class="banner" fxFlex="row">
+                    <div>
+                        <h2 [ngClass.xs]="'header-xs'" [ngClass.sm]="'header-sm'" [ngClass.md]="'header-md'">
+                            Implement Data Governance, privacy and compliance processes
+                        </h2>
+                        <p [ngClass.xs]="'header-xs'">
+                            Infornites enables a best practice data governance capability. You begin by identifying your
+                            knowledge areas and then assign data owners and data stewards. The platform empowers these
+                            users with the training and tools they need setup and maintain effective data governance
+                            processes.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-image" fxLayout fxLayoutAlign="center center">
+                <img src="../../../../assets/img/splash/sc3.png" (click)="openPicDialog('sc3')">
+            </div>
+        </div>
+    </div>
+
+
+    <!--The platform allows you to create a common understanding of business terms, metrics
+                            and key performance indicators.-->
+
+    <div class="splash-banner grey-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="50%" fxFlex.lt-md="100%" fxLayoutAlign="column" class="banner-text">
+                <div class="banner" fxFlex="row">
+                    <div>
+                        <h2 [ngClass.xs]="'header-xs'" [ngClass.sm]="'header-sm'" [ngClass.md]="'header-md'">
+                            Easily create data policies, guidelines and artefacts
+                        </h2>
+                        <p [ngClass.xs]="'header-xs'">
+                            The Infornite platform has pre-defined templates to create common documents and artefacts
+                            you may need. This includes Data Strategy, Data Policy and Roles & Responsibilities. You can
+                            build and share these artefacts from directly within the platform to create a single source
+                            for knowledge.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-image" fxLayout fxLayoutAlign="center center">
+                <img src="../../../../assets/img/splash/sc4.png" (click)="openPicDialog('sc4')">
+            </div>
+        </div>
+    </div>
+
+    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="50%" fxFlex.lt-md="100%" fxLayoutAlign="column" class="banner-text">
+                <div class="banner" fxFlex="row">
+                    <div>
+                        <h2 [ngClass.xs]="'header-xs'" [ngClass.sm]="'header-sm'" [ngClass.md]="'header-md'">
+                            Focus on creating knowledge rather than tools
+                        </h2>
+                        <p [ngClass.xs]="'header-xs'">
+                            The keys to unlocking value from your data already sits within your organisation.
+                            It sits with your subject matter experts and is lost in disparate documentation. The
+                            Infornite platform simply provides the tool and framework to enable your teams
+                            to document and share their knowledge.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-image" fxLayout fxLayoutAlign="center center">
+                <img src="../../../../assets/img/splash/sc2.png" (click)="openPicDialog('sc2')">
+            </div>
+        </div>
+    </div>
+    <div class="splash-banner grey-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="100%" fxLayoutAlign="row">
+            <in4-pricing></in4-pricing>
+            </div>
+
+        </div>
+    </div>
+    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center">
+        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="100%" fxLayoutAlign="row">
+                <div fxLayout="column" class="contact" fxLayoutAlign="center center">
+                    <h2>Contact</h2>
+                    <a href="mailto:{{email}}">Contact us via E-mail</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

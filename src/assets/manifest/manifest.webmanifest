@@ -1,0 +1,32 @@
+{
+    "theme_color": "#0D47A1",
+    "background_color": "#0D47A1",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/discover",
+    "name": "Infornite",
+    "short_name": "Infornite: Unlock your Data",
+    "description": "Help teams find, understand and access data through Business Glossary, Data Dictionary and Report Catalogues.",
+    "icons": [
+        {
+            "src": "/assets/manifest/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/manifest/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/manifest/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/manifest/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+@use '~@angular/material' as mat;
+
+.mat-elevation-z-n4nite {
+  @include mat.elevation-transition;
+  @include mat.elevation(4);
+
+  &:hover {
+    @include mat.elevation(6);
+  }
+}
+
+.form-container {
+  width: 100%;
+  mat-card {
+    mat-card-content {
+      .form-content {
+        margin: 16px;
+        line-height: 16px;
+
+        .form-field-full-width {
+          width: 100%;
+        }
+
+        .form-field-dummy{
+          padding-bottom: 1.25em;
+          padding-top: 1em;
+        }
+
+        mat-icon {
+          margin-top: 3px;
+          margin-right: 3px;
+        }
+
+        p {
+          line-height: 28px;
+          margin-top: 0px;
+        }
+      }
+    }
+  }
+}

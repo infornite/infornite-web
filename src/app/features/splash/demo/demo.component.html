@@ -1,0 +1,61 @@
+<div fxHide fxShow.gt-xs class="demo-wrapper wide" fxFlex="row" fxLayoutAlign="center center">
+    <mat-card class="mat-elevation-z-n4nite">
+        <mat-card-header>
+            <mat-card-title>Demo Access</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div style="padding-left:18px; padding-right:18px">
+                <div fxFlex="column" fxLayourALign="start start">
+                    <div>
+                        The demo application allows you to explore the n4nite platform and see how easy it is to find,
+                        understand and access data for yourself.
+
+                        To access the demo platform you can use the email address and password listed below.
+                    </div>
+                    <div style="margin-top:10px">
+                        <span class="emphasis">email address: </span>demo@n4nite.com
+                        <button mat-icon-button ngxClipboard cbContent="demo@n4nite.com">
+                            <mat-icon style="width:10px">content_copy</mat-icon>
+                        </button>
+                    </div>
+                    <div style="margin-top:10px">
+                        <span class="emphasis">password: </span>demo
+                    </div>
+                    <button style="margin-top:10px" mat-raised-button color="primary"
+                        (click)="auth.loginWithRedirect({redirect_uri:'https://infornite.com/discover'})">Go to Login
+                        Page</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div fxHide fxShow.lt-sm class="demo-wrapper" fxFlex="row" fxLayoutAlign="center center">
+    <div style="padding-left:18px; padding-right:18px">
+        <div fxFlex="column" fxLayourALign="start start">
+            <div class="header">
+                Demo Access
+            </div>
+            <div>
+                <p>
+                The demo application allows you to explore the n4nite platform and see how easy it is to find,
+                understand and access data for yourself.
+
+                To access the demo platform you can use the email address and password listed below.
+                </p>
+            </div>
+            <div style="margin-top:10px">
+                <span class="emphasis">email address: </span>demo@n4nite.com
+                <button mat-icon-button ngxClipboard cbContent="demo@n4nite.com">
+                    <mat-icon style="width:10px">content_copy</mat-icon>
+                </button>
+            </div>
+            <div style="margin-top:10px">
+                <span class="emphasis">password: </span>demo
+            </div>
+            <button style="margin-top:10px" mat-raised-button color="primary"
+                (click)="auth.loginWithRedirect({redirect_uri:'https://infornite.com/discover'})">Go to Login
+                Page</button>
+        </div>
+    </div>
+</div>

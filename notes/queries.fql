@@ -1,0 +1,19 @@
+   /*
+   Query(
+   
+   Map(Paginate(Match(Index("allBenchmarkResponses"))), Lambda("bmRef", Let({
+        responseDoc: Get(Var("bmRef")),
+        orgRef: Select(
+            ["data", "benchmarkResponsesOrgDetails"], Var("responseDoc")),
+        orgDoc: Get(Var("orgRef")),
+        scoreRef: Select(
+            ["data", "benchmarkResponsesScores"], Var("responseDoc")),
+        scoreDoc: Get(Var("scoreRef"))
+    }, {
+      
+        orgIndustry: Select(["data", "orgIndustry"], Var("orgDoc")),
+        DCAM_BM_2019_1: Select(["data", "DCAM_BM_2019_1"], Var("scoreDoc"))
+    }
+    ))))
+
+*/

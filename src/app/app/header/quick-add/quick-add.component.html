@@ -1,0 +1,32 @@
+<button mat-mini-fab [matMenuTriggerFor]="quickAddMenu" class="quick-add-button">
+    <mat-icon>add</mat-icon>
+</button>
+<mat-menu #quickAddMenu="matMenu" xPosition="before">
+    <button mat-menu-item routerLink='/create/knowledge-area'>
+        <mat-icon svgIcon="knowledge-area"></mat-icon>Knowledge Area
+    </button>
+    <button mat-menu-item routerLink='/create/element'>
+        <mat-icon svgIcon="element"></mat-icon>Element
+    </button>
+    <button mat-menu-item routerLink='/create/report'>
+        <mat-icon svgIcon="report"></mat-icon>Report
+    </button>
+    <button mat-menu-item routerLink='/create/system'>
+        <mat-icon svgIcon="system"></mat-icon>System
+    </button>
+    <button mat-menu-item routerLink='/create/table'>
+        <mat-icon svgIcon="table"></mat-icon>Table
+    </button>
+    <button mat-menu-item routerLink='/create/attribute'>
+        <mat-icon svgIcon="attribute"></mat-icon>Attribute
+    </button>
+    <button mat-menu-item routerLink='/create/control'>
+        <mat-icon svgIcon="control"></mat-icon>Control
+    </button>
+    <button mat-menu-item routerLink='/create/stakeholder'>
+        <mat-icon svgIcon="stakeholder"></mat-icon>Stakeholder
+    </button>
+    <button mat-menu-item routerLink='/create/artefact'>
+        <mat-icon svgIcon="artefact"></mat-icon>Artefact
+    </button>
+</mat-menu>

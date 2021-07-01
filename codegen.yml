@@ -1,0 +1,10 @@
+overwrite: true
+watch: false
+schema: "http://localhost:3000/"
+documents: "src/**/*.graphql"
+generates:
+  src/app/graphql/schema.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-apollo-angular"

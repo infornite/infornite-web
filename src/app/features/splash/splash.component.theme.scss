@@ -1,0 +1,53 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-splash-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+
+    .splash-banner{
+        width:100%;
+        background-color: #153363;//mat.get-color-from-palette($primary, 900);
+        color: mat.get-color-from-palette($primary, default-contrast);
+
+        img{
+            border: 1px solid mat.get-color-from-palette($foreground, divider);
+        }
+        &.main {
+            img{
+                border: none;
+            }
+        }
+
+        .emphasis{
+            color: mat.get-color-from-palette($primary);
+        }
+
+        &.grey-background{
+            background-color: #F8F9FC;
+            color: mat.get-color-from-palette($foreground, text);
+            border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
+        }
+
+        &.white-background{
+            background-color: white;
+            color: mat.get-color-from-palette($foreground, text);
+            border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
+
+        }
+    }
+
+    .demo-wrapper{
+    
+        .emphasis{
+            color: mat.get-color-from-palette($primary);
+            font-weight:bold;
+        }
+    
+        
+    }
+
+}

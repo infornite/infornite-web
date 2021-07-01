@@ -1,0 +1,81 @@
+<div class="connections" style="margin-top:12px">
+	<div class="result-numbers-text" *ngIf="dataSource.data.length!=0" fxLayout="row wrap"
+		fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="center center">
+		<div fxLayout="row wrap">
+			<mat-chip-list #connectionsFilter multiple>
+				<mat-chip *ngFor="let item of groupConnectionsByType | keyvalue" (click)="toggleChip(item.key, $event)"
+					color="primary" [selected]="chips.has(item.key)" selectable="true" multiple="true">
+					{{item.key}} ~ {{item.value}}
+				</mat-chip>
+			</mat-chip-list>
+		</div>
+		<mat-paginator #paginatorTop [pageSizeOptions]="[10, 25, 100]" hidePageSize="true" style="background: unset;">
+		</mat-paginator>
+	</div>
+	<div class="results-loading" *ngIf="resultsLoading">
+		<mat-progress-bar mode="query"></mat-progress-bar>
+	</div>
+	<div>
+		<table mat-table [dataSource]="dataSource" matSort>
+			<ng-container matColumnDef="fromName">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Head Facet
+				</th>
+				<td mat-cell *matCellDef="let row">
+					<span class="subtle-link" matTooltip="{{row.fromDescription}}">
+						<a routerLink="{{'/view/' + (row.fromId == facetId? row.fromId: row.toId)}}">{{row.fromId ==
+							facetId? row.fromName: row.toName}}</a>
+					</span>
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="fromType">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Head Facet
+					Type
+				</th>
+				<td mat-cell *matCellDef="let row">{{row.fromId == facetId? (row.fromType | replaceUnderscore):
+					(row.toType | replaceUnderscore)}}
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="display">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Connection
+				</th>
+				<td mat-cell *matCellDef="let row"> {{row.fromId == facetId? row.display: row.displayAlternative}} </td>
+			</ng-container>
+
+			<ng-container matColumnDef="toName">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Tail Facet
+				</th>
+				<td mat-cell *matCellDef="let row">
+					<span class="subtle-link" matTooltip="{{row.toDescription}}">
+						<a routerLink="{{'/view/' + (row.fromId == facetId? row.toId: row.fromId)}}">{{row.fromId ==
+							facetId? row.toName: row.fromName}}</a>
+					</span>
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="toType">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header> Tail Facet
+					Type
+				</th>
+				<td mat-cell *matCellDef="let row"> {{row.fromId == facetId? (row.toType | replaceUnderscore):
+					(row.fromType | replaceUnderscore)}}
+				</td>
+			</ng-container>
+
+			<tr mat-header-row
+				*matHeaderRowDef="(isSmallDevice$ | async)? displayedColumnsSmallDevice:displayedColumns"></tr>
+			<tr mat-row
+				*matRowDef="let row; columns: (isSmallDevice$ | async)? displayedColumnsSmallDevice:displayedColumns;">
+			</tr>
+
+		</table>
+	</div>
+
+	<div class="bottom-paginator" *ngIf="dataSource.data.length!=0">
+		<mat-paginator *ngIf="dataSource.data.length>0 && paginator?.length>paginator?.pageSize"
+			(page)="handlePageBottom($event)" [pageSize]="paginator?.pageSize" [pageIndex]="paginator?.pageIndex"
+			[length]="paginator?.length" [pageSizeOptions]="paginator?.pageSizeOptions">
+		</mat-paginator>
+	</div>
+</div>

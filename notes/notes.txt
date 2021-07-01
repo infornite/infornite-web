@@ -1,0 +1,155 @@
+ng g component shared/components/footer
+ng g module core
+ng g module core/import-guard --flat
+
+
+
+npm install @ngrx/effects@latest --legacy-peer-deps --save
+
+npm install @ngrx/effects@latest --legacy-peer-deps --save
+
+ng g m features/dashboard --routing=true --module core/core.module  --dry-run
+ng g c features/dashboard --dry-run
+
+
+ng g m features/benchmark --routing=true --module features/survey/survey.module  --dry-run
+ng g c features/benchmark --dry-run
+
+
+ng g m features/benchmark --routing=true --module core/core.module  --dry-run
+ng g c features/survey/benchmark/benchmark-public-dashboard --dry-run
+
+
+
+heroku config:set NODE_OPTIONS="--max_old_space_size=2560" -a n4-main-app
+heroku run ng serve -a n4nite-main-app
+
+
+var DEFAULT_BREAKPOINTS = [
+    {
+        alias: 'xs',
+        mediaQuery: 'screen and (min-width: 0px) and (max-width: 599.98px)',
+        priority: 1000,
+    },
+    {
+        alias: 'sm',
+        mediaQuery: 'screen and (min-width: 600px) and (max-width: 959.98px)',
+        priority: 900,
+    },
+    {
+        alias: 'md',
+        mediaQuery: 'screen and (min-width: 960px) and (max-width: 1279.98px)',
+        priority: 800,
+    },
+    {
+        alias: 'lg',
+        mediaQuery: 'screen and (min-width: 1280px) and (max-width: 1919.98px)',
+        priority: 700,
+    },
+    {
+        alias: 'xl',
+        mediaQuery: 'screen and (min-width: 1920px) and (max-width: 4999.98px)',
+        priority: 600,
+    },
+    {
+        alias: 'lt-sm',
+        overlapping: true,
+        mediaQuery: 'screen and (max-width: 599.98px)',
+        priority: 950,
+    },
+    {
+        alias: 'lt-md',
+        overlapping: true,
+        mediaQuery: 'screen and (max-width: 959.98px)',
+        priority: 850,
+    },
+    {
+        alias: 'lt-lg',
+        overlapping: true,
+        mediaQuery: 'screen and (max-width: 1279.98px)',
+        priority: 750,
+    },
+    {
+        alias: 'lt-xl',
+        overlapping: true,
+        priority: 650,
+        mediaQuery: 'screen and (max-width: 1919.98px)',
+    },
+    {
+        alias: 'gt-xs',
+        overlapping: true,
+        mediaQuery: 'screen and (min-width: 600px)',
+        priority: -950,
+    },
+    {
+        alias: 'gt-sm',
+        overlapping: true,
+        mediaQuery: 'screen and (min-width: 960px)',
+        priority: -850,
+    }, {
+        alias: 'gt-md',
+        overlapping: true,
+        mediaQuery: 'screen and (min-width: 1280px)',
+        priority: -750,
+    },
+    {
+        alias: 'gt-lg',
+        overlapping: true,
+        mediaQuery: 'screen and (min-width: 1920px)',
+        priority: -650,
+    }
+];
+
+
+
+npm run codegen
+
+
+
+  //orgIndutries: Array<string> = Object.keys(OrgIndustry).filter(key => isNaN(+key));
+  orgIndustries: Array<string> = Object.values(OrgIndustry).filter(value => isNaN(+value));
+
+
+  Dear Mike,
+
+  I am reaching out because you raised an interest in the Enterprise Data Management Council in the past. and how our leading Data Management Framework, Best Practices and Training can support your organisation in realising your data potential.
+
+  I wanted to personally tell you about an exciting new benchmarking initiative we have launched for the Data Management community this quarter.
+
+ Through our online platform you can now freely participate in our Industry Leading Data Management Benchmark. At no cost you can carry out a Benchmarking Survey online and receive a customised report that compares your Data Management maturity to our leading benchmark.
+
+  The EDM Council is the leading organisation for research and benchmarking of maturity in the Data Management domain.
+
+  Of course, when the time is right we'd be happy to have a call and discuss how the EDM Council can further support you on your data management journey.
+
+  Best regards
+  Michael
+
+
+  
+  Dear Mike,
+
+  I am reaching out because you raised an interest in the Enterprise Data Management Council in the past. I wanted to personally tell you about an exciting new benchmarking initiative we have launched for the Data Management community this quarter.
+
+ Through our online platform you can now freely participate in our Industry Leading Data Management Benchmark. At no cost you can carry out a Benchmarking Survey online and receive a customised report that compares your Data Management maturity to our leading benchmark.
+
+  The EDM Council is the leading organisation for research and benchmarking of maturity in the Data Management domain.
+
+  Of course, when the time is right we'd be happy to have a call and discuss how the EDM Council can further support you on your data management journey.
+
+  Best regards
+  Michael
+
+
+
+Dear Mike,
+
+I am reaching out because you raised an interest in the Enterprise Data Management Council in the past and how we can help you. I'm based in Sydney and I look after our growing community in Australia & New Zealand.
+
+I wanted check if now is a good time for you to re-connect with us. I'd be happy to have a video call so that I can brief you on developments in the data management space and some interesting work we have done such as:
+- How organisations are deploying the DCAM framework and our new Analytics Component in support of their analytics journeys?
+- The EDM Councils recent work with the the major cloud providers to develop a Cloud Data Management Framework.
+- The work our Environment & Social Good working group is driving in the Data Management space.
+
+Best regards
+Michael

@@ -1,0 +1,21 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-label-component-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .in4-label {
+        &.primary {
+            background-color: mat.get-color-from-palette($primary);
+            color: mat.get-color-from-palette($primary, default-contrast);
+        }
+
+        &.gray {
+            background-color: mat.get-color-from-palette($foreground, divider);
+            color: mat.get-color-from-palette($foreground, default-contrast);
+        }
+    }
+}

@@ -1,0 +1,236 @@
+query Facet($filter:QueryFacetInput){
+  Facet(filter:$filter){
+    id
+    tenant
+    name
+    type
+    subType
+    status
+    description
+    acronym
+    synonym
+    validValue
+    primaryKey
+    format
+    dataType
+    pii
+    securityClassification
+    key
+    keyReason
+    accessGuidelines
+    stakeholderTitle
+    stakeholderEmailAddress
+    stakeholderPhoneNumber
+    tag
+    wiki
+    knowledgeAreaId
+    knowledgeAreaName
+    parentId
+    parentName
+    createdAt
+    createdById
+    createdByName
+    updatedAt
+    updatedById
+    updatedByName
+  }
+}
+
+query FacetStub($filter:QueryFacetInput){
+  Facet(filter:$filter){
+    id
+    name
+    type
+  }
+}
+
+query FacetSnippet($filter:QueryFacetInput){
+  FacetSnippet(filter:$filter){
+    id
+    name
+    type
+    subType
+    status
+    description
+    knowledgeAreaId
+    knowledgeAreaName
+    parentId
+    parentName
+    createdAt
+    createdById
+    createdByName
+    updatedAt
+    updatedById
+    updatedByName
+  }
+}
+
+
+query FacetSearch($filter:QueryFacetSearchInput){
+  FacetSearch(filter:$filter){
+    rank
+    id
+    name
+    type
+    subType
+    status
+    description
+    knowledgeAreaId
+    knowledgeAreaName
+    parentId
+    parentName
+    createdAt
+    createdById
+    createdByName
+    updatedAt
+    updatedById
+    updatedByName
+  }
+}
+
+query FacetBreadcrumb($id:ID!){
+  FacetBreadcrumb(id:$id){
+    tenant
+    depth
+    id
+    parentId
+    name
+    type
+    subType
+  }
+}
+
+query FacetTree($id:ID!){
+  FacetTree(id:$id){
+    tenant
+    depth
+    id
+    parentId
+    name
+    type
+    subType
+  }
+}
+
+ mutation upsertFacet($input:UpsertFacetInput!){
+  upsertFacet(input:$input){
+    id
+    tenant
+    name
+    type
+    subType
+    status
+    description
+    knowledgeAreaId
+    parentId
+    acronym
+    synonym
+    validValue
+    primaryKey
+    format
+    dataType
+    pii
+    securityClassification
+    key
+    keyReason
+    accessGuidelines
+    stakeholderTitle
+    stakeholderEmailAddress
+    stakeholderPhoneNumber
+    tag
+    wiki
+    createdAt
+    updatedAt
+    }
+  }
+
+  mutation createConnection($input:CreateConnectionInput!){
+  createConnection(input:$input){
+    id
+    fromId
+    fromName
+    fromType
+    fromSubType
+    fromDescription
+    connection
+    toId
+    toName
+    toType
+    toSubType
+    toDescription
+    createdAt
+    updatedAt
+    source
+    }
+  }
+
+  mutation deleteConnection($input:DeleteConnectionInput!){
+  deleteConnection(input:$input){
+    success
+    }
+  }
+
+  query Connection($filter:QueryConnectionInput){
+  Connection(filter:$filter){
+     id
+    fromId
+    fromName
+    fromType
+    fromSubType
+    fromDescription
+    connection
+    display
+    displayAlternative
+    toId
+    toName
+    toType
+    toSubType
+    toDescription
+    targetId
+    targetName
+    targetType
+    createdAt
+    updatedAt
+    source
+      }
+}
+
+
+ query Explore($filter:QueryConnectionInput){
+  Explore(filter:$filter){
+    id
+    source
+    sourceName
+    sourceType
+    sourceSubType
+    sourceParentId
+    target
+    targetName
+    targetType
+    targetSubType
+    targetParentId
+    connection
+    display
+    displayAlternative
+      }
+}
+
+query Random{
+  Random{
+    id
+  }
+}
+
+
+  query ConnectionStub($filter:QueryConnectionInput){
+  ConnectionStub(filter:$filter){
+    id
+    fromId
+    fromName
+    fromType
+    connection
+    toId
+    toName
+    toType
+      }
+}

@@ -1,0 +1,18 @@
+<button mat-mini-fab [matMenuTriggerFor]="userMenu">
+    <mat-icon>person</mat-icon>
+</button>
+
+<mat-menu #userMenu="matMenu" xPosition="before">
+    <div *ngIf="auth.user$ | async as user" fxLayout="column" fxFlex="100%" fxLayoutAlign="center center"
+        class="profile-header">
+        <img [src]="user.picture" loading="lazy" class="avatar">
+        <h4>{{user.name}}</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-menu-item routerLink='/settings'>
+        <mat-icon>settings</mat-icon>Settings
+    </button>
+    <button mat-menu-item (click)="auth.logout({ returnTo: document.location.origin })">
+        <mat-icon>power_settings_new</mat-icon>Sign Out
+    </button>
+</mat-menu>

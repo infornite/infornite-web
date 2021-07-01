@@ -1,0 +1,168 @@
+@import "../../../../styles/constants.scss";
+
+@mixin full-height() {
+  min-height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - 331px);
+  min-height: -moz-calc(100vh - #{$header-height} - #{$footer-height} - 331px);
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - 331px);
+  min-height: -o-calc(100vh - #{$header-height} - #{$footer-height} - 331px);
+}
+
+.discover-container {
+  .discover-search {
+    padding: 10px 20px;
+    .search-box {
+      flex-grow: 1;
+
+      mat-form-field {
+        width: 100%;
+        margin-bottom: -20px;
+
+        button {
+          align-self: center;
+          top: -0.6em;
+        }
+      }
+    }
+  }
+
+  .facets-container {
+    .facet {
+      height: 74px;
+      cursor: pointer;
+
+      mat-icon {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .facet-select {
+      width: 100%;
+      padding: 10px 20px 0px 20px;
+
+      .facet-select-inner {
+        width: 100%;
+
+        mat-form-field {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .discover {
+    width: 100%;
+    margin-top: 24px;
+    .discover-max-width {
+      width: 100%;
+      max-width: 1270px;
+
+      .filter-button {
+        width: 100%;
+
+        .filter-button-inner {
+          margin: 1px 25px 25px 25px;
+          button {
+            width: 100%;
+            padding:10px;
+          }
+        }
+      }
+
+      .filter {
+        font-size: 14px;
+        min-width: 300px;
+        padding: 3px;
+        margin: 1px 25px 25px 25px;
+
+        .filter-inner {
+          :nth-child(n + 4).header {
+            margin-top: 18px;
+          }
+
+          .header.sort-by {
+            padding: 14px 0px 14px 0px;
+          }
+
+          mat-form-field {
+            width: 100%;
+          }
+        }
+      }
+      .results-outer {
+        width: 100%;
+        .results {
+          width: 100%;
+
+          .result-numbers-text {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px;
+            margin: 3px 25px 25px 25px;
+
+            mat-paginator {
+              background-color: unset;
+              .mat-paginator-outer-container .mat-paginator-container {
+                min-height: 0px;
+              }
+            }
+          }
+
+          .no-results {
+            padding: 3px;
+            margin: 3px 25px 25px 25px;
+
+            p{
+              margin-left:6px;
+            }
+
+            /*
+            background-image: url("../../../../assets/img/illustrations/no_wiki.svg");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            @include full-height;
+
+            margin-top: 16px;
+            font-size: 28px;
+            font-style: italic;
+            */
+          }
+
+          .bottom-paginator {
+            padding: 3px;
+            margin: 3px 25px 25px 25px;
+            mat-paginator {
+              background-color: unset;
+            }
+          }
+
+          .discover-card {
+            margin: 0px 25px 25px 25px;
+
+            &:first-child {
+              margin: 25px;
+            }
+
+            .discover-card-header {
+              width: 100%;
+              a {
+                align-self: center;
+                text-decoration: none;
+                font-size: 18px;
+              }
+
+              .knowledge-area {
+              }
+            }
+          }
+        }
+
+        .results-loading{
+          margin: 1px 25px 25px 25px;
+
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import "../../../../styles/constants.scss";
+
+@mixin full-height() {
+    min-height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    min-height: -moz-calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    min-height: -o-calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    height: -moz-calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    height: calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+    height: -o-calc(100vh - #{$header-height} - #{$footer-height} - #{$toolbar-height});
+}
+
+.explore {
+    mat-sidenav-content {
+        @include full-height;
+    }
+}

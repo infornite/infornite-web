@@ -1,0 +1,21 @@
+@use '~@angular/material' as mat;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 600px,
+  md: 960px,
+  lg: 1280px,
+  xl: 1920px
+);
+
+$toolbar-breakpoint: 600px;
+
+$fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
+
+$link-hover-decoration: none;
+$label-margin-bottom: 0;
+
+
+
+$success-colors: mat.define-palette(mat.$green-palette, 400);
+$warning-colors: mat.define-palette(mat.$amber-palette, 400);

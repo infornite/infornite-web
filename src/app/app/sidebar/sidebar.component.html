@@ -1,0 +1,20 @@
+<div class="sidebar_menu" [@onSideNavChange]="sidebarState">
+    <mat-nav-list class="menu-list">
+      <a mat-list-item routerLinkActive="active-list-item" routerLink="home" title="Discover">
+        <mat-icon class="icon" [@iconAnimation]="sidebarState">input</mat-icon>
+        <span class="label" [@labelAnimation]="sidebarState">Login</span>
+      </a>
+      <a mat-list-item routerLinkActive="active-list-item" routerLink="discover" title="Discover">
+        <mat-icon class="icon" [@iconAnimation]="sidebarState">dashboard</mat-icon>
+        <span class="label" [@labelAnimation]="sidebarState">Discover</span>
+      </a>
+      <a mat-list-item routerLinkActive="active-list-item" routerLink="work" title="Work">
+        <mat-icon class="icon" [@iconAnimation]="sidebarState">work</mat-icon>
+        <span class="label" [@labelAnimation]="sidebarState">Work</span>
+      </a>
+      <a mat-list-item routerLinkActive="active-list-item" routerLink="feedback" title="Feedback">
+        <mat-icon class="icon" [@iconAnimation]="sidebarState">feedback</mat-icon>
+        <span class="label" [@labelAnimation]="sidebarState">Feedback</span>
+      </a>
+    </mat-nav-list>
+  </div>

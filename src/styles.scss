@@ -1,0 +1,157 @@
+@use '~@angular/material' as mat;
+@import "styles-variables";
+@include mat.core();
+@import "styles/index";
+
+@import "~easymde/dist/easymde.min.css";
+@import "~highlight.js/styles/github.css";
+
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+// themes
+@import "./styles/themes/default-theme";
+@import "./styles/themes/light-theme";
+@import "./styles/themes/black-theme";
+@import "./styles/themes/nature-theme";
+@import "./styles/themes/edmc-theme.scss";
+
+// feature pages
+@import "app/app/app.component.theme.scss";
+@import "app/features/discover/discover/discover.component.theme.scss";
+@import "app/features/splash/splash.component.theme.scss";
+
+// components
+@import "app/app/header/header.component.theme.scss";
+@import "app/app/footer/footer.component.theme.scss";
+@import "app/app/sidebar/sidebar.component.theme.scss";
+@import "app/shared/components/label/label.component.theme.scss";
+@import "app/shared/components/autocomplete/autocomplete.component.theme.scss";
+
+// forms
+@import "app/features/edit/edit.component.theme.scss";
+
+// views
+@import "app/features/view/view.component.theme.scss";
+
+// site wide themes areas
+@import "./styles/themes/n4-common.theme.scss";
+@import "./styles/tabbed-navbar.theme.scss";
+@import "./styles/themes/n4-dashboard.theme.scss";
+@import "./styles/themes/material-highcharts";
+@import "./styles/themes/documentation.theme.scss";
+@import "./styles/themes/n4-dec.theme.scss";
+
+@mixin custom-components-theme($theme) {
+  // feature pages
+  @include n4-app-component-theme($theme);
+  @include n4-discover-component-theme($theme);
+  @include n4-splash-theme($theme);
+
+  // components
+  @include n4-header-component-theme($theme);
+  @include n4-footer-theme($theme);
+  @include n4-sidebar-theme($theme);
+  @include n4-label-component-theme($theme);
+  @include n4-ac-component-theme($theme);
+
+  //forms
+  @include n4-edit-theme($theme);
+
+  //views
+  @include n4-view-theme($theme);
+
+  // site wide themes areas
+  @include n4-dashboard-theme($theme);
+  @include n4-common-theme($theme);
+  @include tabbed-navbar-theme($theme);
+  @include n4-highcharts-theme($theme);
+  @include n4-docs-theme($theme);
+  @include n4-dec-theme($theme);
+}
+
+.default-theme {
+  @include mat.all-component-themes($n4-theme);
+  @include custom-components-theme($n4-theme);
+}
+
+.light-theme {
+  @include mat.all-component-themes($n4-light-theme);
+  @include custom-components-theme($n4-light-theme);
+}
+
+.black-theme {
+  @include mat.all-component-themes($n4-black-theme);
+  @include custom-components-theme($n4-black-theme);
+}
+
+.nature-theme {
+  @include mat.all-component-themes($n4-nature-theme);
+  @include custom-components-theme($n4-nature-theme);
+}
+
+.edmc-theme {
+  @include mat.all-component-themes($n4-edmc-theme);
+  @include custom-components-theme($n4-edmc-theme);
+}
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$n4-primary: mat.define-palette(mat.$indigo-palette);
+$n4-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$n4-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$n4-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $n4-primary,
+      accent: $n4-accent,
+      warn: $n4-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($n4-theme);
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body,
+.result-numbers-text {
+  mat-paginator {
+    .mat-paginator-outer-container .mat-paginator-container {
+      min-height: unset;
+    }
+  }
+}
+
+md-editor {
+  .md-editor-container {
+    height: 100%;
+
+    .md-layout {
+      .tool-bar {
+        display: flex;
+      }
+    }
+  }
+}
+
+.lightbox-dialog .mat-dialog-container  {
+  padding: 0;
+  border: 1px solid gray;
+}

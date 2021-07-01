@@ -1,0 +1,121 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-discover-component-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .discover-container {
+        .discover-search {
+            background-color: mat.get-color-from-palette($background, card);
+            border-bottom: solid 1px mat.get-color-from-palette($foreground, divider);
+            .search-box {
+                mat-form-field {
+                }
+            }
+        }
+
+        .facets-container {
+            border-bottom: solid 1px mat.get-color-from-palette($foreground, divider);
+
+            .facet {
+                &:hover {
+                    background: mat.get-color-from-palette($background, card);
+                }
+
+                mat-icon {
+                    color: mat.get-color-from-palette($foreground, secondary-text);
+                    svg {
+                        fill: mat.get-color-from-palette($foreground, secondary-text);
+                    }
+                    &:hover{
+                        color: mat.get-color-from-palette($primary);
+                    }
+                }
+            }
+        }
+
+        .discover {
+            .discover-max-width {
+                .filter {
+                    .filter-inner{
+                        .header{
+                            padding:2px;
+                            color: mat.get-color-from-palette(mat.$gray-palette, 500);
+                            border-bottom: solid 1px mat.get-color-from-palette($foreground, divider);
+                            margin-bottom:4px;
+                        }
+
+                        .mat-form-field-appearance-outline .mat-form-field-infix{
+                            padding: 0.5em;
+                        }
+
+                        .mat-list-base .mat-list-option {
+                            height:24px;
+                        }
+
+                    }
+                }
+                .results-outer {
+                    .results {
+                        .result-numbers-text {
+                            color: mat.get-color-from-palette(mat.$gray-palette, 500);
+                            border-bottom: solid 1px mat.get-color-from-palette($foreground, divider);
+                          }
+                        .discover-card {
+                            .discover-card-header {
+                                mat-icon {
+                                    color: mat.get-color-from-palette($foreground, secondary-text);
+                                    svg {
+                                        fill: mat.get-color-from-palette($foreground, secondary-text);
+                                    }
+                                }
+                                a {
+                                    font-weight: 500;
+                                    color: mat.get-color-from-palette($primary);
+                                }
+                                a:hover {
+                                    color: mat.get-color-from-palette($accent);
+                                }
+
+                                .knowledge-area{
+                                    color: mat.get-color-from-palette(mat.$gray-palette, 500);
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                }
+                            }
+
+                            mat-card-content{
+                                .additionalInfo{
+                                    margin-top:10px;
+                                    padding: 10px 0px;
+                                    background-color: lightgrey;
+                                }
+
+                                .keyInfo{
+                                    b{
+                                        color: mat.get-color-from-palette(mat.$gray-palette, 800); 
+                                        font-weight: 500;
+
+                                    }
+                                    mat-icon {
+                                        color: mat.get-color-from-palette($foreground, secondary-text);
+                                        cursor:pointer;
+                                        svg {
+                                            fill: mat.get-color-from-palette($foreground, secondary-text);
+                                        }
+                                        &:hover{
+                                            color: mat.get-color-from-palette($primary);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

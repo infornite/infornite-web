@@ -1,0 +1,68 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-app-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .n4-content{
+    background-color:mat.get-color-from-palette($background);
+  }
+
+  .footer {
+    color: mat.get-color-from-palette($primary, lighter);
+    background-color: mat.get-color-from-palette($primary, darker);
+    .links,
+    .signature {
+      a {
+        color: mat.get-color-from-palette($primary, lighter);
+        text-decoration: none;
+        &:hover {
+          color: mat.get-color-from-palette($accent);
+        }
+      }
+    }
+  }
+
+  a {
+    color: mat.get-color-from-palette($foreground, text);
+
+    &:hover {
+      color: mat.get-color-from-palette($accent);
+    }
+  }
+
+  p {
+    a {
+      color: mat.get-color-from-palette($accent);
+
+      &:hover {
+        color: mat.get-color-from-palette($accent, darker);
+      }
+    }
+  }
+
+  .error-notification-overlay {
+    color: mat.get-color-from-palette($warn, default-contrast);
+    background-color: mat.get-color-from-palette($warn);
+  }
+
+  .info-notification-overlay {
+    color: mat.get-color-from-palette($accent, default-contrast);
+    background-color: mat.get-color-from-palette($accent);
+  }
+
+  .success-notification-overlay {
+    color: mat.get-color-from-palette($success-colors, default-contrast);
+    background-color: mat.get-color-from-palette($success-colors);
+  }
+
+  .warning-notification-overlay {
+    color: mat.get-color-from-palette($warning-colors, default-contrast);
+    background-color: mat.get-color-from-palette($warning-colors);
+  }
+}
+
+

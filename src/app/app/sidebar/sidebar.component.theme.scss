@@ -1,0 +1,14 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-sidebar-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+
+    .sidebar_menu {
+        .active-list-item {
+            color: mat.get-color-from-palette($primary);
+        }
+    }
+}

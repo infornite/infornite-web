@@ -1,0 +1,25 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-footer-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+
+  .footer {
+    color: mat.get-color-from-palette($primary, lighter);
+    background-color: mat.get-color-from-palette($primary);
+    .links,
+    .signature {
+      a {
+        color: mat.get-color-from-palette($primary, lighter);
+        text-decoration: none;
+        &:hover {
+          color: mat.get-color-from-palette($accent);
+        }
+      }
+    }
+  }
+}
+
+

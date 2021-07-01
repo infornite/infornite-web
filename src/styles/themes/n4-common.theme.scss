@@ -1,0 +1,42 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-common-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+
+  .mat-elevation-z-n4nite {
+    @include mat.elevation-transition;
+    @include mat.elevation(4);
+
+    &:hover {
+      @include mat.elevation(6);
+    }
+  }
+
+  .n4-stepper-no-header {
+    .mat-horizontal-stepper-header-container {
+      display: none;
+    }
+    .mat-horizontal-content-container {
+      padding: 0px;
+      //max-height:80vh;
+    }
+  }
+
+  //Link style where the link matches normal colour and emphasizes on hover
+  .subtle-link {
+    a {
+      text-decoration: none;
+    }
+    a:link,
+    a:visited {
+      color: mat.get-color-from-palette($foreground, text);
+    }
+    a:hover {
+      color: mat.get-color-from-palette($primary);
+      font-weight: 450;
+    }
+  }
+}

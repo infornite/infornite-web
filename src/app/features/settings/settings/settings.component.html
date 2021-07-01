@@ -1,0 +1,94 @@
+<div class="form-container"  fxLayout="column" fxLayoutGap="20px">
+  <ng-container *ngIf="settings$ | async as settings" >
+    <mat-card [ngClass]="routeAnimationsElements"  class="mat-elevation-z-n4nite" fxFlex="100%"> 
+      <mat-card-header>
+        <mat-card-title>{{ 'n4.settings.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>General settings to control how the website will display</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="form-content" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
+          <div fxFlex.gt-sm="50%" fxFlex>
+            <form>
+              <mat-form-field class="form-field-full-width">
+                <mat-select [placeholder]="'n4.settings.general.placeholder' | translate" [ngModel]="settings.language"
+                  (selectionChange)="onLanguageSelect($event)" name="language">
+                  <ng-container *ngFor="let l of languages">
+                    <!-- ngFor hack of missing ngLet of Angular -->
+                    <mat-option *ngFor="let title of ['n4.settings.general.language.' + l.value | translate]"
+                      [value]="l.value" [title]="title !== l.label
+                      ? title
+                      : ''">
+                      {{ l.label }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <div class="form-field-full-width form-field-dummy">
+                <mat-placeholder fxFlex="grow">{{ 'n4.settings.themes.sticky-header' | translate }}
+                </mat-placeholder>
+                <mat-slide-toggle [checked]="settings.stickyHeader" (change)="onStickyHeaderToggle($event)">
+                </mat-slide-toggle>
+              </div>
+              <div class="form-field-full-width form-field-dummy">
+                <mat-placeholder fxFlex="grow">{{ 'n4.settings.animations.page' | translate }}
+                </mat-placeholder>
+                <mat-slide-toggle matTooltip="Sorry, this feature is disabled in IE, EDGE and Safari"
+                  matTooltipPosition="before" *ngIf="settings.pageAnimationsDisabled" disabled>
+                </mat-slide-toggle>
+                <mat-slide-toggle *ngIf="!settings.pageAnimationsDisabled" [checked]="settings.pageAnimations"
+                  (change)="onPageAnimationsToggle($event)">
+                </mat-slide-toggle>
+              </div>
+              <div class="form-field-full-width form-field-dummy">
+                <mat-placeholder  fxFlex="grow">{{ 'n4.settings.animations.elements' | translate }}
+                </mat-placeholder>
+                <mat-slide-toggle [checked]="settings.elementsAnimations" (change)="onElementsAnimationsToggle($event)">
+                </mat-slide-toggle>
+              </div>
+            </form>
+          </div>
+          <div fxHide fxShow.gt-sm fxFlex.gt-sm="50%" fxFlex fxLayout="row">
+            <mat-icon color="accent">help_outline</mat-icon>
+            <p>
+              The language setting controls the language used to display headings and navigation text on the website but
+              will not update the language used for the site content.
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card [ngClass]="routeAnimationsElements"  class="mat-elevation-z-n4nite" fxFlex="100%">
+      <mat-card-header>
+        <mat-card-title>{{ 'n4.settings.themes.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>These settings control the theme and particularly the colors that are used on the website</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="form-content" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
+          <div fxFlex.gt-sm="50%" fxFlex>
+            <form>
+                <mat-form-field  class="form-field-full-width">
+                  <mat-select [placeholder]="'n4.settings.themes.placeholder' | translate" [ngModel]="settings.theme"
+                    (selectionChange)="onThemeSelect($event)" name="themes">
+                    <mat-option *ngFor="let t of themes" [value]="t.value">
+                      {{ 'n4.settings.themes.' + t.label | translate }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="form-field-full-width form-field-dummy">
+                  <mat-placeholder  fxFlex="grow">{{ 'n4.settings.themes.night-mode' | translate }}
+                  </mat-placeholder>
+                  <mat-slide-toggle [checked]="settings.autoNightMode" (change)="onAutoNightModeToggle($event)">
+                  </mat-slide-toggle>
+                </div>
+            </form>
+          </div>
+          <div fxHide fxShow.gt-sm fxFlex.gt-sm="50%" fxFlex fxLayout="row">
+            &nbsp;
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>

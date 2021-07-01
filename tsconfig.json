@@ -1,0 +1,55 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@features/*": [
+        "app/features/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@env/*": [
+        "environments/*"
+      ],
+      "@gql/*": [
+        "app/graphql/*"
+      ],
+      "@auth/*": [
+        "app/core/auth/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@animations/*": [
+        "app/animations/*"
+      ]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  }
+}

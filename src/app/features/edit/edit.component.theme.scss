@@ -1,0 +1,29 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-edit-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  .form-outer-container {
+    mat-card {
+      mat-card-header {
+        background-color: mat.get-color-from-palette($foreground, divider);
+        color: mat.get-color-from-palette($foreground, default-contrast);
+      }
+    }
+  }
+
+  .facet-auto-complete {
+    color: mat.get-color-from-palette(mat.$gray-palette, 700);
+
+    mat-icon {
+      color: mat.get-color-from-palette($foreground, secondary-text);
+      svg {
+        fill: mat.get-color-from-palette($foreground, secondary-text);
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+<div  fxLayout="column">
+<div fxLayout="column" fxLayoutAlign="center center">
+    <h2>Pricing</h2>
+    <mat-button-toggle-group name="currency" (change)="changeCurrency($event)">
+        <mat-button-toggle value="AUD">AUD</mat-button-toggle>
+        <mat-button-toggle value="USD">USD</mat-button-toggle>
+        <mat-button-toggle value="EUR">EUR</mat-button-toggle>
+        <mat-button-toggle value="GBP">GBP</mat-button-toggle>
+        <mat-button-toggle value="SGD">SGD</mat-button-toggle>
+      </mat-button-toggle-group>
+</div>
+<div class="pricing" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="space-between center" fxFill>
+    <mat-card *ngFor="let item of price">
+        <div class="pricing-card" fxLayout="column" fxLayoutAlign="center center">
+            <div fxFlex="100%" class="header" fxFill fxLayoutAlign="center center">
+                {{item.name}}
+            </div>
+            <div fxFlex="100%" class="blurb" fxFill fxLayoutAlign="center center">
+                <p>
+                    {{item.blurb}}
+                </p>
+            </div>
+            <div fxFlex="100%" fxFill class="price" fxLayoutAlign="center center">
+                {{item.basePrice * currencyRate | currency:currencyValue:true:'2.0'}}
+            </div>
+            <div fxFlex="100%" fxFill fxLayout="column" class="offering" fxLayoutAlign="center start" style="margin-top:10px">
+                
+                <div fxLayoutAlign="center center"><mat-icon color="primary" style="margin-right:3px">check_circle</mat-icon>{{item.baseStewards}} Stewards</div>
+                <div fxLayoutAlign="center center"><mat-icon color="primary" style="margin-right:3px">check_circle</mat-icon>{{item.baseViewers}} Viewers</div>
+                <div fxLayoutAlign="center center"><mat-icon color="primary" style="margin-right:3px">check_circle</mat-icon>{{item.baseFacets | number:'1.0':'en-US'}} Facets</div>
+                <div fxLayoutAlign="center center"><mat-icon color="primary" style="margin-right:3px">check_circle</mat-icon>{{item.baseHours | number:'1.0':'en-US'}} Hours of Consulting Services</div>
+                
+                <br/>
+                <ng-container *ngFor="let feature of item.features">
+                    <div fxLayoutAlign="center center"><mat-icon style="margin-right:3px" *ngIf="feature!=''">check_circle</mat-icon>{{feature}}</div>
+                </ng-container>
+                <ng-container *ngFor="let spacer of item.featureSpacer">
+                    <div class="featureSpacer"></div>
+                </ng-container>
+                <button mat-button style="align-self: center;" (click)="toggleCustomise()">{{customise? 'hide options':'customise'}}</button>
+
+            </div>
+            <ng-container *ngIf="customise">
+                <div fxFlex="100%" fxFill fxLayout="column" class="users" fxLayoutAlign="center start">
+                    <div fxLayout="row" fxFlex="100%" fxFill class="user-control" fxLayoutAlign="center start">
+                        <div fxLayoutGap="16px" fxLayout="row">
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'steward', -1)">
+                                <mat-icon>arrow_drop_down</mat-icon>
+                            </button>
+                            <div fxLayout="column" fxLayoutAlign="center center">
+                                <input [value]="item.baseStewards" disabled>
+                                <span>Contributors</span>
+                              </div>
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'steward', 1)">
+                                <mat-icon>arrow_drop_up</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="100%" fxFill fxLayout="column" class="users" fxLayoutAlign="center start">
+                    <div fxLayout="row" fxFlex="100%" fxFill class="user-control" fxLayoutAlign="center start">
+                        <div fxLayoutGap="16px" fxLayout="row">
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'contributor', -5)">
+                                <mat-icon>arrow_drop_down</mat-icon>
+                            </button>
+                            <div fxLayout="column" fxLayoutAlign="center center">
+                                <input [value]="item.baseViewers" disabled>
+                                <span>Viewers</span>
+                              </div>
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'contributor', +5)">
+                                <mat-icon>arrow_drop_up</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="100%" fxFill fxLayout="column" class="users" fxLayoutAlign="center start">
+                    <div fxLayout="row" fxFlex="100%" fxFill class="user-control" fxLayoutAlign="center start">
+                        <div fxLayoutGap="16px" fxLayout="row">
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'facet', -1)">
+                                <mat-icon>arrow_drop_down</mat-icon>
+                            </button>
+                            <div fxLayout="column" fxLayoutAlign="center center">
+                                <input [value]="item.baseFacets | number:'1.0':'en-US'" disabled>
+                                <span>Facets</span>
+                              </div>
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'facet', 1)">
+                                <mat-icon>arrow_drop_up</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="100%" fxFill fxLayout="column" class="users" fxLayoutAlign="center start">
+                    <div fxLayout="row" fxFlex="100%" fxFill class="user-control" fxLayoutAlign="center start">
+                        <div fxLayoutGap="16px" fxLayout="row">
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'hour', -1)">
+                                <mat-icon>arrow_drop_down</mat-icon>
+                            </button>
+                            <div fxLayout="column" fxLayoutAlign="center center">
+                                <input [value]="item.baseHours | number:'1.0':'en-US'" disabled>
+                                <span>Consult Hrs</span>
+                              </div>
+                            <button mat-icon-button color="" (click)="setPrice(item.name, 'hour', 1)">
+                                <mat-icon>arrow_drop_up</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div fxFlex="100%" fxFill class="action" fxLayoutAlign="center center">
+                <button mat-raised-button color="accent" routerLink="/appointment">Book a Discovery Call</button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+</div>

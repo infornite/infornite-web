@@ -1,0 +1,182 @@
+@import "../../../styles/constants.scss";
+
+@mixin full-height() {
+  min-height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - 71px);
+  min-height: -moz-calc(100vh - #{$header-height} - #{$footer-height} - 72px);
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - 72px);
+  min-height: -o-calc(100vh - #{$header-height} - #{$footer-height} - 72px);
+}
+
+mat-sidenav-container{
+  @include full-height;
+  mat-sidenav{
+    min-width:300px;
+  }
+}
+.facet-view {
+  line-height: 34px;
+
+  .mat-tab-header{
+    margin-left:200px;
+  }
+
+  .mat-tab-label-container {
+    margin-left:200px;
+  }
+  .toggle-side-nav {
+    margin-bottom: -48px;
+    height: 48px;
+
+    button {
+      margin: 25px;
+      z-index: 2;
+      margin-right: 16px;
+    }
+  }
+
+  .view-outer-container {
+    padding: 20px;
+    margin: 20px;
+
+    &.small-device{
+      padding: 0px;
+      margin: 25px 16px;
+    }
+
+    .view-inner-container {
+      max-width: 1370px;
+      width: 100%;
+
+      h1 {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+      }
+
+      h2 {
+        font-size: 20px;
+        line-height: 32px;
+        font-weight: 500;
+        border-bottom: 1px solid #e6e6e6;
+      }
+
+      .title {
+      }
+      .title-divider {
+        margin-bottom: 40px;
+      }
+
+      .overview {
+        .spacer {
+          min-height: 16px;
+        }
+
+        .h2-header {
+          margin-top: 24px;
+        }
+      }
+
+      .connections {
+        width: 100%;
+
+        .result-numbers-text {
+          display: flex;
+          justify-content: space-between;
+          padding: 3px;
+          margin: 3px 25px 25px 25px;
+
+          mat-paginator {
+            background-color: unset;
+            .mat-paginator-outer-container .mat-paginator-container {
+              min-height: 0px;
+            }
+          }
+        }
+
+        .no-results {
+          display: flex;
+          justify-content: center;
+
+          img {
+            max-width: 100%;
+          }
+        }
+
+        .no-connections {
+          background-image: url("../../../assets/img/illustrations/no_wiki.svg");
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          @include full-height;
+
+          margin-top: 16px;
+          font-size: 28px;
+          font-style: italic;
+        }
+
+        .facet-card {
+          margin: 0px 25px 25px 25px;
+
+          &.small-device{
+            margin: 0px 0px 25px 0px;
+          }
+
+          &:first-child {
+            margin: 25px;
+          }
+
+          .facet-card-header {
+            width: 100%;
+            a {
+              align-self: center;
+              text-decoration: none;
+              font-size: 18px;
+            }
+
+            in4-label{
+              margin:  0px 12px 6px 0px;
+            }
+          }
+        }
+
+        
+        .bottom-paginator {
+          padding: 3px;
+          margin: 3px 25px 25px 25px;
+          mat-paginator {
+            background-color: unset;
+          }
+        }
+
+        .discover-card {
+          margin: 0px 25px 25px 25px;
+
+          &:first-child {
+            margin: 25px;
+          }
+
+          .discover-card-header {
+            width: 100%;
+            a {
+              align-self: center;
+              text-decoration: none;
+              font-size: 18px;
+            }
+
+            .knowledge-area {
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  min-width: 200px;
+}

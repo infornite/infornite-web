@@ -1,0 +1,142 @@
+@use '~@angular/material' as mat;
+
+@mixin n4-view-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  
+
+  mat-toolbar{
+    .breadcrumb {
+      display: flex;
+      font-size: 16px;
+      .crumb {
+        display: flex;
+        align-items: center;
+        .crumb-name {
+          margin: 0px 6px;
+          display: flex;
+          align-items: center;
+
+          mat-icon{
+            margin-right:6px;
+          }
+          a {
+            text-decoration: none;
+            color: mat.get-color-from-palette($primary, default-contrast);
+
+            &:hover{
+              color: mat.get-color-from-palette($accent);
+            }
+          }
+        }
+      }
+    }
+
+      .toolbar-buttons{
+
+        .white{
+          background-color: mat.get-color-from-palette($primary, default-contrast);
+          color: mat.get-color-from-palette($primary);
+        }
+      }
+      
+  }
+  
+  .facet-view {
+
+
+    .facet-toolbar {
+    }
+
+    .view-outer-container {
+      .view-inner-container {
+        .title {
+        }
+
+        .title-divider {
+        }
+      }
+    }
+  }
+
+  .overview {
+    b {
+      color: mat.get-color-from-palette(mat.$gray-palette, 800);
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  .connections {
+    .result-numbers-text {
+      color: mat.get-color-from-palette(mat.$gray-palette, 500);
+      border-bottom: solid 0px mat.get-color-from-palette($foreground, divider);
+    }
+    
+    .no-connections {
+      color: mat.get-color-from-palette(mat.$gray-palette, 500);
+    }
+
+    .facet-card {
+      .facet-card-header {
+        mat-icon {
+          color: mat.get-color-from-palette($foreground, secondary-text);
+          svg {
+            fill: mat.get-color-from-palette($foreground, secondary-text);
+          }
+        }
+        a {
+          font-weight: 500;
+          color: mat.get-color-from-palette($primary);
+        }
+        a:hover {
+          color: mat.get-color-from-palette($accent);
+        }
+
+        .knowledge-area {
+          color: mat.get-color-from-palette(mat.$gray-palette, 500);
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .display-text {
+          //color: mat.get-color-from-palette(mat.$gray-palette, 500);
+          color: mat.get-color-from-palette($accent);
+          font-style: italic;
+          margin-left: 5px;
+        }
+      }
+
+      mat-card-content {
+        .additionalInfo {
+          margin-top: 10px;
+          padding: 10px 0px;
+          background-color: lightgrey;
+        }
+
+        .keyInfo {
+          b {
+            color: mat.get-color-from-palette(mat.$gray-palette, 800);
+            font-weight: 500;
+          }
+          mat-icon {
+            color: mat.get-color-from-palette($foreground, secondary-text);
+            cursor: pointer;
+            svg {
+              fill: mat.get-color-from-palette($foreground, secondary-text);
+            }
+            &:hover {
+              color: mat.get-color-from-palette($primary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .no-wiki {
+  }
+}

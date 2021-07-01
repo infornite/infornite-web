@@ -1,0 +1,565 @@
+<div class="facet-form">
+	<div class="facet-toolbar" fxLayoutAlign="end center" *ngIf="facetId">
+		<button mat-mini-fab color="primary" routerLink="{{'/view/' + facetId}}" [queryParams]="{tabIndex: tabIndex}">
+			<mat-icon>close</mat-icon>
+		</button>
+	</div>
+	<mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabIndex">
+		<mat-tab label="Overview">
+			<div class="form-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column" fxLayoutAlign=" center">
+				<mat-card>
+					<mat-card-header>
+						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon [svgIcon]="facetType  | lcWithDashes" style="padding-right:10px"></mat-icon>
+							<mat-card-title> {{facetName? facetName: 'New ' + facetType | replaceUnderscore}}
+							</mat-card-title>
+						</div>
+					</mat-card-header>
+					<mat-card-content [ngStyle.gt-sm]="{'padding-right.px': 30}">
+						<form [formGroup]="overviewForm" (ngSubmit)="upsertFacet()">
+							<div fxLayout="row" fxLayoutAlign=" start">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Name:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline" floatLabel="never">
+										<mat-label fxHide fxShow.lt-md>Name</mat-label>
+										<input matInput [formControl]="name">
+										<mat-error *ngIf="overviewForm.get('name').hasError('required')">
+											Name is <strong>required</strong>
+										</mat-error>
+									</mat-form-field>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign=" start" fxHide>
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Type:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label fxHide fxShow.lt-md>Name</mat-label>
+										<mat-select formControlName="type" disableOptionCentering="true"
+											placeholder="Required">
+											<mat-option *ngFor="let facetType of oFacetType | keyvalue"
+												[value]="facetType.value">
+												{{facetType.value | replaceUnderscore}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign=" start">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Sub Type:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label fxHide fxShow.lt-md>Sub Type:</mat-label>
+										<mat-select formControlName="subType" disableOptionCentering="true">
+											<mat-option
+												*ngFor="let facetSubType of oFacetTypesSubTypes?.subType | keyvalue"
+												[value]="facetSubType.value">
+												{{facetSubType.value | replaceUnderscore}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign=" start">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Status:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label fxHide fxShow.lt-md>Status:</mat-label>
+										<mat-select formControlName="status" disableOptionCentering="true">
+											<mat-option *ngFor="let facetStatus of oFacetStatus | keyvalue"
+												[value]="facetStatus.value">
+												{{facetStatus.value | replaceUnderscore}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign=" start">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Description:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label fxHide fxShow.lt-md>Description</mat-label>
+										<textarea matInput rows=5 [formControl]="description"></textarea>
+									</mat-form-field>
+								</div>
+							</div>
+
+							<div fxLayout="row" fxLayoutAlign=" start" style="padding-bottom:16px">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Tags:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<tag-input [formControl]="tag" placeholder="+ tag" secondaryPlaceholder="+ tag"
+										addOnPaste="true" pasteSplitPattern=";" modelAsStrings="true"></tag-input>
+								</div>
+							</div>
+
+							<div class="form-spacer" style="margin-bottom:16px" *ngIf="facetType!='Knowledge_Area'">
+								<mat-divider></mat-divider>
+							</div>
+
+							<div fxLayout="row" fxLayoutAlign=" start">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									<h4>Parent Facet:</h4>
+								</div>
+								<div fxFlex="80" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label fxHide fxShow.lt-md>Parent Facet:</mat-label>
+										<input matInput [matAutocomplete]="autoParent" formControlName="parent"
+											[placeholder]="parentPlaceholder">
+										<mat-autocomplete #autoParent="matAutocomplete"
+											[displayWith]="getACDisplayValue">
+											<mat-option *ngIf="acParentIsLoading" class="is-loading">Loading...
+											</mat-option>
+											<ng-container *ngIf="!acParentIsLoading">
+												<mat-option *ngFor="let parent of acParentFilteredFacets"
+													[value]="parent" class="n4-ac" matTooltip="{{parent.name}}">
+													<span class="facet-auto-complete">
+														<mat-icon [svgIcon]="parent.type | lcWithDashes">
+														</mat-icon>
+														{{parent.name}}
+													</span>
+												</mat-option>
+											</ng-container>
+										</mat-autocomplete>
+									</mat-form-field>
+								</div>
+							</div>
+							<ng-container *ngIf="facetDisplayFields?.fields.knowledgeArea">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Knowledge Area:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Knowledge Area:</mat-label>
+											<input matInput [matAutocomplete]="autoKA" formControlName="knowledgeArea"
+												[placeholder]="knowledgeAreaPlaceholder">
+											<mat-autocomplete #autoKA="matAutocomplete"
+												[displayWith]="getACDisplayValue">
+												<mat-option *ngIf="acKAIsLoading" class="is-loading">Loading...
+												</mat-option>
+												<ng-container *ngIf="!acKAIsLoading">
+													<mat-option *ngFor="let ka of acKAFilteredFacets" [value]="ka"
+														class="n4-ac" matTooltip="{{ka.name}}">
+														<span class="facet-auto-complete">
+															<mat-icon [svgIcon]="ka.type | lcWithDashes">
+															</mat-icon>
+															{{ka.name}}
+														</span>
+													</mat-option>
+												</ng-container>
+											</mat-autocomplete>
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.accessGuidelines">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Access Guidelines:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Access Guidelines:</mat-label>
+											<textarea matInput rows=5 [formControl]="accessGuidelines"></textarea>
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<div class="form-spacer" style="margin-bottom:16px"
+								*ngIf="facetType!='Knowledge_Area' && facetType!='Report' && facetType!='System'  && facetType!='Table' && facetType!='Control'  && facetType!='Stakeholder'  && facetType!='Artefact'">
+								<mat-divider></mat-divider>
+							</div>
+							<ng-container *ngIf="facetDisplayFields?.fields.acronym">
+								<div fxLayout="row" fxLayoutAlign=" start">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Acronym:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>acronym</mat-label>
+											<input matInput [formControl]="acronym">
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.synonym">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Synonyms:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<tag-input [formControl]="synonym" placeholder="+ synonyms"
+											secondaryPlaceholder="+ synonyms" addOnPaste="true" pasteSplitPattern=";"
+											modelAsStrings="true"></tag-input>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.validValue">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label" (click)="dummy()">
+										<h4>Valid Values:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<tag-input [formControl]="validValue" placeholder="+ values"
+											secondaryPlaceholder="+ values" addOnPaste="true" pasteSplitPattern=";"
+											modelAsStrings="true"></tag-input>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.primaryKey">
+								<div fxLayout="row" fxLayoutAlign=" center"
+									style="margin-top:16px; padding: 16px 0px 16px 6px;">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Primary Key:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+
+										<mat-checkbox formControlName="primaryKey"></mat-checkbox>
+										<mat-label fxHide fxShow.lt-md> Primary Key</mat-label>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.format">
+								<div fxLayout="row" fxLayoutAlign=" start">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Format:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Format:</mat-label>
+											<mat-select formControlName="format" disableOptionCentering="true">
+												<mat-option *ngFor="let format of oFormat | keyvalue"
+													[value]="format.value">
+													{{format.value | replaceUnderscore}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.dataType">-
+								<div fxLayout="row" fxLayoutAlign=" start">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Data Type:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline" floatLabel="never">
+											<mat-label fxHide fxShow.lt-md>Data Type:</mat-label>
+											<input matInput [formControl]="dataType">
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+
+							<div class="form-spacer" style="margin-bottom:16px"
+								*ngIf="facetType!='Knowledge_Area' && facetType!='Report' && facetType!='System' && facetType!='Table'  && facetType!='Control'  && facetType!='Artefact'">
+								<mat-divider></mat-divider>
+							</div>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.pii">
+								<div fxLayout="row" fxLayoutAlign=" center"
+									style="margin-top:16px; padding: 16px 0px 16px 6px;">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>PII:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-checkbox formControlName="pii"></mat-checkbox>
+										<mat-label fxHide fxShow.lt-md> PII</mat-label>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.securityClassification">
+								<div fxLayout="row" fxLayoutAlign=" start">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Security Classification:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Security Classification:</mat-label>
+											<mat-select formControlName="securityClassification"
+												disableOptionCentering="true">
+												<mat-option
+													*ngFor="let securityClassification of oSecurityClassification | keyvalue"
+													[value]="securityClassification.value">
+													{{securityClassification.value | replaceUnderscore}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.key">
+								<div fxLayout="row" fxLayoutAlign=" center" style="padding: 0px 0px 16px 6px;">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Key:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+
+										<mat-checkbox formControlName="key"></mat-checkbox>
+										<mat-label fxHide fxShow.lt-md> Key:</mat-label>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.keyReason && overviewForm.get('key').value">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Key Reason:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Key Reason:</mat-label>
+											<textarea matInput rows=5 [formControl]="keyReason"></textarea>
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.stakeholderDetail">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Title:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Title</mat-label>
+											<input matInput [formControl]="stakeholderTitle">
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.stakeholderDetail">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Email:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Email</mat-label>
+											<input matInput [formControl]="stakeholderEmailAddress">
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.stakeholderDetail">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Phone Number:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Phone Number:</mat-label>
+											<input matInput [formControl]="stakeholderPhoneNumber">
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
+							<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
+									&nbsp;
+								</div>
+								<div fxFlex="80" fxFlex.gt-sm="100">
+									<button mat-raised-button type="submit" [disabled]="!overviewForm.valid"
+										color="primary">Save</button>
+								</div>
+							</div>
+						</form>
+					</mat-card-content>
+				</mat-card>
+			</div>
+		</mat-tab>
+		<mat-tab label="Connections" [disabled]='!facetId'>
+			<div class="form-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column"
+				fxLayoutAlign=" center">
+
+				<mat-card>
+					<mat-card-header>
+						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon [svgIcon]="facetType  | lcWithDashes" style="padding-right:10px"></mat-icon>
+							<mat-card-title> {{facetName? facetName: 'New ' + facetType | replaceUnderscore}}
+							</mat-card-title>
+						</div>
+					</mat-card-header>
+					<mat-card-content class="add-connections">
+						<form [formGroup]="connectionsForm" (ngSubmit)="upsertFacet()">
+							<div fxLayout="row wrap" fxLayout.gt-sm="row"  fxLayoutAlign="start center" fxLayoutGap="16px">
+								<div fxFlex="25" fxLayoutAlign="start center" style="margin-left:6px">
+									<h4>{{facetName}}</h4>
+								</div>
+								<div fxFlex="30" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label>Connection Type</mat-label>
+										<mat-select formControlName="connectionType" disableOptionCentering="true"
+											(selectionChange)="connectionTypeChanged()">
+											<mat-option *ngFor="let possibleConnection of possibleConnections"
+												[value]="possibleConnection">
+												{{ possibleConnection.headType == facetType? possibleConnection.display:
+												possibleConnection.displayAlternative }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+								<div fxFlex="30" fxFlex.lt-md="100">
+									<mat-form-field appearance="outline">
+										<mat-label>Connected Facet</mat-label>
+										<input matInput [matAutocomplete]="autoConn" formControlName="connectedFacet"
+											[readonly]="!connectionsForm.get('connectionType').valid">
+										<mat-autocomplete #autoConn="matAutocomplete" [displayWith]="getACDisplayValue">
+											<mat-option *ngIf="acConnIsLoading" class="is-loading">Loading...
+											</mat-option>
+											<ng-container *ngIf="!acConnIsLoading">
+												<mat-option *ngFor="let facet of acConnFilteredFacets" [value]="facet"
+													class="n4-ac" matTooltip="{{facet.name}}">
+													<span class="facet-auto-complete">
+														<mat-icon [svgIcon]="facet.type | lcWithDashes">
+														</mat-icon>
+														{{facet.name}}
+													</span>
+												</mat-option>
+											</ng-container>
+										</mat-autocomplete>
+									</mat-form-field>
+								</div>
+								<div class="connections-button-div">
+									<button mat-raised-button type="submit" (click)="saveConnection()"
+										color="primary">Add Connection</button>
+								</div>
+							</div>
+						</form>
+					</mat-card-content>
+				</mat-card>
+				<br />
+				<mat-card>
+					<table mat-table [dataSource]="dataSource" matSort>
+
+						<!-- ID Column -->
+						<ng-container matColumnDef="id">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+							<td mat-cell *matCellDef="let row">
+
+
+								<button mat-icon-button (click)="deleteConnection(row.id)">
+									<mat-icon>delete</mat-icon>
+								</button>
+
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="fromName">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Head Facet </th>
+							<td mat-cell *matCellDef="let row">
+								<span class="subtle-link" matTooltip="{{row.fromDescription}}">
+									<a routerLink="{{'/view/' + row.fromId}}">{{row.fromName}}</a>
+								</span>
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="fromType">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Head Facet Type</th>
+							<td mat-cell *matCellDef="let row"> {{row.fromType |replaceUnderscore}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="display">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Connection </th>
+							<td mat-cell *matCellDef="let row"> {{row.display}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="toName">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Tail Facet </th>
+							<td mat-cell *matCellDef="let row">
+								<span class="subtle-link" matTooltip="{{row.toDescription}}">
+									<a routerLink="{{'/view/' + row.toId}}">{{row.toName}}</a>
+								</span>
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="toType">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> Tail Facet Type </th>
+							<td mat-cell *matCellDef="let row"> {{row.toType | replaceUnderscore}} </td>
+						</ng-container>
+
+
+
+
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+						<!-- Row shown when there is no matching data. -->
+						<tr class="mat-row" *matNoDataRow>
+							<td class="mat-cell" colspan="4">No data matching the filter "{{input?.value}}"
+							</td>
+						</tr>
+					</table>
+					<div class="bottom-paginator">
+						<mat-paginator #paginatorTop [pageSizeOptions]="[10, 25, 100]" hidePageSize="false">
+						</mat-paginator>
+					</div>
+				</mat-card>
+			</div>
+		</mat-tab>
+		<mat-tab label="Wiki" [disabled]='!facetId'>
+
+			<div class="form-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column"
+				fxLayoutAlign=" center">
+				<mat-card>
+					<mat-card-header>
+						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
+							<mat-icon [svgIcon]="facetType  | lcWithDashes" style="padding-right:10px"></mat-icon>
+							<mat-card-title> {{facetName? facetName: 'New ' + facetType | replaceUnderscore}}
+							</mat-card-title>
+						</div>
+					</mat-card-header>
+					<mat-card-content>
+						<in4-me [(ngModel)]="wiki"></in4-me>
+						<button mat-raised-button type="submit" (click)="upsertWiki()" color="primary">Save</button>
+					</mat-card-content>
+				</mat-card>
+			</div>
+
+
+
+		</mat-tab>
+		<div>
+			Controls
+		</div>
+	</mat-tab-group>
+</div>

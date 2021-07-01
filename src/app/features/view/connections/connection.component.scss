@@ -1,0 +1,92 @@
+.connections {
+    width: 100%;
+
+    .result-numbers-text {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px;
+      margin: 3px 25px 25px 25px;
+
+      mat-paginator {
+        background-color: unset;
+        .mat-paginator-outer-container .mat-paginator-container {
+          min-height: 0px;
+        }
+      }
+    }
+
+    .no-results {
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .no-connections {
+      background-image: url("../../../assets/img/illustrations/no_wiki.svg");
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      @include full-height;
+
+      margin-top: 16px;
+      font-size: 28px;
+      font-style: italic;
+    }
+
+    .facet-card {
+      margin: 0px 25px 25px 25px;
+
+      &.small-device{
+        margin: 0px 0px 25px 0px;
+      }
+
+      &:first-child {
+        margin: 25px;
+      }
+
+      .facet-card-header {
+        width: 100%;
+        a {
+          align-self: center;
+          text-decoration: none;
+          font-size: 18px;
+        }
+
+        in4-label{
+          margin:  0px 12px 6px 0px;
+        }
+      }
+    }
+
+    
+    .bottom-paginator {
+      padding: 3px;
+      margin: 3px 25px 25px 25px;
+      mat-paginator {
+        background-color: unset;
+      }
+    }
+
+    .discover-card {
+      margin: 0px 25px 25px 25px;
+
+      &:first-child {
+        margin: 25px;
+      }
+
+      .discover-card-header {
+        width: 100%;
+        a {
+          align-self: center;
+          text-decoration: none;
+          font-size: 18px;
+        }
+
+        .knowledge-area {
+        }
+      }
+    }
+  }

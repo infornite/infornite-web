@@ -1,0 +1,23 @@
+<mat-progress-bar *ngIf="loading" mode="query"></mat-progress-bar>
+<mat-tree [dataSource]="treeDS" [treeControl]="treeControl">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button mat-icon-button disabled>
+            <mat-icon [svgIcon]="node.type | lcWithDashes">
+            </mat-icon>
+        </button>
+        <a routerLink="{{'/view/' + node.id}}" (click)="closeSidebar()">{{node.name}}</a>
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle>
+            <mat-icon>
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+            <mat-icon [svgIcon]="node.type | lcWithDashes">
+            </mat-icon>
+        </button>
+        <a routerLink="{{'/view/' + node.id}}">{{node.name}}</a>
+    </mat-tree-node>
+</mat-tree>
