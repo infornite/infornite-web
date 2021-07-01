@@ -13,7 +13,7 @@ import { ENV } from '@env/env.config';
     CLIENT_ID: 'darJqhxkzy0hi6PUQTCAWKFlH7hO2a8w',
     CLIENT_DOMAIN: 'n4nite.au.auth0.com',
     AUDIENCE: 'https://fornite.com/',
-    REDIRECT: `${ENV.BASE_URI}/auth/callback`,
+    REDIRECT: `${ENV.BASE_URI}/discover`,
     SCOPE: 'openid profile email',
     RESPONSE_TYPE: 'token id_token',
     //REDIRECT:`${window.location.origin}`,
