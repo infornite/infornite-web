@@ -13,8 +13,10 @@ import { FooterModule } from '@app/app/footer/footer.module';
 // Import the module from the SDK
 import { AuthModule } from '@auth0/auth0-angular';
 import { AUTH_CONFIG } from '@core/auth/auth.config'
-
+import { Router } from '@angular/router'
 import { HIGHLIGHT_OPTIONS, HighlightModule } from "ngx-highlightjs";
+
+router:Router
 
 function getHighlightLanguages() {
   return {
@@ -56,8 +58,19 @@ function getHighlightLanguages() {
       clientId: 'darJqhxkzy0hi6PUQTCAWKFlH7hO2a8w',
       audience:'https://api.n4nite.com/',
       redirectUri: AUTH_CONFIG.REDIRECT,
+      
     }),
 
+    /*
+
+    onRedirectCallback: appState => {
+      router.push(
+        appState && appState.targetUrl
+          ? appState.targetUrl
+          : window.location.pathname
+      );
+    }
+*/
     //HighlightModule,
 
   ],

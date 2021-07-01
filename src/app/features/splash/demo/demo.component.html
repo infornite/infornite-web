@@ -22,7 +22,7 @@
                         <span class="emphasis">password: </span>demo
                     </div>
                     <button style="margin-top:10px" mat-raised-button color="primary"
-                        (click)="auth.loginWithRedirect({redirect_uri:'https://infornite.com/discover'})">Go to Login
+                        (click)="auth.loginWithRedirect()">Go to Login
                         Page</button>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <span class="emphasis">password: </span>demo
             </div>
             <button style="margin-top:10px" mat-raised-button color="primary"
-                (click)="auth.loginWithRedirect({appState: { target: '/discover' }})">Go to Login
+                (click)="auth.loginWithRedirect()">Go to Login
                 Page</button>
         </div>
     </div>
@@ -62,5 +62,22 @@
 
 
 <!--
-    {redirect_uri:'https://infornite.com/discover'}
+redirect_uri?: string;
+/**
+ * Used to store state before doing the redirect
+ */
+appState?: any;
+/**
+ * Used to add to the URL fragment before redirecting
+ */
+fragment?: string;
+/**
+ * Used to select the window.location method used to redirect
+ */
+redirectMethod?: 'replace' | 'assign';
+}
+
+-->
+<!--
+    {redirect_uri:'https://infornite.com/discover', }
 -->
