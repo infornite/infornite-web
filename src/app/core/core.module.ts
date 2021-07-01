@@ -134,7 +134,7 @@ export function httpLoaderFactory(http: HttpClient) {
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
-          name: 'Angular NgRx Material Starter'
+          name: 'Infornite: Unlock your Data '
         }),
 
     // 3rd party
