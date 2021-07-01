@@ -89,6 +89,7 @@ export const arrFacetTypeSubType: IFacetTypesSubTypes[] = [
             FacetSubType.Policy,
             FacetSubType.Guideline,
             FacetSubType.Wiki,
+            FacetSubType.Training,
         ]
     },
 ]
