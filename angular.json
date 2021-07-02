@@ -30,9 +30,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-             
-              "node_modules/dagre/dist/dagre.min.js",
-              "node_modules/cytoscape-dagre/cytoscape-dagre.js",
               "src/assets/js/calendly.js"
             ],
             "vendorChunk": true,
