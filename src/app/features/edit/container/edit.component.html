@@ -134,6 +134,38 @@
 									</mat-form-field>
 								</div>
 							</div>
+
+							<ng-container *ngIf="facetDisplayFields?.fields.relatedElement">
+								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
+									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"
+										class="form-field-label">
+										<h4>Related Element:</h4>
+									</div>
+									<div fxFlex="80" fxFlex.lt-md="100">
+										<mat-form-field appearance="outline">
+											<mat-label fxHide fxShow.lt-md>Related Element:</mat-label>
+											<input matInput [matAutocomplete]="autoKA" formControlName="relatedElement"
+												[placeholder]="relatedElementPlaceholder">
+											<mat-autocomplete #autoKA="matAutocomplete"
+												[displayWith]="getACDisplayValue">
+												<mat-option *ngIf="acREIsLoading" class="is-loading">Loading...
+												</mat-option>
+												<ng-container *ngIf="!acREIsLoading">
+													<mat-option *ngFor="let re of acREFilteredFacets" [value]="re"
+														class="n4-ac" matTooltip="{{re.name}}">
+														<span class="facet-auto-complete">
+															<mat-icon [svgIcon]="re.type | lcWithDashes">
+															</mat-icon>
+															{{re.name}}
+														</span>
+													</mat-option>
+												</ng-container>
+											</mat-autocomplete>
+										</mat-form-field>
+									</div>
+								</div>
+							</ng-container>
+
 							<ng-container *ngIf="facetDisplayFields?.fields.knowledgeArea">
 								<div fxLayout="row" fxLayoutAlign=" start" style="margin-top:16px">
 									<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none"

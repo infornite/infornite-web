@@ -85,12 +85,17 @@ export class EditFacetComponent implements OnInit {
   //AC Connections
   acConnIsLoading = false;
   acConnFilteredFacets: any;
+  knowledgeAreaPlaceholder: String = ""
   acKAIsLoading = false;
   acKAFilteredFacets: any;
   parentPlaceholder: String = ""
   acParentIsLoading = false;
   acParentFilteredFacets: any;
-  knowledgeAreaPlaceholder: String = ""
+
+  relatedElementPlaceholder: String = ""
+  acREIsLoading = false;
+  acREFilteredFacets: any;
+  
 
 
   constructor(
@@ -139,6 +144,7 @@ export class EditFacetComponent implements OnInit {
     this.acConnAssign()
     this.acKAAssign()
     this.acParentAssign()
+    this.acREAssign()
 
   }
   loadConnections(facetId) {
@@ -169,6 +175,7 @@ export class EditFacetComponent implements OnInit {
     status: new FormControl({ value: FacetStatus.Published, disabled: false }, Validators.required),
     description: new FormControl(''),
     knowledgeArea: new FormControl('',),
+    relatedElement: new FormControl('',),
     parent: new FormControl('',),
     acronym: new FormControl('',),
     synonym: new FormControl('',),
@@ -202,6 +209,7 @@ export class EditFacetComponent implements OnInit {
   get status() { return this.overviewForm.get('status') }
   get description() { return this.overviewForm.get('description') }
   get knowledgeArea() { return this.overviewForm.get('knowledgeArea') }
+  get relatedElement() { return this.overviewForm.get('relatedElement') }
   get parent() { return this.overviewForm.get('parent') }
 
   get acronym() { return this.overviewForm.get('acronym') }
@@ -237,6 +245,7 @@ export class EditFacetComponent implements OnInit {
 
           var parentValue = result.data.Facet[0].parentId? {id:result.data.Facet[0].parentId,name:result.data.Facet[0].parentName}: {}
           var kaValue = result.data.Facet[0].knowledgeAreaId? {id:result.data.Facet[0].knowledgeAreaId,name:result.data.Facet[0].knowledgeAreaName}: {}
+          var reValue = result.data.Facet[0].relatedElementId? {id:result.data.Facet[0].relatedElementId,name:result.data.Facet[0].relatedElementName}: {}
 
           this.setFacetSpecificValues(result.data.Facet[0].type)
           this.overviewTitle = "Editing " + result.data.Facet[0].name
@@ -250,7 +259,7 @@ export class EditFacetComponent implements OnInit {
           this.overviewForm.get('description').setValue(result.data.Facet[0].description)
           this.overviewForm.get('parent').setValue(parentValue)
           this.overviewForm.get('knowledgeArea').setValue(kaValue)
-
+          this.overviewForm.get('relatedElement').setValue(reValue)
           this.overviewForm.get('acronym').setValue(result.data.Facet[0].acronym)
           this.overviewForm.get('synonym').setValue(result.data.Facet[0].synonym)
           this.overviewForm.get('validValue').setValue(result.data.Facet[0].validValue)
@@ -309,6 +318,7 @@ export class EditFacetComponent implements OnInit {
           status: this.status.value?this.status.value:null,
           description: this.description.value?this.description.value:null,
           knowledgeAreaId: this.knowledgeArea.value.id? this.knowledgeArea.value.id: null,
+          relatedElementId: this.relatedElement.value.id? this.relatedElement.value.id: null,
           parentId: this.parent.value.id? this.parent.value.id: null,
           acronym: this.acronym.value?this.acronym.value:null,
           synonym: this.synonym.value?this.synonym.value:null,
@@ -475,6 +485,37 @@ export class EditFacetComponent implements OnInit {
               this.acKAFilteredFacets = [];
             } else {
               this.acKAFilteredFacets = result.data.Facet;
+            }
+          });
+  }
+
+  acREAssign() {
+    this.relatedElement.valueChanges
+      .pipe(
+        takeUntil(this.unsubscribe),
+        tap((value) => {
+          if (!value || value.length < 2) {
+            this.acREFilteredFacets = []
+          }
+        }),
+        filter(value => value && value.length >= 2),
+        debounceTime(100),
+        tap(() => {
+          this.acREFilteredFacets = [];
+          this.acREIsLoading = true;
+        }),
+        switchMap(value =>
+          this.facetGQL.fetch({
+            filter: {
+              name: value,
+              type: [FacetType.Element]
+            }
+          }))).subscribe((result) => {
+            this.acREIsLoading = false;
+            if (result == undefined) {
+              this.acREFilteredFacets = [];
+            } else {
+              this.acREFilteredFacets = result.data.Facet;
             }
           });
   }

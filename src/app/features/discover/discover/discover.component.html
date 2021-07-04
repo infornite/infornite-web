@@ -101,7 +101,8 @@
 
 							</div>
 							<div fxLayout="row" fxFlex class="knowledge-area">
-								{{facet.knowledgeAreaName? facet.knowledgeAreaName: 'Unassigned'}}
+								<a *ngIf="facet.parentId" routerLink="{{'/view/' + facet.parentId}}">{{facet.parentName}}</a>
+								<span *ngIf="!facet.parentId">Top Level</span>
 							</div>
 						</div>
 						<mat-card-content fxLayout="column" fxLayoutAlign="start start">

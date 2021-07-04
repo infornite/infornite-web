@@ -124,9 +124,18 @@ export const arrFacetConnections: iConnection[] = [
         display: "is the custodian for knowledge area",
         displayAlternative: "is managed by custodian",
     },
+    //Element
+
 
     /*#region redundant*/
     /*
+        {
+        headType: FacetType.Element,
+        connection: ConnectionType.ElementIsImplementedVia,
+        tailType: FacetType.Attribute,
+        display: "is implemented via attribute",
+        displayAlternative: "implements element",
+    },
     {
         headType: FacetType.KnowledgeArea,
         connection: ConnectionType.KaContains,
@@ -280,6 +289,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
         facet: FacetType.Attribute,
         fields: {
             knowledgeArea: false,
+            relatedElement: true,
             validValue: true,
             primaryKey: true,
             format: true,

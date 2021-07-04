@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 
 import { selectDiscoverFilterPanel } from '@core/core.module';
 import { actionSettingsChangeDiscoverFilterPanel } from '../../../core/settings/settings.actions';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'n4-discover',
@@ -47,6 +48,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   orderBy = _Ordering
   searchCriteria: QueryFacetSearchInput = {
     search: null,
+    attributes: null,
     name: null,
     type: null,
     subType: null,
@@ -97,18 +99,36 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   }
 
   submitSearch(searchString: string) {
-    this.searchCriteria.search = searchString.replace(/\s/g, ' <-> ') + ':*'
+    this.searchCriteria.search = null
+    this.searchCriteria.attributes = null
+
+    //Atribute/Element --> Table or Report
+    if (searchString.startsWith('[') && searchString.match(/\[/g).length == 1 && searchString.endsWith(']') && searchString.match(/]/g).length == 1) {
+      var attributes = searchString.replace("[", "")
+        .replace("]", "")
+        .replace(" ", ",")
+        .split(',')
+        .filter(function (el) { 
+          return el != null;
+        });
+
+        attributes.forEach((name, index) => attributes[index] = `%${name.replace(/[\W_]+/g, '')}%`);
+
+      console.log(attributes)
+      this.searchCriteria.attributes = attributes
+    }
+    else (
+      this.searchCriteria.search = searchString.replace(/\s/g, ' <-> ') + ':*'
+    )
+
     this.runSearch(this.searchCriteria)
   }
-
   toggleShowFilters() {
     this.showFilters = !this.showFilters
     this.showFiltersText = (this.showFiltersText == "Show Filters") ? "Save Filters" : "Show Filters"
   }
 
   runSearch(searchCriteria: QueryFacetSearchInput) {
-    console.log('run search')
-    console.log(this.searchCriteria)
     this.resultsLoading = true;
     this.facetSearchGQL.fetch({
       filter: searchCriteria

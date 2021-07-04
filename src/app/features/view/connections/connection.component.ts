@@ -25,7 +25,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 })
 export class ViewConnectionComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() facetId: string;
-  @ViewChild(MatSort) set matSort(ms: MatSort) { this.sort = ms; }
+  @ViewChild(MatSort, { static: false }) set matSort(ms: MatSort) { this.sort = ms; }
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) { this.paginator = mp; this.setDataSourceAttributes(); }
 
   isSmallDevice$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map((result) => result.matches));
@@ -33,11 +33,14 @@ export class ViewConnectionComponent implements OnInit, AfterViewInit, OnChanges
   showTable: Boolean = false;
   resultsLoading: boolean;
   chipControl = new FormControl(new Set());
+  attributesOnly: Boolean = false;
   groupConnectionsByType: any;
   paginator: MatPaginator;
   sort: MatSort;
-  displayedColumns: string[] = ['fromName', 'fromType', 'display', 'toType', 'toName'];
-  displayedColumnsSmallDevice: string[] = ['display', 'toName'];
+
+  displayedColumns: string[] = ['display', 'toName', 'toType', 'toSubType'];
+  attributeDisplay: Boolean = false;
+  displayedColumnsSmallDevice: string[] = ['toName'];
   dataSource: MatTableDataSource<Connection> = new MatTableDataSource();
 
   constructor(
@@ -52,13 +55,17 @@ export class ViewConnectionComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngAfterViewInit() {
-    this.loadConnections()
-    
+    //this.loadConnections()
+
   }
 
   ngOnChanges() {
-    this.loadConnections()    
-}
+    if (this.facetId) {
+      this.chips.clear()
+      this.loadConnections()
+    }
+
+  }
 
   setDataSourceAttributes() {
     this.dataSource.paginator = this.paginator;
@@ -114,17 +121,30 @@ export class ViewConnectionComponent implements OnInit, AfterViewInit, OnChanges
   toggleConnectionTable() {
     this.showTable = !this.showTable
   }
+
   toggleChip(type: string, event: any) {
     const addChip = () => { this.chips.add(type); };
     const removeChip = () => { this.chips.delete(type); };
     this.chips.has(type) ? removeChip() : addChip();
 
     if (this.chips.size > 0) {
+      if (this.chips.size == 1 && this.chips.has('Attribute')) {
+        this.displayedColumns = ['toOrdinalPosition', 'toPrimaryKey', 'display', 'toName', 'toDataType', 'toPii'];
+        this.attributeDisplay = true;
+      }
+      else {
+        this.displayedColumns = ['display', 'toName', 'toType', 'toSubType'];
+        this.attributeDisplay = false;
+      }
       this.dataSource.filter = "filter"
     }
     else {
+      this.displayedColumns = ['display', 'toName', 'toType', 'toSubType'];
+      this.attributeDisplay = false;
       this.dataSource.filter = null
     }
+
+    //console.log(this.chips)
   }
 
 

@@ -25,6 +25,8 @@ query Facet($filter:QueryFacetInput){
     wiki
     knowledgeAreaId
     knowledgeAreaName
+    relatedElementId
+    relatedElementName
     parentId
     parentName
     createdAt
@@ -56,6 +58,8 @@ query FacetSnippet($filter:QueryFacetInput){
     knowledgeAreaName
     parentId
     parentName
+    relatedElementId
+    relatedElementName
     createdAt
     createdById
     createdByName
@@ -79,6 +83,8 @@ query FacetSearch($filter:QueryFacetSearchInput){
     knowledgeAreaName
     parentId
     parentName
+    relatedElementId
+    relatedElementName
     createdAt
     createdById
     createdByName
@@ -123,6 +129,7 @@ query FacetTree($id:ID!){
     description
     knowledgeAreaId
     parentId
+    relatedElementId
     acronym
     synonym
     validValue
@@ -192,6 +199,18 @@ query FacetTree($id:ID!){
     createdAt
     updatedAt
     source
+    fromParentName
+    fromParentType
+    fromPrimaryKey
+    fromDataType
+    fromPii
+    fromOrdinalPosition
+    toParentName
+    toParentType
+    toPrimaryKey
+    toDataType
+    toPii
+    toOrdinalPosition
       }
 }
 

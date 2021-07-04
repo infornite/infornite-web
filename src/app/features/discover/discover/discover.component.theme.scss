@@ -84,9 +84,13 @@
                                     color: mat.get-color-from-palette(mat.$gray-palette, 500);
                                     font-size: 14px;
                                     font-weight: 500;
+                                    a {
+                                        color: mat.get-color-from-palette(mat.$gray-palette, 500);
+                                        font-size: 14px;
+                                        font-weight: 500;
+                                      }
                                 }
                             }
-
                             mat-card-content{
                                 .additionalInfo{
                                     margin-top:10px;

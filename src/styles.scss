@@ -26,6 +26,8 @@
 @import "app/app/sidebar/sidebar.component.theme.scss";
 @import "app/shared/components/label/label.component.theme.scss";
 @import "app/shared/components/autocomplete/autocomplete.component.theme.scss";
+@import "app/features/view/connections/connection.component.theme.scss";
+
 
 // forms
 @import "app/features/edit/edit.component.theme.scss";
@@ -53,6 +55,7 @@
   @include n4-sidebar-theme($theme);
   @include n4-label-component-theme($theme);
   @include n4-ac-component-theme($theme);
+  @include n4-connection-component-theme($theme);
 
   //forms
   @include n4-edit-theme($theme);

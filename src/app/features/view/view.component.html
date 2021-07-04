@@ -1,19 +1,26 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="breadcrumb">
-            <div *ngFor="let crumb of facetBreadcrumb" class="crumb">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center" style="min-height:64px; height:unset">
+        <div class="breadcrumb" fxLayout="row wrap">
+            <div *ngFor="let crumb of facetBreadcrumb" class="crumb" fxHide fxShow.gt-sm>
                 <mat-icon *ngIf="!crumb.depth==0">play_arrow</mat-icon>
                 <span class="crumb-name">
                     <mat-icon [svgIcon]="crumb.type | lcWithDashes"></mat-icon>
                     <a routerLink="{{'/view/' + crumb.id}}">{{crumb.name}}</a>
                 </span>
             </div>
+            <div class="crumb" fxHide fxShow.lt-md>
+                <span class="crumb-name">
+                    <mat-icon [svgIcon]="facet.type | lcWithDashes"></mat-icon>
+                    {{facet.name}}
+                </span>
+            </div>
         </div>
         <div class="toolbar-buttons" fxLayout="row" fxLayoutAlign="end center">
-            <button mat-mini-fab  routerLink="{{'/explore/' + facet.id}}"  style="margin-right:4px" class="white">
+            <button mat-mini-fab routerLink="{{'/explore/' + facet.id}}" style="margin-right:4px" class="white">
                 <mat-icon>pin_drop</mat-icon>
             </button>
-            <button mat-mini-fab  routerLink="{{'/edit/' + facet.id}}" [queryParams]="{tabIndex: tabIndex}" class="white">
+            <button mat-mini-fab routerLink="{{'/edit/' + facet.id}}" [queryParams]="{tabIndex: tabIndex}"
+                class="white">
                 <mat-icon>edit</mat-icon>
             </button>
         </div>
@@ -36,7 +43,8 @@
                             fxLayoutAlign=" center">
                             <div class="view-inner-container">
                                 <div class="title" fxLayout="row wrap" fxLayoutAlign="space-between center">
-                                    <div fxFlex.lt-sm="100%" fxLayoutAlign="row wrap" [ngClass]="routeAnimationsElements">
+                                    <div fxFlex.lt-sm="100%" fxLayoutAlign="row wrap"
+                                        [ngClass]="routeAnimationsElements">
                                         <mat-icon style="margin-right:4px;align-self: center;"
                                             [svgIcon]="facet.type | lcWithDashes">
                                         </mat-icon>
@@ -46,7 +54,7 @@
                                         <mat-icon style="margin-left:10px;align-self: center;" color="accent"
                                             *ngIf="facet.primaryKey">vpn_key</mat-icon>
                                     </div>
-                                    
+
                                     <div fxFlex.lt-sm="100%" [ngClass]="routeAnimationsElements"
                                         fxLayoutAlign="center end" fxLayoutAlign.lt-sm="start start" fxHide
                                         fxShow.gt-xs>
@@ -125,7 +133,8 @@
                                         </div>
 
                                         <div fxFlex="100%" fxLayout="column" class="h2-header"
-                                            [ngClass]="routeAnimationsElements" *ngIf="facet.validValue && facet.validValue.length>0">
+                                            [ngClass]="routeAnimationsElements"
+                                            *ngIf="facet.validValue && facet.validValue.length>0">
                                             <h2>Valid Values:</h2>
                                             <div fxFlex="100%" fxLayoutAlign="row" [ngClass]="routeAnimationsElements">
                                                 <mat-chip-list>

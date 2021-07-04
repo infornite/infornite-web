@@ -11,7 +11,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
 //Graphql Support
-import { FacetGQL, ConnectionGQL, FacetBreadcrumbGQL, FacetBreadcrumb, FacetTreeGQL, FacetTree } from '@app/graphql/schema'
+import { FacetGQL, FacetBreadcrumbGQL, FacetBreadcrumb, FacetTree } from '@app/graphql/schema'
 import { FacetType} from '@app/graphql/schema'
 import { Facet } from '@app/graphql/schema'
 import { arrFacetDisplayFields, FacetDisplayFields } from '@gql/master'

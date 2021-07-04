@@ -18,7 +18,7 @@ export type Scalars = {
 
 export type Connection = {
   __typename?: 'Connection';
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   tenant?: Maybe<Scalars['String']>;
   fromId?: Maybe<Scalars['ID']>;
   fromName?: Maybe<Scalars['String']>;
@@ -41,6 +41,19 @@ export type Connection = {
   updatedAt?: Maybe<Scalars['String']>;
   updatedById?: Maybe<Scalars['String']>;
   source?: Maybe<Scalars['String']>;
+  /** Attribute Fields */
+  fromParentName?: Maybe<Scalars['String']>;
+  fromParentType?: Maybe<Scalars['String']>;
+  fromPrimaryKey?: Maybe<Scalars['Boolean']>;
+  fromDataType?: Maybe<Scalars['String']>;
+  fromPii?: Maybe<Scalars['Boolean']>;
+  fromOrdinalPosition?: Maybe<Scalars['Int']>;
+  toParentName?: Maybe<Scalars['String']>;
+  toParentType?: Maybe<Scalars['String']>;
+  toPrimaryKey?: Maybe<Scalars['Boolean']>;
+  toDataType?: Maybe<Scalars['String']>;
+  toPii?: Maybe<Scalars['Boolean']>;
+  toOrdinalPosition?: Maybe<Scalars['Int']>;
 };
 
 export type ConnectionStub = {
@@ -62,6 +75,7 @@ export enum ConnectionType {
   HasChild = 'HAS_CHILD',
   KaContains = 'KA_CONTAINS',
   CtrlControls = 'CTRL_CONTROLS',
+  ElementIsImplementedVia = 'ELEMENT_IS_IMPLEMENTED_VIA',
   /** Stakeholder */
   RoleOwner = 'ROLE_OWNER',
   RoleSteward = 'ROLE_STEWARD',
@@ -143,6 +157,8 @@ export type Facet = {
   parentName?: Maybe<Scalars['String']>;
   knowledgeAreaId?: Maybe<Scalars['String']>;
   knowledgeAreaName?: Maybe<Scalars['String']>;
+  relatedElementId?: Maybe<Scalars['String']>;
+  relatedElementName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   createdById?: Maybe<Scalars['String']>;
   createdByName?: Maybe<Scalars['String']>;
@@ -150,6 +166,7 @@ export type Facet = {
   updatedById?: Maybe<Scalars['String']>;
   updatedByName?: Maybe<Scalars['String']>;
   source?: Maybe<Scalars['String']>;
+  ordinalPosition?: Maybe<Scalars['Int']>;
 };
 
 export type FacetBreadcrumb = {
@@ -176,6 +193,8 @@ export type FacetSearch = {
   parentName?: Maybe<Scalars['String']>;
   knowledgeAreaId?: Maybe<Scalars['String']>;
   knowledgeAreaName?: Maybe<Scalars['String']>;
+  relatedElementId?: Maybe<Scalars['String']>;
+  relatedElementName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   createdById?: Maybe<Scalars['String']>;
   createdByName?: Maybe<Scalars['String']>;
@@ -196,6 +215,8 @@ export type FacetSnippet = {
   parentName?: Maybe<Scalars['String']>;
   knowledgeAreaId?: Maybe<Scalars['String']>;
   knowledgeAreaName?: Maybe<Scalars['String']>;
+  relatedElementId?: Maybe<Scalars['String']>;
+  relatedElementName?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   createdById?: Maybe<Scalars['String']>;
   createdByName?: Maybe<Scalars['String']>;
@@ -466,6 +487,7 @@ export type QueryFacetInput = {
 
 export type QueryFacetSearchInput = {
   search?: Maybe<Scalars['String']>;
+  attributes?: Maybe<Array<Maybe<Scalars['String']>>>;
   name?: Maybe<Scalars['String']>;
   type?: Maybe<Array<Maybe<FacetType>>>;
   subType?: Maybe<Array<Maybe<FacetSubType>>>;
@@ -513,6 +535,7 @@ export type UpsertFacetInput = {
   format?: Maybe<Format>;
   dataType?: Maybe<Scalars['String']>;
   pii?: Maybe<Scalars['Boolean']>;
+  ordinalPosition?: Maybe<Scalars['Int']>;
   securityClassification?: Maybe<SecurityClassification>;
   key?: Maybe<Scalars['Boolean']>;
   keyReason?: Maybe<Scalars['String']>;
@@ -523,6 +546,7 @@ export type UpsertFacetInput = {
   tag?: Maybe<Array<Maybe<Scalars['String']>>>;
   parentId?: Maybe<Scalars['String']>;
   knowledgeAreaId?: Maybe<Scalars['String']>;
+  relatedElementId?: Maybe<Scalars['String']>;
   wiki?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['String']>;
@@ -582,7 +606,7 @@ export type FacetQuery = (
   { __typename?: 'Query' }
   & { Facet?: Maybe<Array<Maybe<(
     { __typename?: 'Facet' }
-    & Pick<Facet, 'id' | 'tenant' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'acronym' | 'synonym' | 'validValue' | 'primaryKey' | 'format' | 'dataType' | 'pii' | 'securityClassification' | 'key' | 'keyReason' | 'accessGuidelines' | 'stakeholderTitle' | 'stakeholderEmailAddress' | 'stakeholderPhoneNumber' | 'tag' | 'wiki' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'parentId' | 'parentName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
+    & Pick<Facet, 'id' | 'tenant' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'acronym' | 'synonym' | 'validValue' | 'primaryKey' | 'format' | 'dataType' | 'pii' | 'securityClassification' | 'key' | 'keyReason' | 'accessGuidelines' | 'stakeholderTitle' | 'stakeholderEmailAddress' | 'stakeholderPhoneNumber' | 'tag' | 'wiki' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'relatedElementId' | 'relatedElementName' | 'parentId' | 'parentName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
   )>>> }
 );
 
@@ -608,7 +632,7 @@ export type FacetSnippetQuery = (
   { __typename?: 'Query' }
   & { FacetSnippet?: Maybe<Array<Maybe<(
     { __typename?: 'FacetSnippet' }
-    & Pick<FacetSnippet, 'id' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'parentId' | 'parentName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
+    & Pick<FacetSnippet, 'id' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'parentId' | 'parentName' | 'relatedElementId' | 'relatedElementName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
   )>>> }
 );
 
@@ -621,7 +645,7 @@ export type FacetSearchQuery = (
   { __typename?: 'Query' }
   & { FacetSearch?: Maybe<Array<Maybe<(
     { __typename?: 'FacetSearch' }
-    & Pick<FacetSearch, 'rank' | 'id' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'parentId' | 'parentName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
+    & Pick<FacetSearch, 'rank' | 'id' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'parentId' | 'parentName' | 'relatedElementId' | 'relatedElementName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
   )>>> }
 );
 
@@ -660,7 +684,7 @@ export type UpsertFacetMutation = (
   { __typename?: 'Mutation' }
   & { upsertFacet: (
     { __typename?: 'Facet' }
-    & Pick<Facet, 'id' | 'tenant' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'parentId' | 'acronym' | 'synonym' | 'validValue' | 'primaryKey' | 'format' | 'dataType' | 'pii' | 'securityClassification' | 'key' | 'keyReason' | 'accessGuidelines' | 'stakeholderTitle' | 'stakeholderEmailAddress' | 'stakeholderPhoneNumber' | 'tag' | 'wiki' | 'createdAt' | 'updatedAt'>
+    & Pick<Facet, 'id' | 'tenant' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'parentId' | 'relatedElementId' | 'acronym' | 'synonym' | 'validValue' | 'primaryKey' | 'format' | 'dataType' | 'pii' | 'securityClassification' | 'key' | 'keyReason' | 'accessGuidelines' | 'stakeholderTitle' | 'stakeholderEmailAddress' | 'stakeholderPhoneNumber' | 'tag' | 'wiki' | 'createdAt' | 'updatedAt'>
   ) }
 );
 
@@ -699,7 +723,7 @@ export type ConnectionQuery = (
   { __typename?: 'Query' }
   & { Connection?: Maybe<Array<Maybe<(
     { __typename?: 'Connection' }
-    & Pick<Connection, 'id' | 'fromId' | 'fromName' | 'fromType' | 'fromSubType' | 'fromDescription' | 'connection' | 'display' | 'displayAlternative' | 'toId' | 'toName' | 'toType' | 'toSubType' | 'toDescription' | 'targetId' | 'targetName' | 'targetType' | 'createdAt' | 'updatedAt' | 'source'>
+    & Pick<Connection, 'id' | 'fromId' | 'fromName' | 'fromType' | 'fromSubType' | 'fromDescription' | 'connection' | 'display' | 'displayAlternative' | 'toId' | 'toName' | 'toType' | 'toSubType' | 'toDescription' | 'targetId' | 'targetName' | 'targetType' | 'createdAt' | 'updatedAt' | 'source' | 'fromParentName' | 'fromParentType' | 'fromPrimaryKey' | 'fromDataType' | 'fromPii' | 'fromOrdinalPosition' | 'toParentName' | 'toParentType' | 'toPrimaryKey' | 'toDataType' | 'toPii' | 'toOrdinalPosition'>
   )>>> }
 );
 
@@ -768,6 +792,8 @@ export const FacetDocument = gql`
     wiki
     knowledgeAreaId
     knowledgeAreaName
+    relatedElementId
+    relatedElementName
     parentId
     parentName
     createdAt
@@ -823,6 +849,8 @@ export const FacetSnippetDocument = gql`
     knowledgeAreaName
     parentId
     parentName
+    relatedElementId
+    relatedElementName
     createdAt
     createdById
     createdByName
@@ -857,6 +885,8 @@ export const FacetSearchDocument = gql`
     knowledgeAreaName
     parentId
     parentName
+    relatedElementId
+    relatedElementName
     createdAt
     createdById
     createdByName
@@ -937,6 +967,7 @@ export const UpsertFacetDocument = gql`
     description
     knowledgeAreaId
     parentId
+    relatedElementId
     acronym
     synonym
     validValue
@@ -1042,6 +1073,18 @@ export const ConnectionDocument = gql`
     createdAt
     updatedAt
     source
+    fromParentName
+    fromParentType
+    fromPrimaryKey
+    fromDataType
+    fromPii
+    fromOrdinalPosition
+    toParentName
+    toParentType
+    toPrimaryKey
+    toDataType
+    toPii
+    toOrdinalPosition
   }
 }
     `;
