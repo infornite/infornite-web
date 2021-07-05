@@ -38,25 +38,33 @@
 				</th>
 				<td mat-cell *matCellDef="let row">
 					<span class="subtle-link" matTooltip="{{row.toDescription}}">
-						<div fxLayout="column" fxLayoutAlign="center start">
-							<a class="name" fxLayout="row" xLayoutAlign="start center" routerLink="{{'/view/' + (row.fromId == facetId? row.toId: row.fromId)}}">
-								<div style="padding-right:10px; height:18px; width:18px">
-									<mat-icon
-										[svgIcon]="(row.fromId == facetId? row.toType: row.fromType) | lcWithDashes">
-									</mat-icon>
-								</div>
+						<div fxLayout="row" fxLayoutAlign="center center">
+							<div fxFlex="36px">
+								<mat-icon [svgIcon]="(row.fromId == facetId? row.toType: row.fromType) | lcWithDashes">
+								</mat-icon>
+							</div>
+							<div fxFlex>
 								<div>
-									{{row.fromId == facetId? row.toName: row.fromName}}
+									<a class="name"
+										routerLink="{{'/view/' + (row.fromId == facetId? row.toId: row.fromId)}}" [queryParams]="{tabIndex: '0'}">
+										{{row.fromId == facetId? row.toName: row.fromName}}
+									</a>
 								</div>
-							</a>
-							<a class="parentName" *ngIf="!attributeDisplay && (row.fromId == facetId? row.toParentName: row.fromParentName)"
-								routerLink="{{'/view/' + (row.fromId == facetId? row.toParentId: row.fromParentId)}}" style="margin-left: 28px;">
-								{{row.fromId == facetId? row.toParentName: row.fromParentName}}
-							</a>
-							<a class="parentName" *ngIf="!attributeDisplay && !(row.fromId == facetId? row.toParentName: row.fromParentName)"  style="margin-left: 28px;"
-								routerLink="{{'#'}}">
-								Top Level
-							</a>
+								<div style="margin-top: -12px;">
+									<a class="parentName" *ngIf="!attributeDisplay && (row.fromId == facetId? row.toParentName: row.fromParentName)"
+										routerLink="{{'/view/' + (row.fromId == facetId? row.toParentId: row.fromParentId)}}" [queryParams]="{tabIndex: '0'}">
+										{{row.fromId == facetId? row.toParentName: row.fromParentName}}
+									</a>
+									<a class="parentName" *ngIf="!attributeDisplay && !(row.fromId == facetId? row.toParentName: row.fromParentName)"  routerLink="{{'#'}}">
+										Top Level
+									</a>
+								</div>
+
+							</div>
+							<!--
+							
+							
+							-->
 						</div>
 
 					</span>
@@ -75,7 +83,8 @@
 				<th mat-header-cell *matHeaderCellDef mat-sort-header> Subtype
 				</th>
 				<td mat-cell *matCellDef="let row">
-					{{row.fromId == facetId? (row.toSubType | replaceUnderscore): (row.fromSubType  | replaceUnderscore)}}
+					{{row.fromId == facetId? (row.toSubType | replaceUnderscore): (row.fromSubType |
+					replaceUnderscore)}}
 				</td>
 			</ng-container>
 

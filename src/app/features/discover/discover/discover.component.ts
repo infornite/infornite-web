@@ -104,17 +104,15 @@ export class DiscoverComponent implements OnInit, OnDestroy {
 
     //Atribute/Element --> Table or Report
     if (searchString.startsWith('[') && searchString.match(/\[/g).length == 1 && searchString.endsWith(']') && searchString.match(/]/g).length == 1) {
-      var attributes = searchString.replace("[", "")
+      var attributes = this.replaceAll(searchString," ",",").replace("[", "")
         .replace("]", "")
-        .replace(" ", ",")
         .split(',')
-        .filter(function (el) { 
+        .filter(function (el) {
           return el != null;
         });
 
-        attributes.forEach((name, index) => attributes[index] = `%${name.replace(/[\W_]+/g, '')}%`);
+      attributes.forEach((name, index) => attributes[index] = `%${name.replace(/[\W_]+/g, '')}%`);
 
-      console.log(attributes)
       this.searchCriteria.attributes = attributes
     }
     else (
@@ -123,6 +121,13 @@ export class DiscoverComponent implements OnInit, OnDestroy {
 
     this.runSearch(this.searchCriteria)
   }
+
+  replaceAll(str, find, replace) {
+    var escapedFind = find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    return str.replace(new RegExp(escapedFind, 'g'), replace);
+  }
+
+
   toggleShowFilters() {
     this.showFilters = !this.showFilters
     this.showFiltersText = (this.showFiltersText == "Show Filters") ? "Save Filters" : "Show Filters"

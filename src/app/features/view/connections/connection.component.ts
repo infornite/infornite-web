@@ -55,13 +55,13 @@ export class ViewConnectionComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngAfterViewInit() {
-    //this.loadConnections()
-
   }
 
   ngOnChanges() {
     if (this.facetId) {
       this.chips.clear()
+      this.dataSource.filter = null
+      this.displayedColumns = ['display', 'toName', 'toType', 'toSubType'];
       this.loadConnections()
     }
 
