@@ -38,14 +38,6 @@ query Facet($filter:QueryFacetInput){
   }
 }
 
-query FacetStub($filter:QueryFacetInput){
-  Facet(filter:$filter){
-    id
-    name
-    type
-  }
-}
-
 query FacetSnippet($filter:QueryFacetInput){
   FacetSnippet(filter:$filter){
     id
@@ -69,6 +61,16 @@ query FacetSnippet($filter:QueryFacetInput){
   }
 }
 
+query FacetStub($filter:QueryFacetStubInput){
+  FacetStub(filter:$filter){
+    id
+    name
+    type
+    parentId
+    parentName
+    parentType
+  }
+}
 
 query FacetSearch($filter:QueryFacetSearchInput){
   FacetSearch(filter:$filter){
@@ -177,6 +179,12 @@ query FacetTree($id:ID!){
     }
   }
 
+    mutation deleteFacet($input:DeleteFacetInput!){
+  deleteFacet(input:$input){
+    success
+    }
+  }
+
   query Connection($filter:QueryConnectionInput){
   Connection(filter:$filter){
      id
@@ -252,4 +260,14 @@ query Random{
     toName
     toType
       }
+}
+
+query DashboardFacets{
+  DashboardFacets{
+  type
+  subType
+  status
+  key
+  count
+  }
 }

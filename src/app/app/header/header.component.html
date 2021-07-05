@@ -24,9 +24,11 @@
           <mat-form-field appearance="legacy" class="header-search" style="margin-right:4px;" [@slideInOut]="searchVisible">
             <input #input matInput [matAutocomplete]="autoSearch" formControlName="searchInput" [placeholder]="searchPlaceholder" (focusout)="searchFocusOut()">
             <mat-autocomplete #autoSearch="matAutocomplete" [displayWith]="getACDisplayValue">
+              <!--
               <mat-option *ngIf="acSearchIsLoading" class="is-loading">Loading...
               </mat-option>
-              <ng-container *ngIf="!acSearchIsLoading">
+              -->
+              <!--<ng-container *ngIf="!acSearchIsLoading">-->
                 <mat-option *ngFor="let search of acSearchFilteredFacets" [value]="search" class="n4-ac"
                   matTooltip="{{search.name}}" (click)="acItemSelected(search.id, search.name, search.type)">
                   <span class="facet-auto-complete">
@@ -35,7 +37,7 @@
                     {{search.name}}
                   </span>
                 </mat-option>
-              </ng-container>
+              <!--</ng-container>-->
             </mat-autocomplete>
           </mat-form-field>
         </form>

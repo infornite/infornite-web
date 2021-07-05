@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
 import { SidebarService } from '../../services/sidebar.service';
-import { UpsertFacetGQL, FacetGQL, CreateConnectionGQL, DeleteConnectionGQL, ConnectionGQL, ConnectionDocument, FacetSnippetDocument, Connection, } from '@app/graphql/schema'
+import { UpsertFacetGQL, FacetStubGQL, CreateConnectionGQL, DeleteConnectionGQL, ConnectionGQL, ConnectionDocument, FacetSnippetDocument, Connection, } from '@app/graphql/schema'
 import {
   animate,
   state,
@@ -26,7 +26,7 @@ import {
   actionSettingsChangeLanguage
 } from '../../core/settings/settings.actions';
 import { uptime } from 'process';
-import { debounceTime, filter, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { FacetType } from '@app/graphql/schema';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -36,7 +36,7 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   animations: [
     trigger('slideInOut', [
       state('true', style({ width: '300px' })),
@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public auth: AuthService,
     private sidebarService: SidebarService,
-    private facetGQL: FacetGQL,
+    private facetStubGQL: FacetStubGQL,
     private router: Router,
   ) { }
 
@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit {
 
   get searchInput() { return this.searchForm.get('searchInput') }
 
-  acSearchAssign() {
+  _acSearchAssign() {
     this.searchInput.valueChanges
       .pipe(
         takeUntil(this.unsubscribe),
@@ -124,7 +124,7 @@ export class HeaderComponent implements OnInit {
           this.acSearchIsLoading = true;
         }),
         switchMap(value =>
-          this.facetGQL.fetch({
+          this.facetStubGQL.fetch({
             filter: {
               name: value,
               type: []
@@ -134,10 +134,48 @@ export class HeaderComponent implements OnInit {
             if (result == undefined) {
               this.acSearchFilteredFacets = [];
             } else {
-              this.acSearchFilteredFacets = result.data.Facet;
+              this.acSearchFilteredFacets = result.data.FacetStub;
             }
           });
   }
+
+  acSearchAssign(){
+    this.searchInput.valueChanges
+    .pipe(
+      tap((value) => {
+        if (!value || value.length < 3) {
+          this.acSearchFilteredFacets = []
+        }
+      }),
+      filter(value => value && value.length >= 3),
+      debounceTime(500),
+      tap(() => {
+        this.acSearchFilteredFacets = [];
+        this.acSearchIsLoading = true;
+      }),
+      switchMap(value => 
+        this.facetStubGQL.fetch({
+          filter: {
+            name: value,
+            type: []
+          }
+        })
+        .pipe(
+          finalize(() => {
+            this.acSearchIsLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe(data => {data
+      console.log(data['data']['FacetStub'])
+      if (data['data']['FacetStub'] == undefined) {
+        this.acSearchFilteredFacets = [];
+      } else {
+        this.acSearchFilteredFacets = data['data']['FacetStub'];
+      }
+    });
+}
 
   getACDisplayValue(option) {
     return option ? option.name : '';

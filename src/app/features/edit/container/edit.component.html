@@ -8,15 +8,20 @@
 		<mat-tab label="Overview">
 			<div class="form-outer-container" [ngClass.lt-md]="'small-device'" fxLayout="column" fxLayoutAlign=" center">
 				<mat-card>
-					<mat-card-header>
+					<mat-card-header fxLayout="row" xxLayoutAlign="space-between center">
 						<div fxFlex fxLayout="row" fxLayoutAlign="start center">
 							<mat-icon [svgIcon]="facetType  | lcWithDashes" style="padding-right:10px"></mat-icon>
 							<mat-card-title> {{facetName? facetName: 'New ' + facetType | replaceUnderscore}}
 							</mat-card-title>
 						</div>
+						<div>
+						<button mat-icon-button (click)="deleteFacet()" *ngIf="facetId">
+							<mat-icon>delete</mat-icon>
+						</button>
+					</div>
 					</mat-card-header>
 					<mat-card-content [ngStyle.gt-sm]="{'padding-right.px': 30}">
-						<form [formGroup]="overviewForm" (ngSubmit)="upsertFacet()">
+						<form [formGroup]="overviewForm" (ngSubmit)="upsertFacet(true)">
 							<div fxLayout="row" fxLayoutAlign=" start">
 								<div fxHide fxShow.gt-sm fxFlex="20" fxLayoutAlign="end none" class="form-field-label">
 									<h4>Name:</h4>
@@ -430,8 +435,7 @@
 									&nbsp;
 								</div>
 								<div fxFlex="80" fxFlex.gt-sm="100">
-									<button mat-raised-button type="submit" [disabled]="!overviewForm.valid"
-										color="primary">Save</button>
+									<button mat-raised-button type="submit" [disabled]="!overviewForm.valid" color="primary">Save & Close</button>
 								</div>
 							</div>
 						</form>
@@ -452,7 +456,7 @@
 						</div>
 					</mat-card-header>
 					<mat-card-content class="add-connections">
-						<form [formGroup]="connectionsForm" (ngSubmit)="upsertFacet()">
+						<form [formGroup]="connectionsForm" (ngSubmit)="upsertFacet(true)">
 							<div fxLayout="row wrap" fxLayout.gt-sm="row"  fxLayoutAlign="start center" fxLayoutGap="16px">
 								<div fxFlex="25" fxLayoutAlign="start center" style="margin-left:6px">
 									<h4>{{facetName}}</h4>

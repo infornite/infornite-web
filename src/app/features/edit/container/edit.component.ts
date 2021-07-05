@@ -14,14 +14,14 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, tap, switchMap, finalize, filter, take, takeUntil } from 'rxjs/operators';
 
 //Graphql Support
-import { UpsertFacetGQL, FacetGQL, CreateConnectionGQL, DeleteConnectionGQL, ConnectionGQL, ConnectionDocument, FacetSnippetDocument, Connection, } from '@app/graphql/schema'
-import { FacetType, FacetSubType, FacetStatus, ConnectionType, Format,  SecurityClassification} from '@app/graphql/schema'
+import { UpsertFacetGQL, FacetGQL, CreateConnectionGQL, DeleteConnectionGQL, ConnectionGQL, ConnectionDocument, FacetSnippetDocument, Connection, DeleteFacetGQL } from '@app/graphql/schema'
+import { FacetType, FacetSubType, FacetStatus, ConnectionType, Format, SecurityClassification } from '@app/graphql/schema'
 import { arrFacetTypeSubType, IFacetTypesSubTypes, arrFacetConnections, iConnection } from '@gql/master'
 
 //Utility
 import { toCamelCase } from '@shared/utility/toCamelCase'
 
-import { arrFacetDisplayFields,  FacetDisplayFields} from '@gql/master'
+import { arrFacetDisplayFields, FacetDisplayFields } from '@gql/master'
 
 @Component({
   selector: 'n4-facet-view',
@@ -54,7 +54,7 @@ export class EditFacetComponent implements OnInit {
   paginator: MatPaginator;
   sort: MatSort;
   dataSource: MatTableDataSource<Connection> = new MatTableDataSource<Connection>();
-  displayedColumns: string[] = this.isSmallDevice$? ['id', 'display', 'toType', 'toName'] : ['id', 'fromName', 'fromType', 'display', 'toType', 'toName'];
+  displayedColumns: string[] = this.isSmallDevice$ ? ['id', 'display', 'toType', 'toName'] : ['id', 'fromName', 'fromType', 'display', 'toType', 'toName'];
   obs: Observable<any>;
   possibleConnections: iConnection[];
   groupConnectionsByType: any;
@@ -95,7 +95,7 @@ export class EditFacetComponent implements OnInit {
   relatedElementPlaceholder: String = ""
   acREIsLoading = false;
   acREFilteredFacets: any;
-  
+
 
 
   constructor(
@@ -110,6 +110,7 @@ export class EditFacetComponent implements OnInit {
     private deleteConnectionGQL: DeleteConnectionGQL,
     private changeDetectorRef: ChangeDetectorRef,
     private sidebarService: SidebarService,
+    private deleteFacetGQL: DeleteFacetGQL
 
   ) { }
 
@@ -193,7 +194,7 @@ export class EditFacetComponent implements OnInit {
     stakeholderEmailAddress: new FormControl('',),
     stakeholderPhoneNumber: new FormControl('',),
     tag: new FormControl('',),
-    
+
   });
 
   connectionsForm = new FormGroup({
@@ -243,9 +244,9 @@ export class EditFacetComponent implements OnInit {
         if (result) {
           console.log(result)
 
-          var parentValue = result.data.Facet[0].parentId? {id:result.data.Facet[0].parentId,name:result.data.Facet[0].parentName}: {}
-          var kaValue = result.data.Facet[0].knowledgeAreaId? {id:result.data.Facet[0].knowledgeAreaId,name:result.data.Facet[0].knowledgeAreaName}: {}
-          var reValue = result.data.Facet[0].relatedElementId? {id:result.data.Facet[0].relatedElementId,name:result.data.Facet[0].relatedElementName}: {}
+          var parentValue = result.data.Facet[0].parentId ? { id: result.data.Facet[0].parentId, name: result.data.Facet[0].parentName } : {}
+          var kaValue = result.data.Facet[0].knowledgeAreaId ? { id: result.data.Facet[0].knowledgeAreaId, name: result.data.Facet[0].knowledgeAreaName } : {}
+          var reValue = result.data.Facet[0].relatedElementId ? { id: result.data.Facet[0].relatedElementId, name: result.data.Facet[0].relatedElementName } : {}
 
           this.setFacetSpecificValues(result.data.Facet[0].type)
           this.overviewTitle = "Editing " + result.data.Facet[0].name
@@ -253,7 +254,7 @@ export class EditFacetComponent implements OnInit {
           this.facetName = result.data.Facet[0].name;
           this.overviewForm.get('name').setValue(result.data.Facet[0].name)
           this.overviewForm.get('type').setValue(result.data.Facet[0].type)
-          this.facetType=result.data.Facet[0].type
+          this.facetType = result.data.Facet[0].type
           this.overviewForm.get('subType').setValue(result.data.Facet[0].subType)
           this.overviewForm.get('status').setValue(result.data.Facet[0].status)
           this.overviewForm.get('description').setValue(result.data.Facet[0].description)
@@ -304,37 +305,37 @@ export class EditFacetComponent implements OnInit {
     } else {
       this.router.navigate(['/error'])
     }
-}
+  }
 
   //Form submissions
-  upsertFacet() {
+  upsertFacet(redirect: boolean) {
     if (this.overviewForm.dirty) {
       this.upsertFacetGQL.mutate({
         input: {
           id: this.facetId,
-          name: this.name.value?this.name.value:null,
-          type: this.type.value?this.type.value:null,
-          subType: this.subType.value?this.subType.value:null,
-          status: this.status.value?this.status.value:null,
-          description: this.description.value?this.description.value:null,
-          knowledgeAreaId: this.knowledgeArea.value.id? this.knowledgeArea.value.id: null,
-          relatedElementId: this.relatedElement.value.id? this.relatedElement.value.id: null,
-          parentId: this.parent.value.id? this.parent.value.id: null,
-          acronym: this.acronym.value?this.acronym.value:null,
-          synonym: this.synonym.value?this.synonym.value:null,
-          validValue: this.validValue.value?this.validValue.value:null,
-          primaryKey: this.primaryKey.value? this.primaryKey.value: null,
-          format: this.format.value?this.format.value:null,
-          dataType: this.dataType.value?this.dataType.value:null,
-          pii: this.pii.value? this.pii.value: null,
-          securityClassification: this.securityClassification.value?this.securityClassification.value:null,
-          key: this.key.value? this.key.value: null,
-          keyReason: this.keyReason.value?this.keyReason.value:null,
-          accessGuidelines: this.accessGuidelines.value?this.accessGuidelines.value:null,
-          stakeholderTitle: this.stakeholderTitle.value?this.stakeholderTitle.value:null,
-          stakeholderEmailAddress: this.stakeholderEmailAddress.value?this.stakeholderEmailAddress.value:null,
-          stakeholderPhoneNumber: this.stakeholderPhoneNumber.value?this.stakeholderPhoneNumber.value:null,
-          tag: this.tag.value?this.tag.value:null
+          name: this.name.value ? this.name.value : null,
+          type: this.type.value ? this.type.value : null,
+          subType: this.subType.value ? this.subType.value : null,
+          status: this.status.value ? this.status.value : null,
+          description: this.description.value ? this.description.value : null,
+          knowledgeAreaId: this.knowledgeArea.value.id ? this.knowledgeArea.value.id : null,
+          relatedElementId: this.relatedElement.value.id ? this.relatedElement.value.id : null,
+          parentId: this.parent.value.id ? this.parent.value.id : null,
+          acronym: this.acronym.value ? this.acronym.value : null,
+          synonym: this.synonym.value ? this.synonym.value : null,
+          validValue: this.validValue.value ? this.validValue.value : null,
+          primaryKey: this.primaryKey.value ? this.primaryKey.value : null,
+          format: this.format.value ? this.format.value : null,
+          dataType: this.dataType.value ? this.dataType.value : null,
+          pii: this.pii.value ? this.pii.value : null,
+          securityClassification: this.securityClassification.value ? this.securityClassification.value : null,
+          key: this.key.value ? this.key.value : null,
+          keyReason: this.keyReason.value ? this.keyReason.value : null,
+          accessGuidelines: this.accessGuidelines.value ? this.accessGuidelines.value : null,
+          stakeholderTitle: this.stakeholderTitle.value ? this.stakeholderTitle.value : null,
+          stakeholderEmailAddress: this.stakeholderEmailAddress.value ? this.stakeholderEmailAddress.value : null,
+          stakeholderPhoneNumber: this.stakeholderPhoneNumber.value ? this.stakeholderPhoneNumber.value : null,
+          tag: this.tag.value ? this.tag.value : null
         }
       },
         { refetchQueries: [{ query: FacetSnippetDocument }] }
@@ -344,6 +345,14 @@ export class EditFacetComponent implements OnInit {
           if (result.data.upsertFacet.id) {
             this.facetId = result.data.upsertFacet.id
             this.notificationService.success('The facet has been saved succesfully.')
+            console.log('hey', redirect)
+            if (redirect) {
+              this.router.navigate(['/view', this.facetId])
+            }
+            else {
+
+            }
+
           }
           else {
             this.notificationService.error('There was a problem. Please try again.')
@@ -354,6 +363,7 @@ export class EditFacetComponent implements OnInit {
       this.notificationService.default('No changes made.')
     }
   }
+
 
   saveConnection() {
     if (this.connectionsForm.dirty) {
@@ -386,6 +396,27 @@ export class EditFacetComponent implements OnInit {
       this.notificationService.default('No changes made.')
     }
   }
+
+  deleteFacet() {
+    this.deleteFacetGQL.mutate({
+      input: {
+        id: this.facetId
+      },
+    },
+      { refetchQueries: [{ query: ConnectionDocument }] }
+    )
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result.data.deleteFacet) {
+          this.notificationService.success('The facet has been removed succesfully.')
+          this.router.navigate(['/discover'])
+        }
+        else {
+          this.notificationService.error('There was a problem. Please try again.')
+        }
+      })
+  }
+
 
   deleteConnection(connectionId) {
     this.deleteConnectionGQL.mutate({
@@ -557,7 +588,7 @@ export class EditFacetComponent implements OnInit {
 
   getACDisplayValue(option) {
     console.log(option)
-    return option ? option.name: '';
+    return option ? option.name : '';
   }
 
   ngOnDestroy() {
@@ -565,7 +596,7 @@ export class EditFacetComponent implements OnInit {
     this.unsubscribe.complete()
   }
 
-  dummy(){
-    
+  dummy() {
+
   }
 }

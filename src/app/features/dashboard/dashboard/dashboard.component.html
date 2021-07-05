@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+
+
+<div class="dashboard" fxLayout="row wrap" fxFill fxLayoutGap="8px grid">
+    <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px">
+        <app-bar-chart [label]="facetTypeLabel" [labels]="facetTypeLabels" [data] ="facetTypeData"></app-bar-chart>
+    </div>
+</div>

@@ -60,12 +60,18 @@ const routes: Routes = [
         (m) => m.SettingsModule
       )
   },
-  /*
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      )
+  },
   {
     path: '**',
     redirectTo: 'splash'
   }
-  */
 ];
 
 @NgModule({

@@ -7,7 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: DiscoverComponent,
-    //data: { title: 'n4.menu.splash' }
   },
   {
     path: ':search',

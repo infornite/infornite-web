@@ -95,12 +95,30 @@ export type CreateConnectionInput = {
   source?: Maybe<Scalars['String']>;
 };
 
+export type DashboardFacets = {
+  __typename?: 'DashboardFacets';
+  type?: Maybe<FacetType>;
+  subType?: Maybe<FacetSubType>;
+  status?: Maybe<FacetStatus>;
+  key?: Maybe<Scalars['Boolean']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
 export type DeleteConnectionInput = {
   id: Scalars['ID'];
 };
 
 export type DeleteConnectionResponse = {
   __typename?: 'DeleteConnectionResponse';
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type DeleteFacetInput = {
+  id: Scalars['ID'];
+};
+
+export type DeleteFacetResponse = {
+  __typename?: 'DeleteFacetResponse';
   success?: Maybe<Scalars['Boolean']>;
 };
 
@@ -230,6 +248,16 @@ export enum FacetStatus {
   Published = 'Published'
 }
 
+export type FacetStub = {
+  __typename?: 'FacetStub';
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<FacetType>;
+  parentId?: Maybe<Scalars['String']>;
+  parentName?: Maybe<Scalars['String']>;
+  parentType?: Maybe<FacetType>;
+};
+
 export enum FacetSubType {
   /** Knowledge_Area */
   KnowledgeArea = 'Knowledge_Area',
@@ -310,6 +338,7 @@ export type Mutation = {
   upsertFacet: Facet;
   createConnection: Connection;
   deleteConnection: DeleteConnectionResponse;
+  deleteFacet: DeleteFacetResponse;
   upsertUser: User;
 };
 
@@ -349,6 +378,16 @@ export type MutationDeleteConnectionArgs = {
  * ########################            MUTATION           #########################
  * ################################################################################
  */
+export type MutationDeleteFacetArgs = {
+  input: DeleteFacetInput;
+};
+
+
+/**
+ * ################################################################################
+ * ########################            MUTATION           #########################
+ * ################################################################################
+ */
 export type MutationUpsertUserArgs = {
   input: UpsertUserInput;
 };
@@ -362,6 +401,7 @@ export type Query = {
   __typename?: 'Query';
   Facet?: Maybe<Array<Maybe<Facet>>>;
   FacetSnippet?: Maybe<Array<Maybe<FacetSnippet>>>;
+  FacetStub?: Maybe<Array<Maybe<FacetStub>>>;
   FacetSearch?: Maybe<Array<Maybe<FacetSearch>>>;
   FacetBreadcrumb?: Maybe<Array<Maybe<FacetBreadcrumb>>>;
   FacetTree?: Maybe<Array<Maybe<FacetTree>>>;
@@ -370,6 +410,7 @@ export type Query = {
   Explore?: Maybe<Array<Maybe<Explore>>>;
   Random?: Maybe<Array<Maybe<Random>>>;
   User?: Maybe<Array<Maybe<User>>>;
+  DashboardFacets?: Maybe<Array<Maybe<DashboardFacets>>>;
 };
 
 
@@ -390,6 +431,16 @@ export type QueryFacetArgs = {
  */
 export type QueryFacetSnippetArgs = {
   filter?: Maybe<QueryFacetInput>;
+};
+
+
+/**
+ * ################################################################################
+ * ########################              QUERY            #########################
+ * ################################################################################
+ */
+export type QueryFacetStubArgs = {
+  filter?: Maybe<QueryFacetStubInput>;
 };
 
 
@@ -492,6 +543,15 @@ export type QueryFacetSearchInput = {
   type?: Maybe<Array<Maybe<FacetType>>>;
   subType?: Maybe<Array<Maybe<FacetSubType>>>;
   status?: Maybe<Array<Maybe<FacetStatus>>>;
+  first?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Array<Maybe<_Ordering>>>;
+};
+
+export type QueryFacetStubInput = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<Array<Maybe<FacetType>>>;
   first?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<Maybe<_Ordering>>>;
@@ -610,19 +670,6 @@ export type FacetQuery = (
   )>>> }
 );
 
-export type FacetStubQueryVariables = Exact<{
-  filter?: Maybe<QueryFacetInput>;
-}>;
-
-
-export type FacetStubQuery = (
-  { __typename?: 'Query' }
-  & { Facet?: Maybe<Array<Maybe<(
-    { __typename?: 'Facet' }
-    & Pick<Facet, 'id' | 'name' | 'type'>
-  )>>> }
-);
-
 export type FacetSnippetQueryVariables = Exact<{
   filter?: Maybe<QueryFacetInput>;
 }>;
@@ -633,6 +680,19 @@ export type FacetSnippetQuery = (
   & { FacetSnippet?: Maybe<Array<Maybe<(
     { __typename?: 'FacetSnippet' }
     & Pick<FacetSnippet, 'id' | 'name' | 'type' | 'subType' | 'status' | 'description' | 'knowledgeAreaId' | 'knowledgeAreaName' | 'parentId' | 'parentName' | 'relatedElementId' | 'relatedElementName' | 'createdAt' | 'createdById' | 'createdByName' | 'updatedAt' | 'updatedById' | 'updatedByName'>
+  )>>> }
+);
+
+export type FacetStubQueryVariables = Exact<{
+  filter?: Maybe<QueryFacetStubInput>;
+}>;
+
+
+export type FacetStubQuery = (
+  { __typename?: 'Query' }
+  & { FacetStub?: Maybe<Array<Maybe<(
+    { __typename?: 'FacetStub' }
+    & Pick<FacetStub, 'id' | 'name' | 'type' | 'parentId' | 'parentName' | 'parentType'>
   )>>> }
 );
 
@@ -714,6 +774,19 @@ export type DeleteConnectionMutation = (
   ) }
 );
 
+export type DeleteFacetMutationVariables = Exact<{
+  input: DeleteFacetInput;
+}>;
+
+
+export type DeleteFacetMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteFacet: (
+    { __typename?: 'DeleteFacetResponse' }
+    & Pick<DeleteFacetResponse, 'success'>
+  ) }
+);
+
 export type ConnectionQueryVariables = Exact<{
   filter?: Maybe<QueryConnectionInput>;
 }>;
@@ -761,6 +834,17 @@ export type ConnectionStubQuery = (
   & { ConnectionStub?: Maybe<Array<Maybe<(
     { __typename?: 'ConnectionStub' }
     & Pick<ConnectionStub, 'id' | 'fromId' | 'fromName' | 'fromType' | 'connection' | 'toId' | 'toName' | 'toType'>
+  )>>> }
+);
+
+export type DashboardFacetsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DashboardFacetsQuery = (
+  { __typename?: 'Query' }
+  & { DashboardFacets?: Maybe<Array<Maybe<(
+    { __typename?: 'DashboardFacets' }
+    & Pick<DashboardFacets, 'type' | 'subType' | 'status' | 'key' | 'count'>
   )>>> }
 );
 
@@ -816,26 +900,6 @@ export const FacetDocument = gql`
       super(apollo);
     }
   }
-export const FacetStubDocument = gql`
-    query FacetStub($filter: QueryFacetInput) {
-  Facet(filter: $filter) {
-    id
-    name
-    type
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class FacetStubGQL extends Apollo.Query<FacetStubQuery, FacetStubQueryVariables> {
-    document = FacetStubDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const FacetSnippetDocument = gql`
     query FacetSnippet($filter: QueryFacetInput) {
   FacetSnippet(filter: $filter) {
@@ -866,6 +930,29 @@ export const FacetSnippetDocument = gql`
   })
   export class FacetSnippetGQL extends Apollo.Query<FacetSnippetQuery, FacetSnippetQueryVariables> {
     document = FacetSnippetDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FacetStubDocument = gql`
+    query FacetStub($filter: QueryFacetStubInput) {
+  FacetStub(filter: $filter) {
+    id
+    name
+    type
+    parentId
+    parentName
+    parentType
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FacetStubGQL extends Apollo.Query<FacetStubQuery, FacetStubQueryVariables> {
+    document = FacetStubDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1050,6 +1137,24 @@ export const DeleteConnectionDocument = gql`
       super(apollo);
     }
   }
+export const DeleteFacetDocument = gql`
+    mutation deleteFacet($input: DeleteFacetInput!) {
+  deleteFacet(input: $input) {
+    success
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteFacetGQL extends Apollo.Mutation<DeleteFacetMutation, DeleteFacetMutationVariables> {
+    document = DeleteFacetDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const ConnectionDocument = gql`
     query Connection($filter: QueryConnectionInput) {
   Connection(filter: $filter) {
@@ -1168,6 +1273,28 @@ export const ConnectionStubDocument = gql`
   })
   export class ConnectionStubGQL extends Apollo.Query<ConnectionStubQuery, ConnectionStubQueryVariables> {
     document = ConnectionStubDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DashboardFacetsDocument = gql`
+    query DashboardFacets {
+  DashboardFacets {
+    type
+    subType
+    status
+    key
+    count
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DashboardFacetsGQL extends Apollo.Query<DashboardFacetsQuery, DashboardFacetsQueryVariables> {
+    document = DashboardFacetsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
