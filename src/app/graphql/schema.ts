@@ -76,6 +76,7 @@ export enum ConnectionType {
   KaContains = 'KA_CONTAINS',
   CtrlControls = 'CTRL_CONTROLS',
   ElementIsImplementedVia = 'ELEMENT_IS_IMPLEMENTED_VIA',
+  ElementIsRelatedTo = 'ELEMENT_IS_RELATED_TO',
   /** Stakeholder */
   RoleOwner = 'ROLE_OWNER',
   RoleSteward = 'ROLE_STEWARD',

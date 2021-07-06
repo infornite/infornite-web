@@ -81,7 +81,7 @@
 							<mat-icon>settings</mat-icon>
 						</button>
 						-->
-						<mat-paginator #paginatorTop [pageSizeOptions]="[10, 25, 100]" hidePageSize="false">
+						<mat-paginator #paginatorTop [pageSizeOptions]="[50, 100]" hidePageSize="false">
 						</mat-paginator>
 
 					</div>
@@ -104,7 +104,7 @@
 						<div class="discover-card-header" fxLayout="column">
 							<div fxLayout="row wrap" fxFlex fxLayoutAlign="space-between center">
 								<div fxLayout="row">
-									<a routerLink="{{'/view/' + facet.id}}">{{facet.name}}</a>
+									<a routerLink="{{'/view/' + facet.id}}" [ngClass.lt-sm]="'break-word-wrap'">{{facet.name}}</a>
 								</div>
 								<div fxLayout="col" fxLayoutGap="12px">
 									<in4-label *ngIf="facet.subType" labelText="{{facet.subType | replaceUnderscore}}"
@@ -116,7 +116,7 @@
 							</div>
 							<div fxLayout="row" fxFlex class="knowledge-area">
 								<a *ngIf="facet.parentId"
-									routerLink="{{'/view/' + facet.parentId}}">{{facet.parentName}}</a>
+									routerLink="{{'/view/' + facet.parentId}}" class="break-word-wrap">{{facet.parentName}}</a>
 								<span *ngIf="!facet.parentId">Top Level</span>
 							</div>
 						</div>

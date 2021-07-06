@@ -29,7 +29,6 @@
 @import "app/shared/components/autocomplete/autocomplete.component.theme.scss";
 @import "app/features/view/connections/connection.component.theme.scss";
 
-
 // forms
 @import "app/features/edit/edit.component.theme.scss";
 
@@ -156,7 +155,14 @@ md-editor {
   }
 }
 
-.lightbox-dialog .mat-dialog-container  {
+.lightbox-dialog .mat-dialog-container {
   padding: 0;
   border: 1px solid gray;
+}
+
+.break-word-wrap {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
 }

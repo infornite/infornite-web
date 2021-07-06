@@ -124,6 +124,13 @@ export const arrFacetConnections: iConnection[] = [
         display: "is the custodian for knowledge area",
         displayAlternative: "is managed by custodian",
     },
+    {
+        headType: FacetType.Element,
+        connection: ConnectionType.ElementIsRelatedTo,
+        tailType: FacetType.Element,
+        display: "is related to",
+        displayAlternative: "is related to element",
+    },
     //Element
 
 

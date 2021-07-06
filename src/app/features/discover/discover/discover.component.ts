@@ -39,7 +39,7 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
   showFilters: boolean = false
   showFiltersText: string = "Show Filters"
   resultsLoading: boolean;
-  defaultResultsSize: number = 200;
+  defaultResultsSize: number = 100;
   firstLoadComplete: boolean = false;
 
   //Schema
@@ -56,7 +56,7 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
     status: null,
     first: this.defaultResultsSize,
     offset: null,
-    orderBy: [_Ordering.UpdatedAtDesc]
+    orderBy: null,
   }
 
   x: boolean
