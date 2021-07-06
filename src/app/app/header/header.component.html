@@ -12,14 +12,12 @@
     </div>
     <div class="right-side" fxLayout="row" fxLayoutAlign="center center">
       <div class="authenticated" *ngIf="auth.isAuthenticated$ | async" fxLayout="row" fxLayoutAlign="center center">
-        <div fxHide fxShow.gt-sm>
-          <div class="header-search" [@slideInOut]="searchVisible">
+          <div class="header-search" [@slideInOut]="searchVisible" fxHide fxShow.gt-sm>
             <in4-ac></in4-ac>
           </div>
-          <button mat-mini-fab style="margin-right:4px;" (click)="search()">
+          <button mat-mini-fab style="margin-right:4px;" (click)="search()" fxHide fxShow.gt-sm>
             <mat-icon>search</mat-icon>
           </button>
-        </div>
         <n4-quick-add style="margin-right:4px;"></n4-quick-add>
         <n4-user-popup></n4-user-popup>
       </div>
