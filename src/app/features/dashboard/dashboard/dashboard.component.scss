@@ -1,0 +1,45 @@
+.chart-card {
+    margin: 10px;
+}
+
+@import "../../../../styles/constants.scss";
+
+@mixin full-height() {
+    min-height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - 0px);
+    min-height: -moz-calc(100vh - #{$header-height} - #{$footer-height} - 0px);
+    min-height: calc(100vh - #{$header-height} - #{$footer-height} - 0px);
+    min-height: -o-calc(100vh - #{$header-height} - #{$footer-height} - 0px);
+}
+
+.dashboard-outer {
+    mat-sidenav-container {
+        @include full-height;
+        mat-sidenav {
+            min-width: 300px;
+
+            .filter {
+                font-size: 14px;
+                min-width: 300px;
+                padding: 3px;
+                margin: 1px 25px 25px 25px;
+
+                .filter-inner {
+                    :nth-child(n + 4).header {
+                        margin-top: 18px;
+                    }
+
+                    .header.sort-by {
+                        padding: 14px 0px 14px 0px;
+                    }
+
+                    mat-form-field {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        mat-sidenav-content{
+            @include full-height;
+        }
+    }
+}

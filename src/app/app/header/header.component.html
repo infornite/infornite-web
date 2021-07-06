@@ -9,52 +9,26 @@
           {{item.label | translate}}
         </button>
       </ng-container>
-      <ng-container *ngIf="!(auth.isAuthenticated$ | async)">
-        <button mat-button class="nav-button" routerLink="">
-          Home
-        </button>
-      </ng-container>
     </div>
     <div class="right-side" fxLayout="row" fxLayoutAlign="center center">
-
-      
-
       <div class="authenticated" *ngIf="auth.isAuthenticated$ | async" fxLayout="row" fxLayoutAlign="center center">
-        <form [formGroup]="searchForm" (ngSubmit)="runSearch()">
-          <mat-form-field appearance="legacy" class="header-search" style="margin-right:4px;" [@slideInOut]="searchVisible">
-            <input #input matInput [matAutocomplete]="autoSearch" formControlName="searchInput" [placeholder]="searchPlaceholder" (focusout)="searchFocusOut()">
-            <mat-autocomplete #autoSearch="matAutocomplete" [displayWith]="getACDisplayValue">
-              <!--
-              <mat-option *ngIf="acSearchIsLoading" class="is-loading">Loading...
-              </mat-option>
-              -->
-              <!--<ng-container *ngIf="!acSearchIsLoading">-->
-                <mat-option *ngFor="let search of acSearchFilteredFacets" [value]="search" class="n4-ac"
-                  matTooltip="{{search.name}}" (click)="acItemSelected(search.id, search.name, search.type)">
-                  <span class="facet-auto-complete">
-                    <mat-icon [svgIcon]="search.type | lcWithDashes">
-                    </mat-icon>
-                    {{search.name}}
-                  </span>
-                </mat-option>
-              <!--</ng-container>-->
-            </mat-autocomplete>
-          </mat-form-field>
-        </form>
-        <button mat-mini-fab style="margin-right:4px;" (click)="search()">
-          <mat-icon>search</mat-icon>
-        </button>
-
+        <div fxHide fxShow.gt-sm>
+          <div class="header-search" [@slideInOut]="searchVisible">
+            <in4-ac></in4-ac>
+          </div>
+          <button mat-mini-fab style="margin-right:4px;" (click)="search()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
         <n4-quick-add style="margin-right:4px;"></n4-quick-add>
         <n4-user-popup></n4-user-popup>
       </div>
       <div class="not-authenticated" *ngIf="!(auth.isAuthenticated$ | async)">
-        <button mat-button (click)="auth.loginWithRedirect({ redirect_uri: baseDomain + '/discover',  appState: { target:'/discover' }})">
+        <button mat-button
+          (click)="auth.loginWithRedirect({ redirect_uri: baseDomain + '/discover',  appState: { target:'/discover' }})">
           Login
         </button>
       </div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
-
-

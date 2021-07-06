@@ -262,12 +262,21 @@ query Random{
       }
 }
 
-query DashboardFacets{
-  DashboardFacets{
+query DashboardFacets($filter:QueryDashboardFacetsInput){
+  DashboardFacets(filter:$filter){
   type
   subType
   status
   key
+  count
+  }
+}
+
+query DashboardKpis($filter:QueryDashboardFacetsInput){
+  DashboardKpis(filter:$filter){
+  order
+  kpi
+  name
   count
   }
 }

@@ -11,8 +11,6 @@
 		</div>
 	</div>
 
-	
-	<!--Facet Bar-->
 	<div fxLayout="row" fxLayoutAlign="center center" class="discover">
 		<div class="discover-max-width" fxLayout="row">
 			<div class="results-outer" fxLayout="column" fxLayout.gt-sm="row">
@@ -22,7 +20,6 @@
 						<button mat-raised-button color="primary" (click)="toggleShowFilters()	">{{showFiltersText}}</button>
 					</div>
 				</div>
-
 				<div class="filter" *ngIf="((selectDiscoverFilterPanel$ | async) && !(media.isActive('xs') || media.isActive('sm'))) || (showFilters && (media.isActive('xs') || media.isActive('sm')))">
 					<div class="filter-inner" fxLayout="column">
 						<div class="header sort-by">

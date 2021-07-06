@@ -1,0 +1,26 @@
+.n4-ac {
+    height: 50px;
+    line-height: 20px;
+    padding: 0px;
+    mat-icon {
+    }
+
+    .right-border {
+        float: left;
+        width: 7px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    mat-icon {
+        width: 18px;
+        margin-right: 8px;
+    }
+    small {
+        margin-left: 24px;
+    }
+
+    input {
+        //width: 300px;
+    }
+}

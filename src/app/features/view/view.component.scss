@@ -1,7 +1,7 @@
 @import "../../../styles/constants.scss";
 
 @mixin full-height() {
-  min-height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - 71px);
+  min-height: -webkit-calc(100vh - #{$header-height} - #{$footer-height} - 72px);
   min-height: -moz-calc(100vh - #{$header-height} - #{$footer-height} - 72px);
   min-height: calc(100vh - #{$header-height} - #{$footer-height} - 72px);
   min-height: -o-calc(100vh - #{$header-height} - #{$footer-height} - 72px);

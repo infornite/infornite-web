@@ -1,7 +1,55 @@
+<div class="dashboard-outer">
+    <mat-sidenav-container class="dashboard-outer">
+        <mat-sidenav [mode]="(isSmallDevice$ | async)? 'over': 'side'" [opened]="(sidebarState | async)">
+            <div class="filter">
+                <div class="filter-inner" fxLayout="column">
+                    <div class="header sort-by">
+                        TYPE:
+                    </div>
+                    <div>
+                        <mat-selection-list #filterFacetTypes
+                            (selectionChange)="searchFilterType(filterFacetTypes.selectedOptions.selected)">
+                            <mat-list-option *ngFor="let type of arrFacetType" [value]="type">{{type |
+                                replaceUnderscore}}</mat-list-option>
+                        </mat-selection-list>
+                    </div>
 
+                    <div class="header sort-by">
+                        STATUS:
+                    </div>
+                    <div>
+                        <mat-selection-list #filterStatus
+                            (selectionChange)="searchFilterStatus(filterStatus.selectedOptions.selected)">
+                            <mat-list-option *ngFor="let status of arrFacetStatus" [value]="status">{{status |
+                                replaceUnderscore}}</mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                </div>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="dashboard" fxLayout="row wrap">
+                <ng-container *ngFor="let kpi of kpis">
+                    <div fxFlex="100%" fxFlex.gt-sm="50%" fxFlex.gt-md="25%">
+                        <kpi-card [title]="kpi.name" [value]="kpi.count"></kpi-card>
+                    </div>
+                </ng-container>
+                <div fxFlex="50%" fxFlex.lt-lg="100%">
+                    <mat-card class="chart-card">
+                        <app-bar-chart [label]="facetTypeLabel" [labels]="facetTypeLabels" [data]="facetTypeData"
+                            type="bar" [colorScheme]="facetTypeColors">
+                        </app-bar-chart>
+                    </mat-card>
+                </div>
 
-<div class="dashboard" fxLayout="row wrap" fxFill fxLayoutGap="8px grid">
-    <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayoutGap="64px">
-        <app-bar-chart [label]="facetTypeLabel" [labels]="facetTypeLabels" [data] ="facetTypeData"></app-bar-chart>
-    </div>
+                <div fxFlex="50%" fxFlex.lt-lg="100%">
+                    <mat-card class="chart-card">
+                        <app-bar-chart [label]="facetSubTypeLabel" [labels]="facetSubTypeLabels"
+                            [data]="facetSubTypeData" type="horizontalBar" [colorScheme]="facetSubTypeColors">
+                        </app-bar-chart>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>

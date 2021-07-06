@@ -1,6 +1,9 @@
-import { Component, OnInit, Input} from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, tap, switchMap, finalize, filter, take, takeUntil } from 'rxjs/operators';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FacetStubGQL } from '@app/graphql/schema'
+
+import { debounceTime, filter, finalize, switchMap, tap } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'in4-ac',
@@ -8,51 +11,112 @@ import { debounceTime, tap, switchMap, finalize, filter, take, takeUntil } from 
   styleUrls: ['./autocomplete.component.scss']
 })
 export class AutocompleteComponent implements OnInit {
-
+  @ViewChild('input') inputElement: ElementRef;
   acIsLoading = false;
   facets: any;
-  private readonly unsubscribe = new Subject<void>();
+
+
+    //Search
   
-  constructor() { }
+    searchPlaceholder: String = ""
+    acSearchIsLoading = false;
+    acSearchFilteredFacets: any;
+  
+    searchVisible = false;
+  
+    searchForm = new FormGroup({
+      searchInput: new FormControl('',),
+  
+    });
+
+  constructor(
+    private facetStubGQL: FacetStubGQL,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-
+    this.acSearchAssign()
   }
 
-  getFacet(option) {
-    return option ? option.name + " - " + option.type : '';
-  }
+  get searchInput() { return this.searchForm.get('searchInput') }
 
-  get edgeTailFacetControl() {
-    //return this.connectionsFormGroup.get('connectionDetails.edgeTailFacet')
-  }
-
-  assignEdgeTailAutocomplete() {
-    this.edgeTailFacetControl.valueChanges
+  acSearchAssign() {
+    this.searchInput.valueChanges
       .pipe(
-        takeUntil(this.unsubscribe),
         tap((value) => {
-          if (!value || value.length < 2) {
-            this.facets = []
+          if (!value || value.length < 3) {
+            this.acSearchFilteredFacets = []
           }
         }),
-        filter(value => value && value.length >= 2),
-        debounceTime(100),
+        filter(value => value && value.length >= 3),
+        debounceTime(500),
         tap(() => {
-          this.facets = [];
-          this.acIsLoading = true;
+          this.acSearchFilteredFacets = [];
+          this.acSearchIsLoading = true;
         }),
-        switchMap(value => this.svcGetFacetService.getFacetStub(null, ".*" + value + ".*", this.facetLabel == this.edgeTypeControl.value.headFacetLabel ? this.edgeTypeControl.value.tailFacetLabel : this.edgeTypeControl.value.headFacetLabel, null))
-      )//.pipe(take(1),)
-      .subscribe(({ data, loading, errors }) => {
-        this.acIsLoading = loading;
-        if (data == undefined || errors) {
-          this.facets = [];
+        switchMap(value =>
+          this.facetStubGQL.fetch({
+            filter: {
+              name: value,
+              type: []
+            }
+          })
+            .pipe(
+              finalize(() => {
+                this.acSearchIsLoading = false
+              }),
+            )
+        )
+      )
+      .subscribe(data => {
+        data
+        console.log(data['data']['FacetStub'])
+        if (data['data']['FacetStub'] == undefined) {
+          this.acSearchFilteredFacets = [];
         } else {
-          this.facets = data['FacetStub'];
+          this.acSearchFilteredFacets = data['data']['FacetStub'];
         }
       });
   }
+  getACDisplayValue(option) {
+    return option ? option.name : '';
+  }
 
+  ngOnDestroy() {
+    //this.unsubscribe.next()
+    //this.unsubscribe.complete()
+  }
 
+  search() {
+    if (this.searchVisible && this.searchInput.value.length > 3) {
+      this.router.navigate(['/discover', this.searchInput.value])
+      this.searchForm.get('searchInput').setValue("")
+      this.searchVisible = false;
+    }
+    else {
+      this.searchVisible = !this.searchVisible
+      this.inputElement.nativeElement.focus();
+    }
+  }
+
+  acItemSelected(id, name, type) {
+
+    if (this.router.url.includes('explore')) {
+      this.router.navigate(['/explore', id])
+      this.searchForm.get('searchInput').setValue("")
+      this.searchVisible = false;
+    }
+    else {
+      this.router.navigate(['/view', id])
+      this.searchForm.get('searchInput').setValue("")
+      this.searchVisible = false;
+    }
+  }
+
+  searchFocusOut() {
+    if (this.searchVisible && this.searchInput.value.length == 0) {
+      this.searchVisible = false
+    }
+
+  }
 }

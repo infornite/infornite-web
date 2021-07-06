@@ -39,8 +39,8 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.Default,
   animations: [
     trigger('slideInOut', [
-      state('true', style({ width: '300px' })),
-      state('false', style({ width: '0' })),
+      state('true', style({ opacity: 1})),
+      state('false', style({ opacity: 0 })),
       transition('true => false', animate('300ms ease-in')),
       transition('false => true', animate('300ms ease-out'))
     ])
@@ -55,6 +55,7 @@ export class HeaderComponent implements OnInit {
   loginString: String
   hamburgerState: any
   showSearch: boolean = false;
+
   navbarItems: HeaderItem[] = [
     {
       label: 'Disover',
@@ -69,6 +70,15 @@ export class HeaderComponent implements OnInit {
       label: 'Explore',
       icon: 'explore',
       routerLink: 'explore',
+      linkActive: 'active',
+      showOnMobile: false,
+      showOnTablet: true,
+      showOnDesktop: true
+    },
+    {
+      label: 'Dashboard',
+      icon: 'dashboard',
+      routerLink: 'dashboard',
       linkActive: 'active',
       showOnMobile: false,
       showOnTablet: true,
@@ -107,37 +117,6 @@ export class HeaderComponent implements OnInit {
 
 
   get searchInput() { return this.searchForm.get('searchInput') }
-
-  _acSearchAssign() {
-    this.searchInput.valueChanges
-      .pipe(
-        takeUntil(this.unsubscribe),
-        tap((value) => {
-          if (!value || value.length < 2) {
-            this.acSearchFilteredFacets = []
-          }
-        }),
-        filter(value => value && value.length >= 2),
-        debounceTime(100),
-        tap(() => {
-          this.acSearchFilteredFacets = [];
-          this.acSearchIsLoading = true;
-        }),
-        switchMap(value =>
-          this.facetStubGQL.fetch({
-            filter: {
-              name: value,
-              type: []
-            }
-          }))).subscribe((result) => {
-            this.acSearchIsLoading = false;
-            if (result == undefined) {
-              this.acSearchFilteredFacets = [];
-            } else {
-              this.acSearchFilteredFacets = result.data.FacetStub;
-            }
-          });
-  }
 
   acSearchAssign(){
     this.searchInput.valueChanges

@@ -5,5 +5,13 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
+    .n4-ac {
+        mat-icon {
+            color: mat.get-color-from-palette(mat.$gray-palette, 500);
+          }
 
+        .right-border {
+            background: mat.get-color-from-palette($primary)
+        }
+    }
 }

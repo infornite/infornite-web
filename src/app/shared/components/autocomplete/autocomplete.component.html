@@ -1,4 +1,14 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="in4-label {{colorStyle}}">
-    <mat-icon *ngIf="icon" svgIcon="{{icon}}"></mat-icon>
-    <div>{{ labelText }}</div>		
-</div>
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+    <mat-form-field appearance="legacy"style="margin-right:4px;" class="search-form-field"  [style.width.px]=300>
+        <input #input matInput [matAutocomplete]="autoSearch" formControlName="searchInput" [placeholder]="searchPlaceholder" (focusout)="searchFocusOut()">
+        <mat-autocomplete #autoSearch="matAutocomplete" [displayWith]="getACDisplayValue">
+            <mat-option *ngFor="let search of acSearchFilteredFacets" [value]="search" class="n4-ac"
+                matTooltip="{{search.name}}" (click)="acItemSelected(search.id, search.name, search.type)">
+                <span class="right-border"></span>
+                <mat-icon [svgIcon]="search.type | lcWithDashes"> </mat-icon>
+                <span>{{ search.name }}</span> <br>
+                <small>{{search.parentName}}</small>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

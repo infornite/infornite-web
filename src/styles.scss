@@ -18,6 +18,7 @@
 // feature pages
 @import "app/app/app.component.theme.scss";
 @import "app/features/discover/discover/discover.component.theme.scss";
+@import "app/features/dashboard/dashboard.component.theme.scss";
 @import "app/features/splash/splash.component.theme.scss";
 
 // components
@@ -47,6 +48,7 @@
   // feature pages
   @include n4-app-component-theme($theme);
   @include n4-discover-component-theme($theme);
+  @include n4-dashboard-component-theme($theme);
   @include n4-splash-theme($theme);
 
   // components

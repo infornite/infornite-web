@@ -104,6 +104,14 @@ export type DashboardFacets = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type DashboardKpis = {
+  __typename?: 'DashboardKpis';
+  order?: Maybe<Scalars['Int']>;
+  kpi?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  count?: Maybe<Scalars['Int']>;
+};
+
 export type DeleteConnectionInput = {
   id: Scalars['ID'];
 };
@@ -411,6 +419,7 @@ export type Query = {
   Random?: Maybe<Array<Maybe<Random>>>;
   User?: Maybe<Array<Maybe<User>>>;
   DashboardFacets?: Maybe<Array<Maybe<DashboardFacets>>>;
+  DashboardKpis?: Maybe<Array<Maybe<DashboardKpis>>>;
 };
 
 
@@ -513,6 +522,26 @@ export type QueryUserArgs = {
   filter?: Maybe<QueryUserInput>;
 };
 
+
+/**
+ * ################################################################################
+ * ########################              QUERY            #########################
+ * ################################################################################
+ */
+export type QueryDashboardFacetsArgs = {
+  filter?: Maybe<QueryDashboardFacetsInput>;
+};
+
+
+/**
+ * ################################################################################
+ * ########################              QUERY            #########################
+ * ################################################################################
+ */
+export type QueryDashboardKpisArgs = {
+  filter?: Maybe<QueryDashboardFacetsInput>;
+};
+
 export type QueryConnectionInput = {
   facetId?: Maybe<Scalars['ID']>;
   fromId?: Maybe<Scalars['ID']>;
@@ -523,6 +552,12 @@ export type QueryConnectionInput = {
   first?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<Maybe<_Ordering>>>;
+};
+
+export type QueryDashboardFacetsInput = {
+  type?: Maybe<Array<Maybe<FacetType>>>;
+  subType?: Maybe<Array<Maybe<FacetSubType>>>;
+  status?: Maybe<Array<Maybe<FacetStatus>>>;
 };
 
 export type QueryFacetInput = {
@@ -837,7 +872,9 @@ export type ConnectionStubQuery = (
   )>>> }
 );
 
-export type DashboardFacetsQueryVariables = Exact<{ [key: string]: never; }>;
+export type DashboardFacetsQueryVariables = Exact<{
+  filter?: Maybe<QueryDashboardFacetsInput>;
+}>;
 
 
 export type DashboardFacetsQuery = (
@@ -845,6 +882,19 @@ export type DashboardFacetsQuery = (
   & { DashboardFacets?: Maybe<Array<Maybe<(
     { __typename?: 'DashboardFacets' }
     & Pick<DashboardFacets, 'type' | 'subType' | 'status' | 'key' | 'count'>
+  )>>> }
+);
+
+export type DashboardKpisQueryVariables = Exact<{
+  filter?: Maybe<QueryDashboardFacetsInput>;
+}>;
+
+
+export type DashboardKpisQuery = (
+  { __typename?: 'Query' }
+  & { DashboardKpis?: Maybe<Array<Maybe<(
+    { __typename?: 'DashboardKpis' }
+    & Pick<DashboardKpis, 'order' | 'kpi' | 'name' | 'count'>
   )>>> }
 );
 
@@ -1279,8 +1329,8 @@ export const ConnectionStubDocument = gql`
     }
   }
 export const DashboardFacetsDocument = gql`
-    query DashboardFacets {
-  DashboardFacets {
+    query DashboardFacets($filter: QueryDashboardFacetsInput) {
+  DashboardFacets(filter: $filter) {
     type
     subType
     status
@@ -1295,6 +1345,27 @@ export const DashboardFacetsDocument = gql`
   })
   export class DashboardFacetsGQL extends Apollo.Query<DashboardFacetsQuery, DashboardFacetsQueryVariables> {
     document = DashboardFacetsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DashboardKpisDocument = gql`
+    query DashboardKpis($filter: QueryDashboardFacetsInput) {
+  DashboardKpis(filter: $filter) {
+    order
+    kpi
+    name
+    count
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DashboardKpisGQL extends Apollo.Query<DashboardKpisQuery, DashboardKpisQueryVariables> {
+    document = DashboardKpisDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

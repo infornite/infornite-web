@@ -6,12 +6,13 @@ import { SharedModule } from '@shared/shared.module';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPopupComponent } from './user-popup/user-popup.component';
 import { QuickAddComponent } from './quick-add/quick-add.component';
-
+import {AutocompleteComponent} from '@shared/components/autocomplete/autocomplete.component'
 @NgModule({
   declarations: [
     HeaderComponent, 
     UserPopupComponent,
     QuickAddComponent,
+    AutocompleteComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +23,7 @@ import { QuickAddComponent } from './quick-add/quick-add.component';
   exports: [
     HeaderComponent,
     UserPopupComponent,
+    AutocompleteComponent,
   ]
 })
 export class HeaderModule { }
