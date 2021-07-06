@@ -14,13 +14,15 @@
 	<div fxLayout="row" fxLayoutAlign="center center" class="discover">
 		<div class="discover-max-width" fxLayout="row">
 			<div class="results-outer" fxLayout="column" fxLayout.gt-sm="row">
-				
+
 				<div class="filter-button" fxHide fxShow.lt-md>
-					<div class = "filter-button-inner">
-						<button mat-raised-button color="primary" (click)="toggleShowFilters()	">{{showFiltersText}}</button>
+					<div class="filter-button-inner">
+						<button mat-raised-button color="primary"
+							(click)="toggleShowFilters()	">{{showFiltersText}}</button>
 					</div>
 				</div>
-				<div class="filter" *ngIf="((selectDiscoverFilterPanel$ | async) && !(media.isActive('xs') || media.isActive('sm'))) || (showFilters && (media.isActive('xs') || media.isActive('sm')))">
+				<div class="filter"
+					*ngIf="((selectDiscoverFilterPanel$ | async) && !(media.isActive('xs') || media.isActive('sm'))) || (showFilters && (media.isActive('xs') || media.isActive('sm')))">
 					<div class="filter-inner" fxLayout="column">
 						<div class="header sort-by">
 							SORT BY:
@@ -28,7 +30,8 @@
 						<div>
 							<form>
 								<mat-form-field appearance="outline">
-									<mat-select #filterOrderBy (selectionChange)="searchFilterOrderBy(filterOrderBy.value)">
+									<mat-select #filterOrderBy
+										(selectionChange)="searchFilterOrderBy(filterOrderBy.value)">
 										<mat-option value="rank_desc">
 											Relevance
 										</mat-option>
@@ -47,8 +50,10 @@
 							TYPE:
 						</div>
 						<div>
-							<mat-selection-list #filterFacetTypes (selectionChange)="searchFilterType(filterFacetTypes.selectedOptions.selected)">
-								<mat-list-option *ngFor="let type of arrFacetType" [value]="type">{{type  | replaceUnderscore}}</mat-list-option>
+							<mat-selection-list #filterFacetTypes
+								(selectionChange)="searchFilterType(filterFacetTypes.selectedOptions.selected)">
+								<mat-list-option *ngFor="let type of arrFacetType" [value]="type">{{type |
+									replaceUnderscore}}</mat-list-option>
 							</mat-selection-list>
 						</div>
 
@@ -56,8 +61,10 @@
 							STATUS:
 						</div>
 						<div>
-							<mat-selection-list #filterStatus (selectionChange)="searchFilterStatus(filterStatus.selectedOptions.selected)">
-								<mat-list-option *ngFor="let status of arrFacetStatus" [value]="status">{{status  | replaceUnderscore}}</mat-list-option>
+							<mat-selection-list #filterStatus
+								(selectionChange)="searchFilterStatus(filterStatus.selectedOptions.selected)">
+								<mat-list-option *ngFor="let status of arrFacetStatus" [value]="status">{{status |
+									replaceUnderscore}}</mat-list-option>
 							</mat-selection-list>
 						</div>
 
@@ -65,8 +72,10 @@
 					</div>
 				</div>
 				<div class="results" [ngClass]="routeAnimationsElements">
-					<div class="result-numbers-text" fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="center center">
-						<mat-slide-toggle fxHide fxShow.gt-sm [checked]="(selectDiscoverFilterPanel$ | async)" (change)="toggleFilterPanel($event)">filters</mat-slide-toggle>
+					<div class="result-numbers-text" fxLayoutAlign="space-between center"
+						fxLayoutAlign.lt-md="center center">
+						<mat-slide-toggle fxHide fxShow.gt-sm [checked]="(selectDiscoverFilterPanel$ | async)"
+							(change)="toggleFilterPanel($event)">filters</mat-slide-toggle>
 						<!--
 						<button mat-icon-button [matMenuTriggerFor]="discoverSettingsMenu" fxHide fxShow.gt-sm>
 							<mat-icon>settings</mat-icon>
@@ -74,14 +83,22 @@
 						-->
 						<mat-paginator #paginatorTop [pageSizeOptions]="[10, 25, 100]" hidePageSize="false">
 						</mat-paginator>
-						
+
 					</div>
-					<div class="results-loading"  *ngIf="resultsLoading">
+					<div class="results-loading" *ngIf="resultsLoading">
 						<mat-progress-bar mode="query"></mat-progress-bar>
 					</div>
-					
-					<div class="no-results" *ngIf="dataSource.data.length==0 && !resultsLoading" fxLayout="row" fxLayoutAlign="start center">
-						<mat-icon svgIcon="sorry"></mat-icon> <p> Sorry, no results ...</p>
+					<!--
+					<div class="results-loading" *ngIf="resultsLoading && firstLoadComplete">
+						<div class="fade-in-image" style="display: flex; justify-content: center;">
+							<img src="../../../../assets/img/general/infornite-splash-image.png" style="width:80%; margin-top:40px">
+						</div>
+					</div>
+-->
+					<div class="no-results" *ngIf="dataSource.data.length==0 && !resultsLoading" fxLayout="row"
+						fxLayoutAlign="start center">
+						<mat-icon svgIcon="sorry"></mat-icon>
+						<p> Sorry, no results ...</p>
 					</div>
 					<mat-card class="discover-card" *ngFor="let facet of obs | async">
 						<div class="discover-card-header" fxLayout="column">
@@ -98,7 +115,8 @@
 
 							</div>
 							<div fxLayout="row" fxFlex class="knowledge-area">
-								<a *ngIf="facet.parentId" routerLink="{{'/view/' + facet.parentId}}">{{facet.parentName}}</a>
+								<a *ngIf="facet.parentId"
+									routerLink="{{'/view/' + facet.parentId}}">{{facet.parentName}}</a>
 								<span *ngIf="!facet.parentId">Top Level</span>
 							</div>
 						</div>
@@ -126,10 +144,10 @@
 										<b>Last Modified By:</b> {{facet.updatedByName}}
 									</div>
 									<div fxFlex="50%" fxFlex.lt-sm="100%">
-										<b>Last Modified On:</b>  {{facet.updatedAt | date: 'dd-M-yyyy H:mm'}}
+										<b>Last Modified On:</b> {{facet.updatedAt | date: 'dd-M-yyyy H:mm'}}
 									</div>
 									<div fxFlex="100%" fxFlex.lt-sm="100%" fxLayoutAlign="end center" class="edit">
-										{{facet.rank  | percent}}
+										{{facet.rank | percent}}
 										<mat-icon routerLink="{{'/edit/' + facet.id}}">edit</mat-icon>
 										<mat-icon routerLink="{{'/explore/' + facet.id}}">pin_drop</mat-icon>
 									</div>

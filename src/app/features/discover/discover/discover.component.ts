@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@core/core.module';
 import { routeAnimations, NotificationService } from '@core/core.module';
 import { take } from 'rxjs/operators';
@@ -27,7 +27,7 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
   animations: [routeAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DiscoverComponent implements OnInit, OnDestroy {
+export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   obs: Observable<any>;
 
@@ -40,6 +40,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   showFiltersText: string = "Show Filters"
   resultsLoading: boolean;
   defaultResultsSize: number = 200;
+  firstLoadComplete: boolean = false;
 
   //Schema
   arrFacetType = arrFacetType
@@ -96,6 +97,10 @@ export class DiscoverComponent implements OnInit, OnDestroy {
         this.runSearch(this.searchCriteria)
       }
     })
+  }
+
+  ngAfterViewInit(){
+    this.firstLoadComplete = true;
   }
 
   submitSearch(searchString: string) {
