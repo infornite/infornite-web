@@ -14,14 +14,18 @@
                         </p>
                     </div>
                     <div>
-                        <button mat-raised-button color="accent" routerLink="/appointment">Book a Discovery Call</button>
+                        <button mat-raised-button color="accent" routerLink="/appointment">Book a Discovery
+                            Call</button>
                         <!--<button mat-raised-button routerLink="/demo">Try our Demo Platform</button>-->
                     </div>
                 </div>
 
             </div>
             <div fxFlex="50%" fxHide fxShow.gt-sm class="banner-image main-image">
-                <img src="../../../../assets/img/splash/sc1.png" (click)="openPicDialog('sc1')">
+
+                <video width="100%" controls preload="metadata" poster="../../../../assets/img/splash/sc1.png">
+                    <source src="../../../../assets/video/one-minute-demo-nq.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
     </div>
@@ -34,7 +38,7 @@
         </div>
     </div>
 
-    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center">
+    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center" ngClass.lt-md="no-bottom-border">
         <div class="splash-banner-container quote" fxLayout="row" fxLayout.lt-md="column reverse">
             <div fxFlex="100%" fxLayoutAlign="row" class="banner-text" fxLayout fxLayoutAlign="center center">
                 <div class="banner quote" fxLayoutAlign="row" fxLayoutAlign="center center">
@@ -53,6 +57,21 @@
         </div>
     </div>
 
+    <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center" fxHide.gt-sm>
+        <div class="splash-banner-container quote" fxLayout="row" fxLayout.lt-md="column reverse">
+            <div fxFlex="100%" fxLayoutAlign="row" class="banner-text" fxLayout fxLayoutAlign="center center">
+                <div class="banner quote" fxLayoutAlign="row" fxLayoutAlign="center center">
+                    <div class="boom" fxLayoutAlign="row" fxLayoutAlign="center center">
+                        <video width="100%" controls preload="metadata" poster="../../../../assets/img/splash/sc1.png">
+                            <source src="../../../../assets/video/one-minute-demo-nq.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="splash-banner grey-background" fxLayout="row" fxLayoutAlign="center center">
         <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
             <div fxFlex="50%" fxFlex.lt-md="100%" fxLayoutAlign="column" class="banner-text">
@@ -63,8 +82,9 @@
                         </h2>
                         <p [ngClass.xs]="'header-xs'">
                             Infornite brings your business glossaries, data dictionaries and
-                            report catalogues together in a unified platform. Your teams can easily search for the information they
-                            need and navigate from simple business terms down to the underlying data. 
+                            report catalogues together in a unified platform. Your teams can easily search for the
+                            information they
+                            need and navigate from simple business terms down to the underlying data.
                         </p>
                     </div>
                 </div>
@@ -115,7 +135,7 @@
                         <p [ngClass.xs]="'header-xs'">
                             The Infornite platform has pre-defined templates to create common documents and artefacts
                             you may need. This includes Data Strategy, Data Policy and Roles & Responsibilities. You can
-                            build and share these artefacts from directly within the platform to create a single source
+                            build and share these artefacts in the platform to create a single source
                             for knowledge.
                         </p>
                     </div>
@@ -123,38 +143,15 @@
 
             </div>
             <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-image" fxLayout fxLayoutAlign="center center">
-                <img src="../../../../assets/img/splash/sc4.png" (click)="openPicDialog('sc4')">
+                <img src="../../../../assets/img/splash/sc2.png" (click)="openPicDialog('sc4')">
             </div>
         </div>
-    </div>
+    </div>  
 
     <div class="splash-banner white-background" fxLayout="row" fxLayoutAlign="center center">
         <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
-            <div fxFlex="50%" fxFlex.lt-md="100%" fxLayoutAlign="column" class="banner-text">
-                <div class="banner" fxFlex="row">
-                    <div>
-                        <h2 [ngClass.xs]="'header-xs'" [ngClass.sm]="'header-sm'" [ngClass.md]="'header-md'">
-                            Focus on creating knowledge rather than tools
-                        </h2>
-                        <p [ngClass.xs]="'header-xs'">
-                            The keys to unlocking value from your data already sits within your organisation.
-                            It sits with your subject matter experts and is lost in disparate documentation. The
-                            Infornite platform simply provides the tool and framework to enable your teams
-                            to document and share their knowledge.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-            <div fxFlex="50%" fxFlex.lt-md="100%" class="banner-image" fxLayout fxLayoutAlign="center center">
-                <img src="../../../../assets/img/splash/sc2.png" (click)="openPicDialog('sc2')">
-            </div>
-        </div>
-    </div>
-    <div class="splash-banner grey-background" fxLayout="row" fxLayoutAlign="center center">
-        <div class="splash-banner-container" fxLayout="row" fxLayout.lt-md="column reverse">
             <div fxFlex="100%" fxLayoutAlign="row">
-            <in4-pricing></in4-pricing>
+                <in4-pricing></in4-pricing>
             </div>
 
         </div>

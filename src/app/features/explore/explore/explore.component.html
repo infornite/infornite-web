@@ -16,42 +16,48 @@
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
-<div class="results-loading"  *ngIf="resultsLoading">
+<div class="results-loading" *ngIf="resultsLoading">
     <mat-progress-bar mode="query"></mat-progress-bar>
 </div>
 
 <mat-sidenav-container class="explore">
-    <mat-sidenav [mode]="(isSmallDevice$ | async)? 'over': 'side'" [opened]="(sidebarState | async)">
+    <mat-sidenav [mode]="(isSmallDevice$ | async)? 'over': 'side'" [opened]="(sidebarState | async)" fxHide>
         <button mat-button color="primary">Dummy</button>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div fxLayout="row" fxLayoutAlign="start center" style="padding-left:4px;">
-            <button mat-button [matMenuTriggerFor]="graphLayout">
-                <mat-icon color="primary">settings</mat-icon>Layout
-            </button>
-            <button mat-button (click)="redraw()">
-                <mat-icon color="primary">settings</mat-icon>Redraw
-            </button>
-            <button mat-button (click)="fetchRandom()">
-                <mat-icon color="primary">settings</mat-icon>Random
-            </button>
-            <mat-menu #graphLayout="matMenu">
-                <button mat-menu-item (click)="setLayout('cola')">Cola</button>
-                <button mat-menu-item (click)="setLayout('grid')">Grid</button>
-                <button mat-menu-item (click)="setLayout('dagre')" [matMenuTriggerFor]="dagreLayout">Dagre</button>
-                <button mat-menu-item (click)="setLayout('breadthFirst')">Breadth First</button>
-                <button mat-menu-item (click)="setLayout('circle')">Circle</button>
-                <button mat-menu-item (click)="setLayout('klay')">Klay</button>
-                <button mat-menu-item (click)="setLayout('cise')">Cise</button>
-            </mat-menu>
-            <mat-menu #dagreLayout="matMenu">
-                <button mat-menu-item (click)="setLayout('dagreLR')">Left to Right</button>
-                <button mat-menu-item (click)="setLayout('dagreTB')">Top to Bottom</button>
-            </mat-menu>
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="padding-left:4px; border-bottom:solid 1px gray">
+            <div>
+                <button mat-button [matMenuTriggerFor]="graphLayout">
+                    <mat-icon color="primary">settings</mat-icon>Layout
+                </button>
+                <button mat-button (click)="redraw()">
+                    <mat-icon color="primary">settings</mat-icon>Redraw
+                </button>
+                <button mat-button (click)="fetchRandom()">
+                    <mat-icon color="primary">settings</mat-icon>Random
+                </button>
+                <mat-menu #graphLayout="matMenu">
+                    <button mat-menu-item (click)="setLayout('cola')">Cola</button>
+                    <button mat-menu-item (click)="setLayout('grid')">Grid</button>
+                    <button mat-menu-item (click)="setLayout('dagre')" [matMenuTriggerFor]="dagreLayout">Dagre</button>
+                    <button mat-menu-item (click)="setLayout('breadthFirst')">Breadth First</button>
+                    <button mat-menu-item (click)="setLayout('circle')">Circle</button>
+                    <button mat-menu-item (click)="setLayout('klay')">Klay</button>
+                    <button mat-menu-item (click)="setLayout('cise')">Cise</button>
+                </mat-menu>
+                <mat-menu #dagreLayout="matMenu">
+                    <button mat-menu-item (click)="setLayout('dagreLR')">Left to Right</button>
+                    <button mat-menu-item (click)="setLayout('dagreTB')">Top to Bottom</button>
+                </mat-menu>
+            </div>
+            <div>
+                <button mat-button color="primary"*ngIf="selectedNodeId"  routerLink="{{'/view/' + selectedNodeId}}">View {{selectedNodeName}}</button><!--selectedNodeId-->
+            </div>
         </div>
 
         <div style="height: calc(100% - 40px); width: 100%; float: left; overflow: auto; overflow-y: hidden">
-            <n4-cyto [nodes]="nodes" [edges]="edges" (select)="nodeChange($event)" (dblClick)="nodeDblClick($event)"></n4-cyto>
+            <n4-cyto [nodes]="nodes" [edges]="edges" (select)="nodeChange($event)" (dblClick)="nodeDblClick($event)">
+            </n4-cyto>
         </div>
 
     </mat-sidenav-content>

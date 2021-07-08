@@ -30,6 +30,11 @@
             background-color: #F8F9FC;
             color: mat.get-color-from-palette($foreground, text);
             border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
+
+            &.no-bottom-border{
+                border-bottom:none; 
+                padding-bottom:0px;
+            }
         }
 
         &.white-background{
@@ -37,6 +42,10 @@
             color: mat.get-color-from-palette($foreground, text);
             border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
 
+            &.no-bottom-border{
+                border-bottom:none; 
+                padding-bottom:0px;
+            }
         }
     }
 

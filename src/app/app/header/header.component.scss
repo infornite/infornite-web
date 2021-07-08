@@ -2,6 +2,8 @@
   .top-row {
     padding-left: 8px;
 
+ 
+
     .right-side {
       n4-quick-add {
         margin: 5px;
@@ -12,4 +14,12 @@
   .nav-button {
     margin: 0 10px 0 0;
   }
-}
+}   
+.logo {
+      display: flex;
+      .img-logo {
+        height: 26px;
+        margin: 0 4px 3px 0;
+        vertical-align: middle;
+      }
+    }

@@ -1,7 +1,13 @@
 <mat-toolbar class="n4-header" color="primary" class="mat-elevation-z6" style="position: relative;">
   <mat-toolbar-row class="top-row" fxLayout="row wrap" fxLayoutAlign="space-between center" class="mat-elevation-z6">
-    <div>
+    <div fxLayout="row" fxLayoutAlign="center center">
       <app-toggle-sidebar *ngIf="(hamburgerState | async)"></app-toggle-sidebar>
+      <div class="logo">
+        <a mat-button routerLink="/splash" aria-label="Infornite">
+          <img class="img-logo" src="../../../assets/img/logos/n4nite-logo-white-small.png" alt="Infornite">
+          <span>INFORNITE</span>
+        </a>
+      </div>
       <ng-container *ngIf="auth.isAuthenticated$ | async">
         <button mat-button class="nav-button" *ngFor="let item of navbarItems" [routerLink]="[item.routerLink]"
           [routerLinkActive]="[item.linkActive]" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
@@ -30,3 +36,8 @@
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
+
+
+<!--
+
+-->

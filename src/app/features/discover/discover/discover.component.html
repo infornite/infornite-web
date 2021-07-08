@@ -12,13 +12,13 @@
 	</div>
 
 	<div fxLayout="row" fxLayoutAlign="center center" class="discover">
-		<div class="discover-max-width" fxLayout="row">
+		<div class="discover-max-width" fxLayout="row" [ngClass]="{'max-width-extend': (selectDiscoverFilterPanel$ | async)}">
 			<div class="results-outer" fxLayout="column" fxLayout.gt-sm="row">
 
 				<div class="filter-button" fxHide fxShow.lt-md>
 					<div class="filter-button-inner">
 						<button mat-raised-button color="primary"
-							(click)="toggleShowFilters()	">{{showFiltersText}}</button>
+							(click)="toggleShowFilters()">{{showFiltersText}}</button>
 					</div>
 				</div>
 				<div class="filter"

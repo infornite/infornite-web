@@ -43,7 +43,7 @@ export class N4CytoComponent implements OnChanges {
     @Output() select: EventEmitter<any> = new EventEmitter<any>();
     @Output() dblClick: EventEmitter<any> = new EventEmitter<any>();
 
-    activeLayout: any = cytoLayouts.gridLayout;
+    activeLayout: any = cytoLayouts.colaLayout;
 
     private cy: cytoscape.Core;
     sy: cytoscape.Stylesheet;
@@ -76,7 +76,7 @@ export class N4CytoComponent implements OnChanges {
 
             localCy.elements().addClass('faded');
             neighborhood.removeClass('faded');
-            localselect.emit(node.data('name'));
+            localselect.emit([node.data('id'),node.data('name')]);
         });
 
         localCy.on('tap', function (e) {

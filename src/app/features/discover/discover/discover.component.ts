@@ -104,19 +104,21 @@ export class DiscoverComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitSearch(searchString: string) {
+    searchString = searchString.trim()
     this.searchCriteria.search = null
     this.searchCriteria.attributes = null
 
     //Atribute/Element --> Table or Report
     if (searchString.startsWith('[') && searchString.match(/\[/g).length == 1 && searchString.endsWith(']') && searchString.match(/]/g).length == 1) {
-      var attributes = this.replaceAll(searchString," ",",").replace("[", "")
+      var attributes = this.replaceAll(this.replaceAll(this.replaceAll(searchString," ",","), "_", ""),"*", "%").replace("[", "")
         .replace("]", "")
         .split(',')
         .filter(function (el) {
           return el != null;
         });
 
-      attributes.forEach((name, index) => attributes[index] = `%${name.replace(/[\W_]+/g, '')}%`);
+      console.log(attributes)
+      attributes.forEach((name, index) => attributes[index] = `%${name.replace(/[^\w%]+/g, '')}%`);
 
       this.searchCriteria.attributes = attributes
     }

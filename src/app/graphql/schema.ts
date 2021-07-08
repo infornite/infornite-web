@@ -77,10 +77,13 @@ export enum ConnectionType {
   CtrlControls = 'CTRL_CONTROLS',
   ElementIsImplementedVia = 'ELEMENT_IS_IMPLEMENTED_VIA',
   ElementIsRelatedTo = 'ELEMENT_IS_RELATED_TO',
-  /** Stakeholder */
+  /** Stakeholder Roles */
   RoleOwner = 'ROLE_OWNER',
   RoleSteward = 'ROLE_STEWARD',
-  RoleCustodian = 'ROLE_CUSTODIAN'
+  RoleCustodian = 'ROLE_CUSTODIAN',
+  /** Stakeholder Other */
+  StakeholderIsSmeForReport = 'STAKEHOLDER_IS_SME_FOR_REPORT',
+  StakeholderIsSmeForSystem = 'STAKEHOLDER_IS_SME_FOR_SYSTEM'
 }
 
 export type CreateConnectionInput = {
@@ -277,6 +280,8 @@ export enum FacetSubType {
   /** Report */
   Report = 'Report',
   RegulatoryReport = 'Regulatory_Report',
+  Dashboard = 'Dashboard',
+  Dataset = 'Dataset',
   /** System */
   System = 'System',
   ManualProcess = 'Manual_Process',

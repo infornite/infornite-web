@@ -570,7 +570,7 @@ export class EditFacetComponent implements OnInit {
           this.facetGQL.fetch({
             filter: {
               name: value,
-              type: [FacetType[this.facetType]]
+              type: this.facetDisplayFields.parentLabel
             }
           }))).subscribe((result) => {
             this.acParentIsLoading = false;

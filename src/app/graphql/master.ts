@@ -16,7 +16,7 @@ export interface iConnection {
 export interface FacetDisplayFields {
     facet: FacetType,
     fields: any[string],
-    parentLabel:FacetType,
+    parentLabel: FacetType[],
     defaultSubType: FacetSubType
 
 }
@@ -124,6 +124,22 @@ export const arrFacetConnections: iConnection[] = [
         display: "is the custodian for knowledge area",
         displayAlternative: "is managed by custodian",
     },
+
+    {
+        headType: FacetType.Stakeholder,
+        connection: ConnectionType.StakeholderIsSmeForReport,
+        tailType: FacetType.Report,
+        display: "stakeholder is an SME for report",
+        displayAlternative: "report has stakeholder as SME",
+    },
+    {
+        headType: FacetType.Stakeholder,
+        connection: ConnectionType.StakeholderIsSmeForSystem,
+        tailType: FacetType.System,
+        display: "stakeholder is an SME for system",
+        displayAlternative: "system has stakeholder as SME",
+    },
+
     {
         headType: FacetType.Element,
         connection: ConnectionType.ElementIsRelatedTo,
@@ -244,7 +260,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
         fields: {
             knowledgeArea: false,
         },
-        parentLabel: FacetType.KnowledgeArea,
+        parentLabel: [FacetType.KnowledgeArea],
         defaultSubType: FacetSubType.KnowledgeArea,
 
     },
@@ -261,7 +277,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
             key:true,
             keyReason:false,
         },
-        parentLabel: FacetType.Element,
+        parentLabel: [FacetType.Element],
         defaultSubType: FacetSubType.BusinessTerm,
     },
     {
@@ -274,7 +290,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
             keyReason:false,
             accessGuidelines: true,
         },
-        parentLabel: FacetType.Report,
+        parentLabel: [FacetType.Report],
         defaultSubType: FacetSubType.Report,
     },
     {
@@ -282,7 +298,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
         fields: {
             knowledgeArea: true,
         },
-        parentLabel: FacetType.System,
+        parentLabel: [FacetType.System],
         defaultSubType: FacetSubType.System,
     },
     {
@@ -290,7 +306,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
         fields: {
             knowledgeArea: true,
         },
-        parentLabel: FacetType.System,
+        parentLabel: [FacetType.System],
         defaultSubType: FacetSubType.Table,
     },{
         facet: FacetType.Attribute,
@@ -304,7 +320,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
             pii: true,
             securityClassification: true,
         },
-        parentLabel: FacetType.Table,
+        parentLabel: [FacetType.Table, FacetType.Report],
         defaultSubType: FacetSubType.Column,
     },
     {
@@ -312,7 +328,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
         fields: {
             knowledgeArea: true,
         },
-        parentLabel: FacetType.Control,
+        parentLabel: [FacetType.Control],
         defaultSubType: FacetSubType.Control,
     },
     {
@@ -321,7 +337,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
             knowledgeArea: false,
             stakeholderDetail: true,
         },
-        parentLabel: FacetType.Stakeholder,
+        parentLabel: [FacetType.Stakeholder],
         defaultSubType: FacetSubType.Person,
     },
     {
@@ -329,7 +345,7 @@ export const arrFacetDisplayFields: FacetDisplayFields[] = [
         fields: {
             knowledgeArea: true,
         },
-        parentLabel: FacetType.Artefact,
+        parentLabel: [FacetType.Artefact],
         defaultSubType: FacetSubType.Wiki,
     }
 ]

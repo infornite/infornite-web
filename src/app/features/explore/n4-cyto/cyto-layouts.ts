@@ -32,8 +32,10 @@ export var cytoLayouts = {
     },
     colaLayout: {
         name: 'cola',
-        animate: 'end',
-        randomize: true
+        animate: true,//'end',
+        randomize: true,
+        nodeDimensionsIncludeLabels: true,
+        nodeSpacing: function( node ){ return 10; },
     }, klayLayout: {
         name: 'klay',
         animate: true

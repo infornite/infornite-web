@@ -31,6 +31,9 @@ export class ExploreComponent implements OnInit {
   edges: EdgeDefinition[] = []
   resultsLoading: boolean;
 
+  selectedNodeId: String
+  selectedNodeName: String
+
   //graph events 
   node_name: string;
   constructor(
@@ -81,7 +84,8 @@ export class ExploreComponent implements OnInit {
   }
 
   nodeChange(event) {
-    this.node_name = event;
+    this.selectedNodeId = event[0]
+    this.selectedNodeName = event[1]
   }
 
   nodeDblClick(event) {

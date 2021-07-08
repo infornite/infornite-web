@@ -27,7 +27,7 @@ export class PricingComponent implements OnInit {
   currencyValue = "AUD"
 
   price = [{
-    name: "Essentials",
+    name: "Business Essentials",
     blurb: "Create a common understanding of key business terms, metrics and reports across your business.",
     basePrice: 5000,
     currentPrice: 5000,
