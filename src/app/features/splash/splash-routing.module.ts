@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'appointment',
     component: AppointmentComponent,
+  },
+  {
+    path: 'meet',
+    component: AppointmentComponent,
   }
 ];
 
