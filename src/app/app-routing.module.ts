@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./features/splash/splash.module').then((m) => m.SplashModule)
+    import('./features/discover/discover.module').then((m) => m.DiscoverModule)
   },
   {
     path: 'splash',
@@ -70,7 +70,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'splash'
+    redirectTo: 'discover'
   }
 ];
 
