@@ -84,15 +84,6 @@ export class HeaderComponent implements OnInit {
       showOnTablet: true,
       showOnDesktop: true
     },
-    {
-      label: 'Blog',
-      icon: 'blog',
-      routerLink: 'blog',
-      linkActive: 'active',
-      showOnMobile: false,
-      showOnTablet: true,
-      showOnDesktop: true
-    }
   ];
 
   //Search

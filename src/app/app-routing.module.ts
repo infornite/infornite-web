@@ -6,11 +6,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from '@auth0/auth0-angular';
 
 const routes: Routes = [
+  /*
   {
     path: '',
     loadChildren: () =>
     import('./features/discover/discover.module').then((m) => m.DiscoverModule)
   },
+  */
   {
     path: 'splash',
     loadChildren: () =>
@@ -68,10 +70,12 @@ const routes: Routes = [
         (m) => m.DashboardModule
       )
   },
+  
   {
     path: '**',
     redirectTo: 'discover'
   }
+  
 ];
 
 @NgModule({
